@@ -1,0 +1,336 @@
+.wowrestro .form-table input[type=text],
+.wowrestro .form-table input[type=number],
+.wowrestro .form-table input[type=tel],
+.wowrestro .form-table input[type=email],
+.select2-container {
+  width: 400px !important;
+}
+input.food-modifier-item-price.has-error.focus-visible, input.food-modifier-item-name.has-error.focus-visible, input.food-modifier-category-name-input.has-error.focus-visible {
+  border-color: red;
+  box-shadow: 0 0 0 1px red;
+  outline: 2px solid transparent;
+}
+.wowrestro .form-table textarea {
+  min-width: 400px !important;
+}
+
+.select2-container .select2-selection--multiple {
+  border: 1px solid #ddd !important;
+  border-radius: 4px !important;
+  padding: 0 5px;
+}
+
+.wowrestrohelp-tip {
+  color: #666;
+  display: inline-block;
+  font-size: 1.1em;
+  font-style: normal;
+  height: 16px;
+  line-height: 16px;
+  position: relative;
+  vertical-align: middle;
+  width: 16px;
+}
+
+.wowrestrohelp-tip::after {
+  font-family: Dashicons;
+  speak: none;
+  font-weight: 400;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  margin: 0;
+  text-indent: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  content: "";
+  cursor: help;
+}
+
+
+h2 .wowrestrohelp-tip {
+  margin-top: -5px;
+  margin-left: .25em;
+}
+
+
+.tips {
+  cursor: help;
+  text-decoration: none;
+}
+
+img.tips {
+  padding: 5px 0 0;
+}
+
+#tiptip_holder {
+  display: none;
+  z-index: 8675309;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#tiptip_holder.tip_top {
+  padding-bottom: 5px;
+}
+
+#tiptip_holder.tip_top #tiptip_arrow_inner {
+  margin-top: -7px;
+  margin-left: -6px;
+  border-top-color: #333;
+}
+
+#tiptip_holder.tip_bottom {
+  padding-top: 5px;
+}
+
+#tiptip_holder.tip_bottom #tiptip_arrow_inner {
+  margin-top: -5px;
+  margin-left: -6px;
+  border-bottom-color: #333;
+}
+
+#tiptip_holder.tip_right {
+  padding-left: 5px;
+}
+
+#tiptip_holder.tip_right #tiptip_arrow_inner {
+  margin-top: -6px;
+  margin-left: -5px;
+  border-right-color: #333;
+}
+
+#tiptip_holder.tip_left {
+  padding-right: 5px;
+}
+
+#tiptip_holder.tip_left #tiptip_arrow_inner {
+  margin-top: -6px;
+  margin-left: -7px;
+  border-left-color: #333;
+}
+
+#tiptip_content,.chart-tooltip,.wc_error_tip {
+  color: #fff;
+  font-size: .8em;
+  max-width: 150px;
+  background: #333;
+  text-align: center;
+  border-radius: 3px;
+  padding: .618em 1em;
+  box-shadow: 0 1px 3px rgba(0,0,0,.2);
+}
+
+#tiptip_content code,.chart-tooltip code,.wc_error_tip code {
+  padding: 1px;
+  background: #888;
+}
+
+#tiptip_arrow,#tiptip_arrow_inner {
+  position: absolute;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 6px;
+  height: 0;
+  width: 0;
+}
+
+#woocommerce-product-data .hndle label:first-child {
+  border-right: 0 !important;
+}
+
+span.wowrestro_order_meta {
+  display: block;
+  margin: 3px 0px;
+}
+
+ul.wc-radios {
+  float: left !important;
+  width: 80%;
+  vertical-align: middle;
+}
+
+.wc-radios label {
+  float: inherit;
+  margin: inherit;
+}
+
+.wc-radios li {
+  display: inline-block !important;
+  padding: 0 10px 0 0px !important;
+}
+
+
+/* Override */
+.modifier-category-content {
+    display: flex;
+}
+.modifier-category-content-left {
+    display: block;
+    float: left;
+    width: 50%;
+}
+.modifier-category-content-right {
+    display: block;
+    width: 50%;
+    float: right;
+}
+.modifier-category-content-right-header {
+    display: block;
+    float: left;
+}
+.modifier-category-content-right-header {
+    display: block;
+    float: left;
+}
+.modifier-category-inner-content {
+    display: block;
+    float: right;
+}
+.modifier-category-inner-content {
+    display: block;
+    float: right;
+}
+ul.modifier-category-item-list {
+    display: grid;
+}
+div#food_product_options{
+  padding: 15px;
+}
+.product_data #food_product_options fieldset.form-field, .product_data #food_product_options p.form-field {
+  padding: 0px !important;
+}
+fieldset.form-field._wowrestro_food_item_type_field legend{
+  font-size: 16px;
+  padding-top: 4px;
+  font-weight: 600;
+}
+#food_product_options button.create-new-modifier-category-btn {
+  padding: 6px 10px;
+  font-weight: 600;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  background: #0073aa;
+  color: #fff;
+  height: 32px;
+  line-height: 18px;
+  margin: 10px 0;
+}
+#food_product_options .modifier-category-content{
+  position: relative;
+  margin-bottom: 20px;
+}
+#food_product_options .modifier-category-content button{
+  position: relative;
+  margin-top: 4px;
+  border-radius: 100px;
+  border: none;
+  font-size: 10px;
+  width: 22px;
+  height: 22px;
+  padding: 4px 7px;
+  text-align: center;
+  cursor: pointer;
+  margin-right: 10px;
+  font-weight: bold;
+}
+#food_product_options .modifier-category-content-left .modifier-category-select{
+  /*margin-left: 30px;*/
+}
+.food-modifier-category-type-select{
+
+}
+.new-modifier-category-content label{
+  margin: 0!important;
+  width: auto;
+}
+.new-modifier-category-content{
+  display: table;
+  width: 100%;
+}
+table.food-modifier-category,table.food-modifier-items{
+  width: 100%;
+  text-align: left;
+}
+button.add-modifier-category-btn {
+    padding: 6px 15px;
+    font-weight: 500;
+    background-color: #0073aa;
+    border-radius: 4px;
+    color: #fff;
+    border: none;
+}
+.new-modifier-category-block .modifier-header{
+  display: flex;
+  justify-content: space-between;
+  vertical-align: middle;
+}
+span.close-create-new-modifier-block{
+  font-size: 11px;
+  padding: 7px;
+}
+.wowrestro-modifier-close{
+  height: 20px;
+  width: 20px;
+  border-radius: 100px;
+  background-color: #0073aa;
+  color: #ffff;
+  text-align: center;
+  cursor: pointer;
+  margin: 15px 0;
+}
+td.remove-modifier-item {
+  font-weight: 600;
+  cursor: pointer;
+  padding: 3px;
+}
+.new-modifier-category-row input,.new-modifier-item-row input{
+  width: 85%!important;
+}
+span.wowrestro-currency-sym {
+    position: relative;
+    top: 3px;
+    padding-left: 8px;
+    font-weight: 600;
+    font-size: 16px;
+}
+button.add-new-modifier-item-btn,button.add-new-modifier-category-btn{
+  padding: 6px 15px;
+  font-weight: 500;
+  background-color: #0073aa;
+  border-radius: 4px;
+  color: #fff;
+  border: none;
+  margin-top: 20px;
+
+}
+.modifier-header.modifier-new-category {
+    display: flex;
+    justify-content: space-between;
+    flex: 100%;
+    vertical-align: middle;
+    background: #e8e8e8;
+    padding: 0px 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+.add-new-modifier-category {
+    margin-top: 30px;
+}
+span.wow-ad-close {
+    background: #e8e8e8;
+    border-radius: 100px;
+    width: 16px;
+    display: block;
+    text-align: center;
+    font-size: 10px;
+    cursor: pointer;
+    padding: 3px 2px;
+}

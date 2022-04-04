@@ -1,0 +1,42 @@
+@font-face {
+  font-family: 'wowrestro-icons';
+  src:  url('fonts/wowrestro.eot?b7w66x');
+  src:  url('fonts/wowrestro.eot?b7w66x#iefix') format('embedded-opentype'),
+    url('fonts/wowrestro.ttf?b7w66x') format('truetype'),
+    url('fonts/wowrestro.woff?b7w66x') format('woff'),
+    url('fonts/wowrestro.svg?b7w66x#wowrestro-icons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="wowrestro-icon-"], [class*=" wowrestro-icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'wowrestro-icons' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.wowrestro-icon-search:before {
+  content: "\f002";
+}
+.wowrestro-icon-close:before {
+  content: "\f00d";
+}
+.wowrestro-icon-trash-o:before {
+  content: "\f014";
+}
+.wowrestro-icon-pencil:before {
+  content: "\f040";
+}
+.wowrestro-icon-shopping-cart:before {
+  content: "\f07a";
+}

@@ -1,0 +1,292 @@
+/* Media Queries */
+
+/* Device: Desktops */
+@media (min-width: 1200px) {
+
+}
+
+/* Device: Laptops, Desktops */
+@media (min-width: 1025px) and (max-width: 1199px) {
+	.wowrestro-cart-overview-description {
+		/*width: 20%;*/
+	}
+}
+
+/* Device: Tablets, iPads (Portrait) */
+@media (min-width: 992px) and (max-width: 1024px) {
+
+}
+
+/* Device: Tablets, iPads (Portrait) */
+@media (min-width: 769px) and (max-width: 1200px) {
+	.wowrestro-cart-overview {
+	    width: 15%;
+	}
+}
+
+/* Device: Tablets, iPads (Landscape) */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+	.wowrestro-cart-overview-description {
+		/*width: 24%;*/
+	}
+}
+
+/* Device: Tablets, iPads (Landscape) to Large Desktops */
+@media (min-width: 768px) {
+	.wowrestro-food-item-summery .button-add-to-cart {
+		display: none;
+	}
+	.wowrestro-cart-purchase-actions-mobile {
+		display: none;
+	}
+}
+
+/* Device: Small screen Mobiles to Tablets, iPads (Landscape) */
+@media (max-width: 768px) {
+	.wowrestro-food-item-cart-action .button-add-to-cart {
+		display: none;
+	}
+	.wowrestro-cart-purchase-actions, {
+		display: none;
+	}
+	.wowrestro-cart-overview-row {
+		padding: 0;
+	}
+	.wowrestro-cart-content-area {
+		display: block;
+	}
+	.cart-content-left {
+		width: 97%;
+	}
+	.cart-content-right {
+		width: 100%;
+	}
+	.wowrestro-cart-totals-container {
+		padding-left: 0;
+	}
+	.wowrestro-cart-overview{
+	width: 100%;	
+	}
+	.wowrestro-cart-overview {
+	    background: white;
+	    position: fixed;
+	    z-index: 99999;
+	    box-shadow: -7px -5px 16px #00000024;
+	    padding: 6px 20px;
+	    bottom: 0;
+	    right: 0;
+	    border-radius: 0;
+	    cursor: pointer;
+	    height: 55px;
+	    max-height: 60px;
+	}
+	.mobile-cart-wrap{
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+	}
+	.wowrestro-cart-overview-description.wwr-secondary-color.wowrestro-cart-toggle{
+		line-height: 45px;
+		font-size: 18px;
+		display: inline;
+		width: 50%;
+		padding: 0;
+		vertical-align: middle;
+		font-weight: 300;
+	}
+	.wowrestro-cart-expanded{
+		width: 100%;
+		right: 0px;
+	}
+	.wowrestro-cart-purchase-actions-mobile{
+		line-height: 45px;
+		font-size: 18px;
+		display: inline;
+		width: 50%;
+		padding: 0;
+		vertical-align: middle;
+	}
+	#wowrestro-sticky-sidebar{
+		height: 325px;
+	    margin-bottom: 30px;
+	    width: 75%;
+	    background: white;
+	    position: fixed;
+	    z-index: 99999;
+	    box-shadow: -7px -5px 16px #00000024;
+	    padding: 6px;
+	    bottom: 98px;
+	    left: 40px;
+	    border-radius: 5px;
+	    cursor: pointer;
+	    text-align: center;
+	    overflow-x: hidden;
+	    overflow-y: scroll;
+	}
+	.wowrestro-sidebar-menu ul a{
+		text-align: left;
+		font-size: 14px;
+	    font-weight: 600;
+	}
+	.wowrestro-cart-expanded.content.active .wowrestro-cart-content-area{
+		height: 100%;
+	}
+	.wowrestro-cart-expanded .cart-content-total{
+		display: none;
+	}
+	.wowrestro-cart-expanded .cart-content{
+		padding-bottom: 30px;
+	}
+	span.wwr-mobile-menu-txt {
+	    font-weight: 600;
+	    line-height: 28px;
+	}
+	#wowrestro-food-items {
+	    padding-left: 0;
+	    padding-right: 0;
+	}
+	.wowrestro-cart-expanded.active {
+	    bottom: 50px!important;
+	    border-radius: 0px;
+	}
+	.wowrestro-cart-expanded.active {
+	    height: 100%!important;
+	    top: 0px;
+	    padding-bottom: 60px!important;
+	}
+	.wowrestromodal-footer .wowrestro-modal-add-to-cart{
+		margin-left: 10px;
+	}
+	a.wowrestro-loop-category__title.active{
+		border: none;
+	}
+	#wowrestro-sticky-sidebar .wowrestro-category-menu-li{
+		margin: 0;
+	}
+	.wowrestro-search-container {
+	    width: 100%;
+	    clear: both;
+	    float: none;
+	}
+	.wwr-sep-line-dek,span.wwr-cart-icon{
+		display: none;
+	}
+	.mobile-cart-wrap span.wwr-price{
+		position: relative;
+		top: 0px;
+		font-weight: 700;
+	}
+	.mobile-cart-wrap .wowrestro-proceed-to-checkout{
+		padding: 0;
+	    font-weight: 300;
+	    text-transform: capitalize;
+	    border: none;
+	    border-radius: 0;
+	    line-height: inherit;
+	    outline: 0;
+	    background: transparent;
+	    font-size: inherit;
+	    width: auto;
+	    line-height: 1.6;
+	}
+	span.wwr-view-cart-txt{
+		padding-right: 5px;
+	}
+
+	.wwr-mobile-category-wrap span.wp-cart-svg{
+		padding-left: 0px;
+		position: relative;
+		top: 0px;
+		line-height: 28px;
+	}
+	span.wp-cart-svg svg{
+		width: 22px;
+		height: 22px;
+		display: inline-block;
+	}
+	span.wwr-price, span.wwr-sep-line-mob{
+		display: inline-block;
+	}
+	.cart-content-checkout{
+		display: none;
+	}
+	body.wowrestro{
+		margin-bottom: 55px;
+	}
+	.wwr-product-image-container{
+		height: 160px;
+	}
+	.wowrestromodal-body{
+		max-height: 440px;
+	}
+	#wowrestro-sticky-sidebar.d-none{
+		display: none;
+	}
+	.wowrestro-food-item-title{
+		font-size: 14px;
+	}
+	.wwr-food-item-wrap .wwr-col-lg-6.wwr-col-md-6.wwr-col-sm-12.wwr-col-xs-12{
+		padding: 0;
+	}
+	.wwr-service-time-wrap label:after, .wwr-service-time-wrap label:before{
+	    top: 12px;
+	}
+	.mobile-cart-wrap .wp-cart-svg{
+		line-height: 28px;
+		position: relative;
+		top: -1px;	
+	}
+	.wowrestro-header-service-wrap .wowrestro-service-wrap{
+		padding: 0;
+	}
+	.wowrestro-close-msg-wrp{
+		width: 100%;
+	}
+	#wowrestro_service_time{
+		padding: 10px;
+	}
+	#wowrestroServiceModal .wwr-service-time-wrap label:after,
+	#wowrestroServiceModal .wwr-service-time-wrap label:before{
+	top: 14px;	
+	}
+	#wowrestroModal-content .product-content{
+	padding-bottom: 30px;
+	}
+	body.wwr-cat-no-scroll{
+		overflow: hidden;
+	}
+	.wwr-mobile-category-wrap{
+		width: 15%!important;
+	}
+	.wowrestro-product-add-to-cart .ball-scale-multiple {
+	    transform: translate(27%, -22px);
+	}
+}
+
+/* Device: Desktops To Mobile */
+@media (min-width: 769px) {
+.dk-none{
+	display: none;
+}
+#wowrestro-sticky-sidebar.d-none{
+	display: block;
+}
+.wwr-cat-overlay{
+	display: none;
+}
+.wowrestro-sidebar-menu ul a {
+	padding-left: 0;
+	margin: 0;
+}
+}
+
+/* Device: Low Resolution Tablets, Mobiles (Landscape) */
+@media (min-width: 481px) and (max-width: 767px) {
+}
+
+/* Device: Small screen Mobiles (Portrait) */
+@media (max-width: 480px) {
+	.wwr-mobile-category-wrap{
+		width: 30%!important;
+	}
+}

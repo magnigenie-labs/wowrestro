@@ -1,0 +1,18 @@
+@font-face {
+  font-family: 'wowrestro-icomoon';
+  src:  url('fonts/wowrestro/icomoon.eot?f6cgsy');
+  src:  url('fonts/wowrestro/icomoon.eot?f6cgsy#iefix') format('embedded-opentype'),
+    url('fonts/wowrestro/icomoon.ttf?f6cgsy') format('truetype'),
+    url('fonts/wowrestro/icomoon.woff?f6cgsy') format('woff'),
+    url('fonts/wowrestro/icomoon.svg?f6cgsy#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+#adminmenu #toplevel_page_wowrestro-settings .menu-icon-generic div.wp-menu-image:before {
+  font-family: 'wowrestro-icomoon' !important;
+  content: "\e900";
+  font-size: 7px;
+  line-height: 3.5;
+}

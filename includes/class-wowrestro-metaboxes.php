@@ -98,7 +98,7 @@ class WWRO_Metaboxes {
           <option <?php selected( $choice, 'single' ); ?> value="single"><?php esc_html_e( 'Single', 'wowrestro' ); ?></option>
           <option <?php selected( $choice, 'multiple' ); ?>  value="multiple"><?php esc_html_e( 'Multiple', 'wowrestro' ); ?></option>
         </select>
-        <p class="description"><?php esc_html_e( 'Please choose how you want this modifier to be associated with the WOWRestro item.', 'wowrestro' ); ?></p>
+        <p class="description"><?php esc_html_e( 'Please choose how you want this modifier to be associated with the WooRestro item.', 'wowrestro' ); ?></p>
       </td>
     </tr> <?php
 
@@ -169,7 +169,7 @@ class WWRO_Metaboxes {
 
     // Add custom tab for food options
     $tabs['food-options'] = array(
-      'label'    => __( 'WOWRestro Item Options', 'wowrestro' ),
+      'label'    => __( 'WooRestro Item Options', 'wowrestro' ),
       'target'   => 'food_product_options',
       'class'    => array( 'show_if_food_item' ),
       'priority' => 16,
@@ -260,8 +260,8 @@ class WWRO_Metaboxes {
     $sales_type = get_option( '_wowrestro_sales_type' );
 
     if ( $sales_type == 'only_food_item' ) {
-      $types['simple']   = __( 'Simple WOWRestro Item', 'wowrestro' );
-      $types['variable'] = __( 'Variable WOWRestro Item', 'wowrestro' );
+      $types['simple']   = __( 'Simple WooRestro Item', 'wowrestro' );
+      $types['variable'] = __( 'Variable WooRestro Item', 'wowrestro' );
     }
 
     $other_types_setting = get_option( '_wowrestro_adv_keep_other_product_types' );
@@ -301,8 +301,8 @@ class WWRO_Metaboxes {
         'id'            => '_food_item',
         'wrapper_class' => '',
         'class'         => array( 'show_if_simple', 'show_if_variable' ),
-        'label'         => __( 'WOWRestro Item', 'woocommerce' ),
-        'description'   => __( 'Set this product as a WOWRestro item.', 'woocommerce' ),
+        'label'         => __( 'WooRestro Item', 'woocommerce' ),
+        'description'   => __( 'Set this product as a WooRestro item.', 'woocommerce' ),
         'default'       => 'no',
       );
     }

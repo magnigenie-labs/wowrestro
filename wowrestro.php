@@ -1,7 +1,7 @@
 <?php
 /**
- * Plugin Name: WOWRestro
- * Description: WOWRestro is an Ordering system for WooCommerce.
+ * Plugin Name: WooRestro
+ * Description: WooRestro is an Ordering system for WooCommerce.
  * Version: 1.3.1
  * Author: MagniGenie
  * Text Domain: wowrestro

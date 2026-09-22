@@ -298,7 +298,7 @@ class WWRO_Settings_Services extends WWRO_Settings_Page {
             'title'     => __( 'Cooking Time', 'wowrestro' ),
             'id'        => '_wowrestro_food_prepation_time',
             'type'      => 'number',
-            'desc_tip'  => __( 'Set WOWRestro item preparation time', 'wowrestro' ),
+            'desc_tip'  => __( 'Set WooRestro item preparation time', 'wowrestro' ),
             'default'   => 0,
             'css'       => 'min-width: 100px;',
             'custom_attributes' => array(

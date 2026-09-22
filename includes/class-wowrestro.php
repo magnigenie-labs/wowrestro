@@ -224,7 +224,7 @@ final class WOWRestro {
 	public function admin_notices() {
 
 		echo '<div class="error"><p>';
-		_e( 'WOWRestro requires <a href="'.admin_url( 'plugin-install.php?s=WooCommerce&tab=search&type=term', 'admin' ).'">WooCommerce</a> to be installed &amp; active!', 'wowrestro' );
+		_e( 'WooRestro requires <a href="'.admin_url( 'plugin-install.php?s=WooCommerce&tab=search&type=term', 'admin' ).'">WooCommerce</a> to be installed &amp; active!', 'wowrestro' );
 		echo '</p></div>';
 
 	}

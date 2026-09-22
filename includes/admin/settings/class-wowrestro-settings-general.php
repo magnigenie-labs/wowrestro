@@ -53,8 +53,8 @@ class WWRO_Settings_General extends WWRO_Settings_Page {
           'type'    => 'select',
           'options'   => array(
             'default'         => __( 'Use Default Shop page.', 'wowrestro' ),
-            'only_food_item'  => __( 'Show Only WOWRestro item on shop page.', 'wowrestro' ),
-            'only_shop'       => __( 'Remove WOWRestro items from shop page.', 'wowrestro' ),
+            'only_food_item'  => __( 'Show Only WooRestro item on shop page.', 'wowrestro' ),
+            'only_shop'       => __( 'Remove WooRestro items from shop page.', 'wowrestro' ),
           ),
           'class'     => 'wc-enhanced-select',
         ),
@@ -67,14 +67,14 @@ class WWRO_Settings_General extends WWRO_Settings_Page {
           'type'    => 'select',
           'options'   => array(
             'all_product'     => __( 'Sale all types of product.', 'wowrestro' ),
-            'only_food_item'  => __( 'Sale only WOWRestro item.', 'wowrestro' ),
+            'only_food_item'  => __( 'Sale only WooRestro item.', 'wowrestro' ),
           ),
           'class'     => 'wc-enhanced-select',
         ),
 
         array(
-          'title'   => __( 'Veg / Non Veg option for WOWRestro items', 'wowrestro' ),
-          'desc'    => __( 'Check this box if you want to include veg / non veg option to your WOWRestro items.', 'wowrestro' ),
+          'title'   => __( 'Veg / Non Veg option for WooRestro items', 'wowrestro' ),
+          'desc'    => __( 'Check this box if you want to include veg / non veg option to your WooRestro items.', 'wowrestro' ),
           'id'      => '_wowrestro_include_veg_non_veg',
           'default' => 'yes',
           'type'    => 'checkbox',

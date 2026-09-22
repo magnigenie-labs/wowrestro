@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the WOWRestro plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: WOWRestro 1.3.1\n"
+"Project-Id-Version: WooRestro 1.3.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wowrestro\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,11 +16,11 @@ msgstr ""
 
 #. Plugin Name of the plugin
 #: includes/admin/class-wowrestro-admin-menus.php:37
-msgid "WOWRestro"
+msgid "WooRestro"
 msgstr ""
 
 #. Description of the plugin
-msgid "WOWRestro is an Ordering system for WooCommerce."
+msgid "WooRestro is an Ordering system for WooCommerce."
 msgstr ""
 
 #. Author of the plugin
@@ -77,11 +77,11 @@ msgid "Use Default Shop page."
 msgstr ""
 
 #: includes/admin/settings/class-wowrestro-settings-general.php:56
-msgid "Show Only WOWRestro item on shop page."
+msgid "Show Only WooRestro item on shop page."
 msgstr ""
 
 #: includes/admin/settings/class-wowrestro-settings-general.php:57
-msgid "Remove WOWRestro items from shop page."
+msgid "Remove WooRestro items from shop page."
 msgstr ""
 
 #: includes/admin/settings/class-wowrestro-settings-general.php:63
@@ -97,15 +97,15 @@ msgid "Sale all types of product."
 msgstr ""
 
 #: includes/admin/settings/class-wowrestro-settings-general.php:70
-msgid "Sale only WOWRestro item."
+msgid "Sale only WooRestro item."
 msgstr ""
 
 #: includes/admin/settings/class-wowrestro-settings-general.php:76
-msgid "Veg / Non Veg option for WOWRestro items"
+msgid "Veg / Non Veg option for WooRestro items"
 msgstr ""
 
 #: includes/admin/settings/class-wowrestro-settings-general.php:77
-msgid "Check this box if you want to include veg / non veg option to your WOWRestro items."
+msgid "Check this box if you want to include veg / non veg option to your WooRestro items."
 msgstr ""
 
 #: includes/admin/settings/class-wowrestro-settings-general.php:84
@@ -154,7 +154,7 @@ msgid "Purge Settings"
 msgstr ""
 
 #: includes/admin/settings/class-wowrestro-settings-misc.php:86
-msgid "Remove WoWRestro data when plugin is deactivated."
+msgid "Remove WooRestro data when plugin is deactivated."
 msgstr ""
 
 #: includes/admin/settings/class-wowrestro-settings-notification.php:27
@@ -374,7 +374,7 @@ msgid "Cooking Time"
 msgstr ""
 
 #: includes/admin/settings/class-wowrestro-settings-services.php:301
-msgid "Set WOWRestro item preparation time"
+msgid "Set WooRestro item preparation time"
 msgstr ""
 
 #: includes/admin/settings/class-wowrestro-settings-services.php:312
@@ -482,7 +482,7 @@ msgid "Displays the number of items available for the category."
 msgstr ""
 
 #: includes/admin/settings/class-wowrestro-settings-style.php:117
-msgid "WOWRestro Item Image"
+msgid "WooRestro Item Image"
 msgstr ""
 
 #: includes/admin/settings/class-wowrestro-settings-style.php:118
@@ -623,7 +623,7 @@ msgid "%s has been removed from cart"
 msgstr ""
 
 #: includes/class-wowrestro-install.php:89
-msgid "View WOWRestro settings"
+msgid "View WooRestro settings"
 msgstr ""
 
 #: includes/class-wowrestro-install.php:89
@@ -635,7 +635,7 @@ msgid "Selection Choice"
 msgstr ""
 
 #: includes/class-wowrestro-metaboxes.php:101
-msgid "Please choose how you want this modifier to be associated with the WOWRestro item."
+msgid "Please choose how you want this modifier to be associated with the WooRestro item."
 msgstr ""
 
 #: includes/class-wowrestro-metaboxes.php:128
@@ -643,15 +643,15 @@ msgid "Add a Price for this modifier item."
 msgstr ""
 
 #: includes/class-wowrestro-metaboxes.php:172
-msgid "WOWRestro Item Options"
+msgid "WooRestro Item Options"
 msgstr ""
 
 #: includes/class-wowrestro-metaboxes.php:263
-msgid "Simple WOWRestro Item"
+msgid "Simple WooRestro Item"
 msgstr ""
 
 #: includes/class-wowrestro-metaboxes.php:264
-msgid "Variable WOWRestro Item"
+msgid "Variable WooRestro Item"
 msgstr ""
 
 #: includes/class-wowrestro-modifiers.php:43
@@ -792,7 +792,7 @@ msgid " Time : "
 msgstr ""
 
 #: includes/class-wowrestro.php:227
-msgid "WOWRestro requires <a href=\""
+msgid "WooRestro requires <a href=\""
 msgstr ""
 
 #: includes/wowrestro-core-functions.php:186

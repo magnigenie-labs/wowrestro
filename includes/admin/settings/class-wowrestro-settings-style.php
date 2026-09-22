@@ -114,7 +114,7 @@ class WWRO_Settings_Styling extends WWRO_Settings_Page {
         ),
 
         array(
-          'title'     => __( 'WOWRestro Item Image', 'wowrestro' ),
+          'title'     => __( 'WooRestro Item Image', 'wowrestro' ),
           'desc'      => __( 'Please select how would you like to show the item images on frontend.', 'wowrestro' ),
           'id'        => '_wowrestro_listing_item_image_display',
           'default'   => 'medium',

@@ -34,7 +34,7 @@ class WWRO_Admin_Menus {
    */
   public function wowrestro_menu() {
 
-    add_menu_page( __( 'WOWRestro', 'wowrestro' ), __( 'WOWRestro', 'wowrestro' ), 'manage_woocommerce', 'wowrestro-settings', array( $this, 'wowrestro_settings_page' ), null, '55.5' );
+    add_menu_page( __( 'WooRestro', 'wowrestro' ), __( 'WooRestro', 'wowrestro' ), 'manage_woocommerce', 'wowrestro-settings', array( $this, 'wowrestro_settings_page' ), null, '55.5' );
   }
 
   /**

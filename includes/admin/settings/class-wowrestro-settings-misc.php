@@ -83,7 +83,7 @@ class WWRO_Settings_Misc extends WWRO_Settings_Page {
 
         array(
           'title'     => __( 'Purge Settings', 'wowrestro' ),
-          'desc'      => __( 'Remove WoWRestro data when plugin is deactivated.', 'wowrestro' ),
+          'desc'      => __( 'Remove WooRestro data when plugin is deactivated.', 'wowrestro' ),
           'id'        => '_wowrestro_adv_remove_data_on_uninstall',
           'default'   => 'no',
           'type'      => 'checkbox',

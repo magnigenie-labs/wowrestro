@@ -86,7 +86,7 @@ class WWRO_Install {
    */
   public static function plugin_action_links( $links ) {
     $action_links = array(
-      'settings' => '<a href="' . esc_url( admin_url( 'admin.php?page=wowrestro-settings' ) ) . '" aria-label="' . esc_attr__( 'View WOWRestro settings', 'wowrestro' ) . '">' . esc_html__( 'Settings', 'wowrestro' ) . '</a>',
+      'settings' => '<a href="' . esc_url( admin_url( 'admin.php?page=wowrestro-settings' ) ) . '" aria-label="' . esc_attr__( 'View WooRestro settings', 'wowrestro' ) . '">' . esc_html__( 'Settings', 'wowrestro' ) . '</a>',
     );
 
     return array_merge( $action_links, $links );

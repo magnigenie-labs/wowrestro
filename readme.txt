@@ -1,15 +1,15 @@
-=== WooRestro - Online Ordering System For WooCommerce ===
+=== WowRestro - Restaurant Ordering & Operations for WooCommerce ===
 Contributors: magnigenie, sagarseth9, devashu0011
-Tags: ecommerce, woo, woocommerce, shop, online store
+Tags: restaurant, food ordering, woocommerce, pickup, delivery
 Donate link: https://paypal.me/magnigeeks
-Requires PHP: 5.6
-Requires at least: 4.0
-Tested up to: 7.0
-Stable tag: 1.3.1
+Requires PHP: 7.4
+Requires at least: 6.2
+Tested up to: 6.7
+Stable tag: 2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-WooRestro is an online ordering system for WooCommerce that makes it easier to receive takeaway and delivery orders.
+WowRestro is a complete restaurant ordering and fulfillment operations system for WooCommerce.
 
 == Description ==
 
@@ -90,6 +90,29 @@ No, you don't need any special theme to run this plugin. It works with all theme
 
 == Changelog ==
 
+= 2.0 =
+* Major Release: Complete architectural modernization for high-performance restaurant operations.
+* Added: WooCommerce High-Performance Order Storage (HPOS) and Cart & Checkout Blocks compatibility.
+* Added: Live Kitchen Order Board with real-time Firebase Cloud Messaging (FCM HTTP v1) push notifications and audio alerts.
+* Added: Operational order statuses (New, Accepted, Preparing, Ready, Out for Delivery, Completed, Cancelled) decoupled from payment statuses.
+* Added: Atomic shared-kitchen capacity and slot reservations ledger with InnoDB transactional safety.
+* Added: Single-page ordering storefront app powered by WooCommerce Store API, including 36 modern menu templates.
+* Added: Modern Gutenberg menu block and Elementor widget for flexible menu embedding.
+* Added: Reusable Modifier Groups custom post type (`wowrestro_mod_group`) with min/max selection bounds, single/multi choices, default options, and immutable order snapshots.
+* Added: Table reservations management system (`[wowrestro_reservations]`) with slot capacity, guest limits, and deposit support.
+* Added: Dine-in QR code table ordering (`[wowrestro_staff_panel]`) with automatic table session tracking.
+* Added: Multi-location / branch restaurant support (`[wowrestro_location_selector]`).
+* Added: Least-privilege restaurant staff roles (`wowrestro_manager`, `wowrestro_staff`, `wowrestro_waiter`).
+* Added: In-board manual / phone order entry with item selection, custom delivery/pickup timing, and payment collection.
+* Added: Tip calculation support (percentage presets and custom flat amounts) on cart and checkout.
+* Added: Live customer order tracking page and shortcode (`[wowrestro_tracking]`) with progress updates on Thank You page and emails.
+* Added: Comprehensive REST API under `wowrestro/v1` namespace for menu, availability, operations, devices, and tracking.
+* Added: Resumable, non-destructive legacy data migration tool for seamless upgrades from WOWRestro 1.x and WooRestro.
+* Added: Guided 4-step onboarding wizard for first-time restaurant setup.
+* Added: Built-in HPOS-safe restaurant sales analytics and operational reporting.
+* Added: Site Health diagnostic checks for checkout compatibility, configuration, and capacity ledger health.
+* Removed: Legacy jQuery dependencies (jquery.timepicker, jquery.toast, jquery.tipTip) and outdated template files in favor of lightweight vanilla scripts and Phosphor icon fonts.
+
 = 1.3.1 - 13th April 2022 =
 * Compatibility check with latest WordPress & WooCommerce version.
 * Minor bugs fixed.
@@ -121,6 +144,9 @@ No, you don't need any special theme to run this plugin. It works with all theme
 * Initial public release.
 
 == Upgrade Notice ==
+
+= 2.0 =
+Major release 2.0 brings HPOS compatibility, Checkout Blocks support, a live Kitchen Order Board, slot reservations, and a redesigned modifier engine. An automatic, non-destructive data migration wizard will run on first activation to migrate your 1.x settings, modifiers, and orders.
 
 = 1.3.1 =
 Please take a backup of your site before updating the plugin.

@@ -1,0 +1,113 @@
+.wowrestro-onboarding {
+	max-width: 960px;
+}
+
+.wowrestro-onboarding__feature {
+	align-items: center;
+	background: #f6f7f7;
+	border: 1px solid #dcdcde;
+	border-radius: 8px;
+	display: grid;
+	gap: 12px;
+	grid-template-columns: 28px 1fr auto;
+	margin-bottom: 24px;
+	padding: 16px;
+}
+
+.wowrestro-onboarding__feature > .dashicons {
+	color: #2b4bff;
+}
+
+.wowrestro-onboarding__feature > span:nth-child(2) {
+	display: grid;
+	gap: 3px;
+}
+
+.wowrestro-onboarding__feature small,
+.wowrestro-onboarding__next-steps small {
+	color: #646970;
+}
+
+.wowrestro-onboarding__complete-icon {
+	align-items: center;
+	background: #edfaef;
+	border-radius: 50%;
+	color: #008a20;
+	display: flex;
+	height: 68px;
+	justify-content: center;
+	margin: 4px auto 18px;
+	width: 68px;
+}
+
+.wowrestro-onboarding__complete-icon .dashicons {
+	font-size: 38px;
+	height: 38px;
+	width: 38px;
+}
+
+.wowrestro-onboarding__success {
+	font-size: 16px;
+	text-align: center;
+}
+
+.wowrestro-onboarding__next-steps {
+	display: grid;
+	gap: 10px;
+	grid-template-columns: 1fr 1fr;
+}
+
+.wowrestro-onboarding__next-steps a {
+	align-items: flex-start;
+	border: 1px solid #dcdcde;
+	border-radius: 8px;
+	color: #1d2327;
+	display: grid;
+	gap: 10px;
+	grid-template-columns: 26px 1fr;
+	padding: 14px;
+	text-decoration: none;
+}
+
+.wowrestro-onboarding__next-steps a:hover,
+.wowrestro-onboarding__next-steps a:focus {
+	border-color: #2b4bff;
+	color: #4051df;
+}
+
+.wowrestro-onboarding__next-steps a > span:last-child {
+	display: grid;
+	gap: 3px;
+}
+
+@media (max-width: 782px) {
+	.wowrestro-onboarding__next-steps {
+		grid-template-columns: 1fr;
+	}
+}
+
+.wowrestro-onboarding__progress-row {
+	align-items: center;
+	display: flex;
+	gap: 14px;
+	margin-bottom: 26px;
+}
+
+.wowrestro-onboarding__progress-row .wowrestro-onboarding__progress {
+	flex: 1;
+}
+
+.wowrestro-onboarding__progress-row .wowrestro-onboarding__count {
+	margin: 0;
+	white-space: nowrap;
+}
+
+.wowrestro-onboarding input[type="text"],
+.wowrestro-onboarding input[type="email"],
+.wowrestro-onboarding input[type="tel"],
+.wowrestro-onboarding input[type="number"],
+.wowrestro-onboarding input:not([type]),
+.wowrestro-onboarding select {
+	border: 1px solid #a7aaad;
+	box-shadow: none;
+}

@@ -1,0 +1,29 @@
+/* Keep WowRestro's native WooCommerce product columns readable. */
+.post-type-product .wp-list-table.fixed {
+	table-layout: auto;
+	min-width: 1280px;
+}
+
+.post-type-product .wp-list-table .column-name {
+	min-width: 220px;
+}
+
+.post-type-product .wp-list-table .column-wowrestro_menu {
+	width: 110px;
+	min-width: 110px;
+	white-space: nowrap;
+}
+
+.post-type-product .wp-list-table .column-taxonomy-wowrestro_location,
+.post-type-product .wp-list-table .column-wowrestro_location,
+.post-type-product .wp-list-table .column-locations {
+	width: 105px;
+	min-width: 105px;
+	white-space: normal;
+}
+
+.post-type-product .wp-list-table th,
+.post-type-product .wp-list-table td {
+	word-break: normal;
+	overflow-wrap: normal;
+}

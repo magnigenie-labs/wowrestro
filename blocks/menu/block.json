@@ -1,0 +1,19 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "wowrestro/menu",
+  "version": "0.3.0-beta.85",
+  "title": "WowRestro Menu",
+  "category": "woocommerce",
+  "icon": "store",
+  "description": "Display an app-like restaurant ordering menu.",
+  "textdomain": "wowrestro",
+  "editorScript": "wowrestro-menu-block",
+  "style": "wowrestro-storefront",
+  "attributes": {
+    "template": { "type": "number", "default": 0 },
+    "layout": { "type": "string", "default": "" },
+    "location": { "type": "string", "default": "" }
+  },
+  "supports": { "html": false, "align": ["wide", "full"] }
+}

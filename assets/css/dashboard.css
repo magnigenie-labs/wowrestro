@@ -1,0 +1,165 @@
+.wowrestro-dashboard-page #adminmenumain,
+.wowrestro-shell-page #adminmenumain {
+	display: none;
+}
+
+.wowrestro-dashboard-page #wpcontent,
+.wowrestro-dashboard-page #wpfooter {
+	margin-left: 0;
+}
+
+.wowrestro-dashboard-page #wpcontent {
+	padding-left: 0;
+}
+
+.wowrestro-shell-page #wpcontent,
+.wowrestro-shell-page #wpfooter {
+	margin-left: 230px;
+}
+
+.wowrestro-shell-page #wpcontent {
+	padding-left: 0;
+}
+
+.wowrestro-dashboard-shell {
+	display: grid;
+	grid-template-columns: 230px minmax(0, 1fr);
+	margin: 0;
+	min-height: calc(100vh - 32px);
+}
+
+.wowrestro-dashboard-shell__sidebar {
+	background: #fff;
+	border-right: 1px solid #dcdcde;
+	display: flex;
+	flex-direction: column;
+	min-height: calc(100vh - 32px);
+	padding: 22px 14px;
+}
+
+.wowrestro-dashboard-shell__sidebar--fixed {
+	bottom: 0;
+	box-sizing: border-box;
+	left: 0;
+	overflow-y: auto;
+	position: fixed;
+	top: 32px;
+	width: 230px;
+	z-index: 100;
+}
+
+.wowrestro-shell-page .wowrestro-board-page {
+	margin-left: 0;
+}
+
+.wowrestro-shell-page .wp-list-table .column-wowrestro_menu {
+	min-width: 92px;
+	white-space: nowrap;
+	width: 92px;
+}
+
+.wowrestro-dashboard-shell__brand {
+	align-items: center;
+	display: flex;
+	font-size: 18px;
+	gap: 9px;
+	margin: 0 8px 24px;
+}
+
+.wowrestro-dashboard-shell__brand .dashicons {
+	align-items: center;
+	background: #2b4bff;
+	border-radius: 8px;
+	color: #fff;
+	display: flex;
+	height: 34px;
+	justify-content: center;
+	width: 34px;
+}
+
+.wowrestro-dashboard-shell__sidebar nav {
+	display: grid;
+	gap: 4px;
+}
+
+.wowrestro-dashboard-shell__sidebar nav p {
+	color: #8c8f94;
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: .08em;
+	margin: 18px 10px 5px;
+	text-transform: uppercase;
+}
+
+.wowrestro-dashboard-shell__sidebar nav a,
+.wowrestro-dashboard-shell__return {
+	align-items: center;
+	border-radius: 6px;
+	color: #3c434a;
+	display: flex;
+	gap: 9px;
+	padding: 10px;
+	text-decoration: none;
+}
+
+.wowrestro-dashboard-shell__sidebar nav a:hover,
+.wowrestro-dashboard-shell__sidebar nav a:focus,
+.wowrestro-dashboard-shell__sidebar nav a.is-current {
+	background: #f0f1ff;
+	color: #4051df;
+}
+
+.wowrestro-dashboard-shell__return {
+	border-top: 1px solid #f0f0f1;
+	margin-top: auto;
+	padding-top: 18px;
+}
+
+.wowrestro-dashboard-shell__content {
+	box-sizing: border-box;
+	margin: 0;
+	max-width: none;
+	padding: 10px 28px 50px;
+}
+
+@media (max-width: 960px) {
+	.wowrestro-shell-page #wpcontent,
+	.wowrestro-shell-page #wpfooter {
+		margin-left: 0;
+	}
+
+	.wowrestro-dashboard-shell {
+		grid-template-columns: 1fr;
+	}
+
+	.wowrestro-dashboard-shell__sidebar {
+		min-height: auto;
+	}
+
+	.wowrestro-dashboard-shell__sidebar--fixed {
+		bottom: auto;
+		position: relative;
+		top: auto;
+		width: auto;
+	}
+
+	.wowrestro-dashboard-shell__sidebar nav {
+		display: flex;
+		flex-wrap: wrap;
+	}
+
+	.wowrestro-dashboard-shell__sidebar nav p,
+	.wowrestro-dashboard-shell__return {
+		display: none;
+	}
+}
+
+@media (max-width: 782px) {
+	.wowrestro-dashboard-shell {
+		min-height: calc(100vh - 46px);
+	}
+
+	.wowrestro-dashboard-shell__content {
+		padding: 10px 14px 40px;
+	}
+}

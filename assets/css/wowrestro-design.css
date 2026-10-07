@@ -1,0 +1,754 @@
+/* Olive & Ember order flow - cloned from "Olive and Ember Order Flow" and wired
+   to live WooCommerce data. Scoped to the .wowrestro-design body class, which
+   WowRestro adds to any page holding the menu. */
+
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap");
+
+.wowrestro-design {
+  --oe-bg: #0B0A08;
+  --oe-fg: #F2EDE3;
+  --oe-ember: #E0743C;
+  --oe-ember-soft: #F0A277;
+  --oe-olive: #93A45C;
+  --oe-olive-soft: #B6C482;
+  --oe-ink: #17110C;
+  --oe-mute: #A79C8C;
+  --oe-mute2: #968C7D;
+  --oe-dim: #756B5E;
+  --oe-dim2: #6B6255;
+  --oe-line: rgba(242, 237, 227, 0.1);
+  --oe-line-soft: rgba(242, 237, 227, 0.065);
+  --oe-panel: linear-gradient(180deg, #16130F, #100E0B);
+}
+
+/* The page stays the theme's: its header, main menu, footer and type are left
+   alone, and everything below styles only the order flow and its dialog. */
+.wowrestro-design :is(.wowrestro-menu, .oe-modalroot) {
+  color: var(--oe-fg);
+  font-family: Manrope, -apple-system, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-wrap: pretty;
+}
+.wowrestro-design :is(.wowrestro-menu, .oe-modalroot) a { color: var(--oe-ember); text-decoration: none; transition: color .25s ease; }
+.wowrestro-design :is(.wowrestro-menu, .oe-modalroot) a:hover { color: var(--oe-ember-soft); }
+.wowrestro-design :is(.wowrestro-menu, .oe-modalroot) ::selection { background: rgba(224, 116, 60, 0.35); color: #fff; }
+.wowrestro-design :is(.wowrestro-menu, .oe-modalroot) :is(input, textarea, select) { font-family: inherit; }
+.wowrestro-design :is(.wowrestro-menu, .oe-modalroot) :is(input, textarea)::placeholder { color: var(--oe-dim2); }
+.wowrestro-design :is(.wowrestro-menu, .oe-modalroot) :is(input, textarea):focus { border-color: rgba(224, 116, 60, 0.55) !important; outline: none; }
+/* Theme content styles (".entry-content h2", "p") must not resize the order flow's own type. */
+.wowrestro-design .wowrestro-menu :where(h1, h2, h3) { color: inherit; }
+
+@keyframes oe-rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@keyframes oe-pulse { 0%,100% { opacity: .3; transform: scale(1); } 50% { opacity: 1; transform: scale(1.35); } }
+
+.wowrestro-design :is(.wowrestro-menu, .oe-modalroot) ::-webkit-scrollbar { width: 10px; }
+.wowrestro-design :is(.wowrestro-menu, .oe-modalroot) ::-webkit-scrollbar-track { background: var(--oe-bg); }
+.wowrestro-design :is(.wowrestro-menu, .oe-modalroot) ::-webkit-scrollbar-thumb { background: #262119; border-radius: 10px; }
+
+/* The menu plugin's storefront.css gives this section a cream background,
+   a 645px cap and its own padding - the design owns the full width instead. */
+/* The design assumes border-box everywhere; without it a 48px input renders
+   50px while the select renders 48px, so fields sit on different baselines. */
+.wowrestro-design .wowrestro-menu,
+.wowrestro-design .wowrestro-menu *,
+.wowrestro-design .wowrestro-menu *::before,
+.wowrestro-design .wowrestro-menu *::after,
+.wowrestro-design .oe-modal,
+.wowrestro-design .oe-modal * { box-sizing: border-box; }
+
+/* No z-index here: a stacking context would trap the fixed drawer and order bar
+   under the theme's own header. */
+.wowrestro-design .wowrestro-menu {
+  position: relative;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  color: var(--oe-fg);
+  font-family: Manrope, -apple-system, "Segoe UI", sans-serif;
+}
+
+/* ---------------- first paint ----------------
+   The server sends the plugin's own menu markup, which the script then
+   replaces. Without this the raw storefront flashes on every hard reload.
+   Three ways out of the hidden state, so a JS failure can never leave a blank
+   page: the script marks it ready, <noscript> unhides it, and a 5s animation
+   reveals it regardless. */
+.wowrestro-design .wowrestro-menu:not([data-oe-ready]) > * {
+  opacity: 0;
+  animation: oe-failsafe 0s linear 5s forwards;
+}
+@keyframes oe-failsafe { to { opacity: 1; } }
+
+.wowrestro-design .wowrestro-menu:not([data-oe-ready]) {
+  min-height: 70vh;
+  position: relative;
+}
+.wowrestro-design .wowrestro-menu:not([data-oe-ready])::after {
+  content: "";
+  position: absolute;
+  top: 180px; left: 50%;
+  width: 26px; height: 26px;
+  margin-left: -13px;
+  border-radius: 50%;
+  border: 2px solid rgba(242, 237, 227, 0.15);
+  border-top-color: var(--oe-ember);
+  animation: oe-spin .7s linear infinite, oe-failsafe 0s linear 5s reverse forwards;
+}
+
+/* The screen paints the menu's background, so it takes the menu's rounded corners. */
+.wowrestro-design .oe-screen { border-radius: inherit; }
+
+.oe-shell { max-width: 1280px; margin: 0 auto; padding-left: 32px; padding-right: 32px; }
+.oe-serif { font-family: Newsreader, Georgia, serif; font-weight: 500; letter-spacing: -0.02em; }
+.oe-eyebrow { font-size: 11.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--oe-dim); }
+
+/* ---------------- hero ---------------- */
+
+.oe-hero { display: grid; grid-template-columns: minmax(0, 1fr) 460px; gap: 48px; align-items: center; padding-top: 56px; padding-bottom: 40px; }
+.oe-badge {
+  display: inline-flex; align-items: center; gap: 9px;
+  padding: 7px 15px 7px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(147, 164, 92, 0.32);
+  background: rgba(147, 164, 92, 0.09);
+  font-size: 13px; color: var(--oe-olive-soft);
+}
+.oe-badge i { width: 6px; height: 6px; border-radius: 50%; background: var(--oe-olive); display: block; animation: oe-pulse 2.6s ease-in-out infinite; }
+.wowrestro-design .oe-hero__title {
+  font-family: Newsreader, Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(44px, 5.6vw, 78px);
+  line-height: 0.98;
+  letter-spacing: -0.025em;
+  margin: 22px 0 0;
+}
+.oe-hero__title em { font-style: italic; color: var(--oe-ember); }
+.wowrestro-design .oe-hero__lede { font-size: 17.5px; line-height: 1.6; color: var(--oe-mute); margin: 20px 0 0; max-width: 46ch; }
+.oe-hero__row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; align-items: center; }
+.oe-eta { font-size: 14.5px; color: var(--oe-dim); }
+
+.oe-toggle { display: flex; padding: 4px; border-radius: 999px; background: rgba(242, 237, 227, 0.05); border: 1px solid rgba(242, 237, 227, 0.09); }
+.oe-toggle button {
+  padding: 11px 26px; border-radius: 999px;
+  font: inherit; font-size: 15px; font-weight: 500;
+  cursor: pointer; border: 0; background: transparent; color: #968C7D;
+  transition: all .3s ease;
+}
+.oe-toggle button.is-on { background: var(--oe-fg); color: var(--oe-ink); box-shadow: 0 12px 28px -14px rgba(0, 0, 0, 0.9); }
+
+.oe-heroart {
+  position: relative; height: 420px;
+  border-radius: 26px; overflow: hidden;
+  background: linear-gradient(150deg, #2A1F16, #14110D) center/cover no-repeat;
+  box-shadow: inset 0 0 0 1px rgba(242, 237, 227, 0.1), 0 50px 100px -50px rgba(0, 0, 0, 0.95);
+}
+.oe-heroart::after { content: ""; position: absolute; inset: 0; background: linear-gradient(190deg, rgba(11, 10, 8, 0) 30%, rgba(11, 10, 8, 0.85)); }
+.oe-heroart__cap { position: absolute; left: 24px; right: 24px; bottom: 22px; z-index: 2; display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; }
+.oe-heroart__name { font-family: Newsreader, Georgia, serif; font-size: 27px; font-weight: 500; letter-spacing: -0.02em; margin-top: 6px; }
+.oe-heroart__price { font-family: Newsreader, Georgia, serif; font-size: 24px; white-space: nowrap; }
+
+/* ---------------- menu + cart columns ---------------- */
+
+.oe-two { display: grid; grid-template-columns: minmax(0, 1fr) 384px; gap: 40px; align-items: start; padding-top: 12px; padding-bottom: 110px; }
+
+.oe-listhead { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 20px; padding-bottom: 18px; border-bottom: 1px solid rgba(242, 237, 227, 0.09); }
+.wowrestro-design .oe-listhead h2 { font-family: Newsreader, Georgia, serif; font-weight: 400; font-size: 38px; letter-spacing: -0.02em; margin: 8px 0 0; }
+.oe-search {
+  width: 240px; height: 44px;
+  border: 1px solid rgba(242, 237, 227, 0.11);
+  border-radius: 999px; padding: 0 18px;
+  font-size: 14.5px; color: var(--oe-fg);
+  background: rgba(242, 237, 227, 0.035);
+  transition: border-color .3s ease;
+}
+
+.oe-cats { display: flex; flex-wrap: wrap; gap: 26px; padding: 18px 0 26px; }
+.oe-cats button {
+  cursor: pointer; font: inherit; font-size: 15.5px;
+  padding: 0 0 7px; border: 0; border-bottom: 1.5px solid transparent;
+  background: none; color: #968C7D;
+  display: flex; align-items: baseline; gap: 7px;
+  transition: color .25s ease;
+}
+.oe-cats button:hover { color: var(--oe-fg); }
+.oe-cats button.is-on { color: var(--oe-fg); border-bottom-color: var(--oe-ember); }
+.oe-cats small { font-size: 11.5px; color: #5E564B; }
+.oe-cats button.is-on small { color: var(--oe-ember-soft); }
+
+.oe-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.oe-card {
+  border: 1px solid rgba(242, 237, 227, 0.085);
+  border-radius: 22px; overflow: hidden;
+  background: linear-gradient(180deg, rgba(242, 237, 227, 0.038), rgba(242, 237, 227, 0.015));
+  transition: border-color .35s ease, transform .35s ease;
+  display: flex; flex-direction: column;
+}
+.oe-card:hover { border-color: rgba(224, 116, 60, 0.42); transform: translateY(-3px); }
+.oe-card__img { position: relative; height: 212px; background: rgba(242, 237, 227, 0.04) center/cover no-repeat; }
+.oe-tag {
+  position: absolute; top: 14px; left: 14px;
+  padding: 6px 12px; border-radius: 999px;
+  background: rgba(11, 10, 8, 0.72); backdrop-filter: blur(8px);
+  font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--oe-ember-soft); border: 1px solid rgba(224, 116, 60, 0.4);
+}
+.oe-card__body { padding: 20px 22px 22px; display: flex; flex-direction: column; flex: 1; min-width: 0; }
+.oe-card__top { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; }
+.oe-card__name { font-family: Newsreader, Georgia, serif; font-size: 23px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.2; }
+.oe-card__price { font-family: Newsreader, Georgia, serif; font-size: 21px; white-space: nowrap; }
+.oe-card__desc { font-size: 14.5px; line-height: 1.55; color: #968C7D; margin-top: 9px; flex: 1; }
+.oe-card__foot { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-top: 18px; }
+.oe-card__meta { font-size: 12.5px; color: var(--oe-dim2); letter-spacing: 0.04em; }
+
+.oe-add {
+  padding: 10px 22px; border-radius: 999px;
+  background: var(--oe-fg); color: var(--oe-ink);
+  font: inherit; font-size: 14.5px; font-weight: 600;
+  cursor: pointer; white-space: nowrap; border: 0;
+  transition: background .25s ease;
+}
+.oe-add:hover { background: var(--oe-ember); }
+
+.oe-step { display: flex; align-items: center; gap: 2px; border: 1px solid rgba(224, 116, 60, 0.45); border-radius: 999px; background: rgba(224, 116, 60, 0.1); }
+.oe-step button { padding: 8px 15px; cursor: pointer; font: inherit; font-size: 16px; color: var(--oe-ember-soft); line-height: 1; border: 0; background: none; }
+.oe-step span { font-size: 14.5px; min-width: 20px; text-align: center; font-weight: 600; }
+
+.oe-empty { text-align: center; padding: 64px 24px; border: 1px dashed rgba(242, 237, 227, 0.14); border-radius: 22px; }
+.oe-empty__title { font-family: Newsreader, Georgia, serif; font-size: 24px; color: #C3B7A5; }
+.oe-empty button { display: inline-block; margin-top: 16px; font: inherit; font-size: 14.5px; color: var(--oe-ember); cursor: pointer; border: 0; background: none; }
+
+.oe-note {
+  margin-top: 34px; display: flex; flex-wrap: wrap; gap: 18px;
+  align-items: center; justify-content: space-between;
+  padding: 22px 24px; border-radius: 20px;
+  border: 1px solid rgba(242, 237, 227, 0.075);
+  background: rgba(242, 237, 227, 0.022);
+  font-size: 14.5px; line-height: 1.6; color: #968C7D;
+}
+.oe-note b { color: var(--oe-fg); font-weight: 400; }
+.oe-note__by { font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--oe-dim2); white-space: nowrap; }
+
+/* ---------------- order panel ---------------- */
+
+/* A tall order panel used to run past the fold, so the Checkout button was only
+   reachable after scrolling to the end of the menu. Cap it to the viewport and
+   let the item list scroll inside, keeping totals and the CTA always visible. */
+.oe-panel {
+  position: sticky; top: 24px;
+  border: 1px solid var(--oe-line);
+  border-radius: 24px;
+  background: var(--oe-panel);
+  box-shadow: 0 50px 90px -60px rgba(0, 0, 0, 0.9);
+  overflow: hidden;
+  max-height: calc(100vh - 48px);
+  display: flex;
+  flex-direction: column;
+}
+.oe-panel > * { flex: none; }
+/* Header and the checkout button stay put; everything between them scrolls as
+   one block, so item rows are never clipped mid-line to make room. No
+   overscroll-behavior: Chrome then swallows the mouse wheel over a list too
+   short to scroll, and the page stopped scrolling under the pointer. */
+.oe-panel .oe-panel__scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+}
+/* The checkout summary has no inner scroller, so it is never capped: capped, its
+   Place order button was cut off on a long order. */
+.wowrestro-design .oe-checkout .oe-panel { max-height: none !important; overflow: visible; }
+.oe-panel .oe-lines { overflow: visible; }
+/* a hint that the list continues */
+.oe-panel .oe-panel__scroll::-webkit-scrollbar { width: 6px; }
+.oe-panel .oe-panel__scroll::-webkit-scrollbar-thumb { background: rgba(242, 237, 227, 0.14); border-radius: 6px; }
+.oe-panel__head { padding: 22px 24px 18px; border-bottom: 1px solid rgba(242, 237, 227, 0.075); display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.oe-panel__title { font-family: Newsreader, Georgia, serif; font-size: 22px; font-weight: 500; letter-spacing: -0.02em; }
+.oe-panel__svc { font-size: 12.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--oe-dim); }
+.oe-panel__empty { padding: 44px 28px; text-align: center; font-size: 14.5px; line-height: 1.6; color: var(--oe-dim); }
+.oe-panel__ring { width: 46px; height: 46px; border-radius: 50%; border: 1px dashed rgba(242, 237, 227, 0.2); margin: 0 auto 16px; }
+
+.oe-lines { padding: 6px 24px 0; }
+.oe-line { display: flex; gap: 14px; padding: 16px 0; border-bottom: 1px solid var(--oe-line-soft); }
+.oe-line__img { width: 52px; height: 52px; border-radius: 13px; flex: none; background: rgba(242, 237, 227, 0.05) center/cover no-repeat; box-shadow: inset 0 0 0 1px rgba(242, 237, 227, 0.1); }
+.oe-line__body { flex: 1; min-width: 0; }
+.oe-line__top { display: flex; justify-content: space-between; gap: 12px; }
+.oe-line__name { font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
+.oe-line__total { font-size: 15px; font-weight: 600; white-space: nowrap; }
+.oe-line__opts { font-size: 12.5px; color: var(--oe-dim2); margin-top: 4px; line-height: 1.45; }
+.oe-line__ctrl { display: flex; align-items: center; gap: 14px; margin-top: 9px; }
+.oe-step--sm { border-color: rgba(242, 237, 227, 0.13); background: none; }
+.oe-step--sm button { padding: 3px 11px; font-size: 15px; color: #C3B7A5; }
+.oe-step--sm span { font-size: 13.5px; min-width: 16px; font-weight: 400; }
+.oe-remove { font: inherit; font-size: 12.5px; color: var(--oe-dim2); cursor: pointer; border: 0; background: none; padding: 0; }
+.oe-remove:hover { color: var(--oe-ember); }
+
+.oe-slots { padding: 18px 24px 0; }
+.oe-slots__label { font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--oe-dim); margin-bottom: 11px; }
+.oe-slots__list { display: flex; flex-wrap: wrap; gap: 7px; }
+.oe-slots__list button {
+  padding: 8px 14px; border-radius: 10px;
+  font: inherit; font-size: 13.5px; cursor: pointer;
+  border: 1px solid var(--oe-line); background: transparent; color: #968C7D;
+  transition: all .25s ease;
+}
+.oe-slots__list button.is-on { border-color: rgba(224, 116, 60, 0.55); background: rgba(224, 116, 60, 0.14); color: var(--oe-fg); }
+/* Template 1 is light, while these colours come from the dark base design; and
+   features.css tints every order-panel button, which hid the chosen time option.
+   Unchosen options go plain, and the confirmed time reads at full contrast. */
+.wowrestro-design .wowrestro-menu:not([data-skin]) .oe-slots__list button:not(.is-on) { background: #fff !important; border-color: rgba(23, 23, 19, .16) !important; color: #52525b !important; }
+.wowrestro-design .wowrestro-menu:not([data-skin]) .oe-slots__promise { color: #3f6212; }
+
+.oe-freebar { margin: 18px 24px 0; padding: 13px 15px; border-radius: 13px; background: rgba(147, 164, 92, 0.08); border: 1px solid rgba(147, 164, 92, 0.24); }
+.oe-freebar__text { font-size: 13px; color: var(--oe-olive-soft); line-height: 1.5; }
+.oe-freebar__track { height: 3px; border-radius: 999px; background: rgba(242, 237, 227, 0.1); margin-top: 10px; overflow: hidden; }
+.oe-freebar__fill { height: 3px; border-radius: 999px; background: var(--oe-olive); }
+
+.oe-totals { padding: 20px 24px 0; display: grid; gap: 10px; font-size: 14.5px; color: var(--oe-mute); }
+.oe-totals > div { display: flex; justify-content: space-between; }
+.oe-totals b { color: var(--oe-fg); font-weight: 400; }
+.oe-totals .is-free { color: var(--oe-olive-soft); }
+.oe-totals__grand { align-items: baseline; padding-top: 14px; margin-top: 4px; border-top: 1px solid var(--oe-line); }
+.oe-totals__grand span:first-child { font-family: Newsreader, Georgia, serif; font-size: 20px; color: var(--oe-fg); }
+.oe-totals__grand span:last-child { font-family: Newsreader, Georgia, serif; font-size: 26px; color: var(--oe-fg); }
+
+.oe-cta {
+  display: block; width: 100%;
+  padding: 16px; border-radius: 15px;
+  background: var(--oe-ember); color: var(--oe-ink);
+  text-align: center; font: inherit; font-size: 16px; font-weight: 600;
+  cursor: pointer; border: 0;
+  box-shadow: 0 22px 44px -20px rgba(224, 116, 60, 0.9);
+  transition: filter .25s ease;
+}
+.oe-cta:hover { filter: brightness(1.08); }
+.oe-cta[disabled] { background: rgba(242, 237, 227, 0.06); color: var(--oe-dim2); box-shadow: none; cursor: not-allowed; }
+.oe-panel__pay { padding: 20px 24px 24px; }
+.oe-fineprint { font-size: 11.5px; color: var(--oe-dim2); text-align: center; margin-top: 11px; line-height: 1.5; }
+
+/* ---------------- checkout screen ---------------- */
+
+.oe-checkout { padding-top: 44px; padding-bottom: 90px; }
+.oe-checkout__head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 34px; }
+.oe-back { font: inherit; font-size: 14px; color: var(--oe-dim); cursor: pointer; border: 0; background: none; padding: 0; }
+.oe-back:hover { color: var(--oe-ember); }
+.wowrestro-design .oe-h1 { font-family: Newsreader, Georgia, serif; font-weight: 400; font-size: clamp(38px, 4.4vw, 56px); letter-spacing: -0.025em; margin: 12px 0 0; }
+
+.oe-sections { display: grid; gap: 18px; }
+.oe-section { border: 1px solid rgba(242, 237, 227, 0.085); border-radius: 22px; background: rgba(242, 237, 227, 0.022); padding: 26px 28px; }
+.oe-section__head { display: flex; flex-wrap: wrap; align-items: center; gap: 13px; margin-bottom: 20px; }
+.oe-section__head .oe-toggle { margin-left: auto; }
+.oe-section .oe-slots { padding: 0; }
+.oe-section .oe-fields + .oe-slots { margin-top: 22px; }
+.oe-section__num {
+  width: 27px; height: 27px; border-radius: 50%;
+  border: 1px solid rgba(224, 116, 60, 0.45); background: rgba(224, 116, 60, 0.1);
+  color: var(--oe-ember-soft); font-size: 13px; font-weight: 600;
+  display: flex; align-items: center; justify-content: center; flex: none;
+}
+.oe-section__title { font-family: Newsreader, Georgia, serif; font-size: 24px; font-weight: 500; letter-spacing: -0.02em; }
+
+.oe-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.oe-field--wide { grid-column: span 2; }
+.oe-field label { display: block; font-size: 11.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--oe-dim); margin-bottom: 8px; }
+.wowrestro-design .oe-field input, .wowrestro-design .oe-field textarea {
+  width: 100%; height: 48px;
+  border: 1px solid var(--oe-line); border-radius: 13px;
+  padding: 0 15px; font-size: 15px; color: var(--oe-fg);
+  background: rgba(242, 237, 227, 0.035);
+  transition: border-color .3s ease;
+}
+.wowrestro-design .oe-field textarea { height: auto; padding: 13px 15px; resize: vertical; }
+.oe-field.is-missing :is(input, select) { border-color: rgba(224, 116, 60, 0.7); }
+.oe-field__msg { font-size: 12.5px; line-height: 1.45; color: var(--t-danger, var(--oe-ember-soft)); margin-top: 7px; }
+.oe-field__msg:empty { display: none; }
+
+/* a scheduled order: day and time side by side */
+.oe-when { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 12px; }
+.oe-when .oe-field label { margin-bottom: 6px; }
+
+.oe-pays { display: grid; gap: 10px; }
+.oe-pay {
+  display: flex; align-items: center; gap: 14px;
+  padding: 16px 18px; border-radius: 15px; cursor: pointer;
+  border: 1px solid var(--oe-line); background: rgba(242, 237, 227, 0.028);
+  color: var(--oe-fg); font: inherit; text-align: left;
+  transition: all .3s ease;
+}
+.oe-pay.is-on { border-color: rgba(224, 116, 60, 0.55); background: rgba(224, 116, 60, 0.09); }
+.oe-pay__mark { width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid rgba(242, 237, 227, 0.26); flex: none; display: block; }
+.oe-pay.is-on .oe-pay__mark { border-color: var(--oe-ember); background: var(--oe-ember); box-shadow: 0 0 12px rgba(224, 116, 60, 0.8); }
+.oe-pay__name { font-size: 15.5px; font-weight: 600; letter-spacing: -0.01em; }
+.oe-pay__desc { font-size: 13.5px; color: #968C7D; margin-top: 3px; }
+
+.oe-coupon { padding: 16px 24px 0; }
+.oe-coupon__row { display: flex; gap: 8px; }
+.oe-coupon input {
+  flex: 1; min-width: 0; height: 44px;
+  border: 1px solid var(--oe-line); border-radius: 12px;
+  padding: 0 14px; font-size: 14.5px; color: var(--oe-fg);
+  background: rgba(242, 237, 227, 0.035);
+}
+.oe-coupon button {
+  padding: 0 18px; height: 44px;
+  border-radius: 12px; border: 1px solid rgba(242, 237, 227, 0.14);
+  font: inherit; font-size: 14px; color: #C3B7A5; cursor: pointer;
+  background: none; white-space: nowrap; transition: all .25s ease;
+}
+.oe-coupon button:hover { border-color: rgba(224, 116, 60, 0.6); color: var(--oe-ember-soft); }
+.oe-coupon__msg { font-size: 12.5px; margin-top: 9px; line-height: 1.5; }
+.oe-coupon__msg.is-ok { color: var(--oe-olive-soft); }
+.oe-coupon__msg.is-bad { color: var(--oe-ember-soft); }
+
+/* ---------------- order received ---------------- */
+
+.oe-done { max-width: 1080px; padding-top: 60px; padding-bottom: 90px; animation: oe-rise .35s ease-out; }  /* once, on arrival */
+.oe-done__tick {
+  width: 62px; height: 62px; border-radius: 50%; margin: 0 auto 24px;
+  background: rgba(147, 164, 92, 0.12); border: 1px solid rgba(147, 164, 92, 0.4);
+  color: var(--oe-olive-soft); font-size: 26px;
+  display: flex; align-items: center; justify-content: center;
+}
+.oe-done__kicker { font-size: 11.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--oe-dim); }
+.wowrestro-design .oe-done__title { font-family: Newsreader, Georgia, serif; font-weight: 400; font-size: clamp(40px, 5vw, 66px); letter-spacing: -0.025em; line-height: 1.04; margin: 16px 0 0; }
+.oe-done__title em { font-style: italic; color: var(--oe-ember); }
+.oe-done__lede { font-size: 17px; line-height: 1.6; color: var(--oe-mute); margin: 18px auto 0; max-width: 52ch; }
+
+.oe-meta { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; margin-top: 44px; border: 1px solid var(--oe-line); border-radius: 20px; overflow: hidden; background: rgba(242, 237, 227, 0.09); }
+.oe-meta__cell { background: #100E0B; padding: 22px 24px; }
+.oe-meta__label { font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--oe-dim); }
+.oe-meta__value { font-family: Newsreader, Georgia, serif; font-size: 22px; margin-top: 9px; letter-spacing: -0.01em; }
+
+.oe-tracker { margin-top: 18px; border: 1px solid var(--oe-line); border-radius: 22px; background: var(--oe-panel); padding: 28px 30px; }
+.oe-tracker__head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 14px; margin-bottom: 26px; }
+.oe-tracker__title { font-family: Newsreader, Georgia, serif; font-size: 24px; font-weight: 500; letter-spacing: -0.02em; }
+.oe-tracker__eta { font-size: 14px; color: var(--oe-olive-soft); }
+.oe-tl { display: flex; gap: 18px; }
+.oe-tl__rail { display: flex; flex-direction: column; align-items: center; flex: none; }
+.oe-tl__dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid rgba(242, 237, 227, 0.18); display: block; flex: none; margin-top: 3px; }
+.oe-tl.is-done .oe-tl__dot { border-color: var(--oe-ember); background: var(--oe-ember); }
+.oe-tl.is-now .oe-tl__dot { border-color: var(--oe-ember); background: var(--oe-ember); box-shadow: 0 0 14px rgba(224, 116, 60, 0.85); }
+.oe-tl__line { width: 2px; flex: 1; background: rgba(242, 237, 227, 0.12); display: block; }
+.oe-tl.is-done .oe-tl__line { background: var(--oe-ember); }
+.oe-tl__title { font-size: 16px; font-weight: 600; color: var(--oe-dim2); letter-spacing: -0.01em; }
+.oe-tl.is-done .oe-tl__title, .oe-tl.is-now .oe-tl__title { color: var(--oe-fg); }
+.oe-tl__body { font-size: 13.5px; color: var(--oe-dim2); margin-top: 4px; line-height: 1.55; }
+
+.oe-done__cols { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: 18px; margin-top: 18px; align-items: start; }
+.oe-recap { border: 1px solid var(--oe-line); border-radius: 22px; background: rgba(242, 237, 227, 0.022); overflow: hidden; }
+.oe-recap__head { padding: 24px 28px 18px; border-bottom: 1px solid rgba(242, 237, 227, 0.075); font-family: Newsreader, Georgia, serif; font-size: 24px; font-weight: 500; letter-spacing: -0.02em; }
+.oe-recap__lines { padding: 6px 28px 0; }
+.oe-recap__line { display: flex; gap: 16px; align-items: center; padding: 17px 0; border-bottom: 1px solid var(--oe-line-soft); }
+.oe-recap__img { width: 58px; height: 58px; border-radius: 14px; flex: none; background: rgba(242, 237, 227, 0.05) center/cover no-repeat; box-shadow: inset 0 0 0 1px rgba(242, 237, 227, 0.1); }
+.oe-recap__name { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; }
+.oe-recap__sub { font-size: 13px; color: var(--oe-dim2); margin-top: 4px; line-height: 1.5; }
+.oe-recap__price { font-family: Newsreader, Georgia, serif; font-size: 19px; white-space: nowrap; }
+.oe-recap__rows { padding: 18px 28px 26px; display: grid; gap: 10px; font-size: 14.5px; color: var(--oe-mute); }
+.oe-recap__rows > div { display: flex; justify-content: space-between; gap: 16px; }
+.oe-recap__rows b { color: var(--oe-fg); font-weight: 400; }
+
+.oe-side { display: grid; gap: 18px; }
+.oe-addr { border: 1px solid var(--oe-line); border-radius: 22px; background: rgba(242, 237, 227, 0.022); padding: 24px 26px; }
+.oe-addr__label { font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--oe-dim); margin-bottom: 14px; }
+.oe-addr__name { font-size: 15.5px; line-height: 1.7; color: var(--oe-fg); }
+.oe-addr__lines { font-size: 14.5px; line-height: 1.7; color: #968C7D; }
+.oe-help { border: 1px solid rgba(224, 116, 60, 0.28); border-radius: 22px; background: rgba(224, 116, 60, 0.06); padding: 24px 26px; }
+.oe-help__title { font-family: Newsreader, Georgia, serif; font-size: 21px; font-weight: 500; letter-spacing: -0.02em; }
+.oe-help__body { font-size: 14.5px; line-height: 1.6; color: #C3B7A5; margin-top: 10px; }
+.oe-help__body b { color: var(--oe-fg); font-weight: 400; }
+.oe-again { margin-top: 18px; width: 100%; padding: 13px; border-radius: 13px; background: var(--oe-fg); color: var(--oe-ink); font: inherit; font-size: 15px; font-weight: 600; cursor: pointer; border: 0; transition: background .25s ease; }
+.oe-again:hover { background: var(--oe-ember); }
+
+/* ---------------- order bar ----------------
+   Fixed to the foot of the screen once the order has items. Drawer and sheet
+   templates open their order with it; side-panel templates show it only where
+   the panel drops below the menu. */
+
+.wowrestro-design .oe-cartbar {
+  position: fixed; z-index: 100; left: 0; right: 0; bottom: 0;
+  display: flex; justify-content: center;
+  padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+  pointer-events: none;
+}
+.wowrestro-design .oe-cartbar:empty,
+.wowrestro-design .wowrestro-menu.is-cart-open .oe-cartbar { display: none; }
+.wowrestro-design .oe-cartbar__btn {
+  pointer-events: auto;
+  display: flex; align-items: center; gap: 14px;
+  width: min(100%, 560px); min-height: 58px; padding: 10px 18px 10px 12px;
+  border: 0; border-radius: var(--t-btn-radius, 999px);
+  background: var(--t-accent, var(--oe-ember)); color: var(--t-on-accent, #fff);
+  font: inherit; font-size: 16px; font-weight: 600;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, .28);
+  cursor: pointer;
+}
+.wowrestro-design .oe-cartbar__count {
+  display: grid; place-items: center;
+  min-width: 34px; height: 34px; padding: 0 8px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--t-on-accent, #fff) 18%, transparent);
+  font-size: 14px;
+}
+.wowrestro-design .oe-cartbar__label { flex: 1; text-align: left; }
+.wowrestro-design .oe-cartbar__total { font-variant-numeric: tabular-nums; }
+/* room under the page while the bar shows, so the theme's footer can scroll clear of it */
+body.wowrestro-design:has(.oe-cartbar__btn) { padding-bottom: calc(82px + env(safe-area-inset-bottom)); }
+@media (min-width: 1121px) {
+  .wowrestro-design .wowrestro-menu:not([data-cart="drawer"]):not([data-cart="sheet"]) .oe-cartbar { display: none; }
+  body.wowrestro-design:has(.wowrestro-menu:not([data-cart="drawer"]):not([data-cart="sheet"]) .oe-cartbar__btn) { padding-bottom: 0; }
+}
+
+/* ---------------- item modal ---------------- */
+
+.oe-modal { position: fixed; inset: 0; z-index: 130; background: rgba(6, 5, 4, 0.76); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; padding: 24px; }
+.oe-modal__scrim { position: absolute; inset: 0; }
+/* The dialog used to scroll as one block, so the Add button fell below the
+   fold on long option lists. Cap it, scroll only the options, pin the footer. */
+.oe-modal__box {
+  position: relative; width: 480px; max-width: 100%;
+  max-height: min(88vh, 780px);
+  display: flex; flex-direction: column; overflow: hidden;
+  border-radius: 26px; border: 1px solid rgba(242, 237, 227, 0.13);
+  background: linear-gradient(180deg, #17140F, #0E0C0A);
+  animation: oe-rise .3s cubic-bezier(.2, .8, .2, 1);
+  box-shadow: 0 70px 120px -50px rgba(0, 0, 0, 1);
+}
+.oe-modal__hero { height: 190px; flex: none; background: rgba(242, 237, 227, 0.05) center/cover no-repeat; position: relative; }
+.oe-modal__hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(185deg, rgba(14, 12, 10, 0.1), rgba(14, 12, 10, 0.95)); }
+.oe-modal__close {
+  position: absolute; top: 16px; right: 16px; z-index: 2;
+  width: 32px; height: 32px; border-radius: 50%;
+  background: rgba(11, 10, 8, 0.7); backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 19px; line-height: 1; cursor: pointer; color: var(--oe-fg); border: 0;
+}
+.oe-modal__cap { position: absolute; left: 26px; right: 26px; bottom: 20px; z-index: 2; }
+.oe-modal__name { font-family: Newsreader, Georgia, serif; font-size: 28px; font-weight: 500; letter-spacing: -0.02em; }
+.oe-modal__desc { font-size: 14px; color: var(--oe-mute); margin-top: 6px; line-height: 1.5; }
+.oe-modal__body {
+  padding: 24px 26px 0;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.oe-modal__body::-webkit-scrollbar { width: 6px; }
+.oe-modal__body::-webkit-scrollbar-thumb { background: rgba(242, 237, 227, 0.14); border-radius: 6px; }
+.oe-group { margin-bottom: 24px; }
+.oe-group__head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 11px; }
+.oe-group__name { font-size: 15px; font-weight: 600; }
+.oe-group__hint { font-size: 11.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--oe-dim2); }
+.oe-opt {
+  display: flex; align-items: center; gap: 13px;
+  padding: 13px 15px; border-radius: 14px; cursor: pointer; width: 100%;
+  border: 1px solid var(--oe-line); background: rgba(242, 237, 227, 0.028);
+  color: var(--oe-fg); font: inherit; text-align: left;
+  transition: all .28s ease;
+}
+.oe-opt + .oe-opt { margin-top: 9px; }
+.oe-opt.is-on { border-color: rgba(224, 116, 60, 0.55); background: rgba(224, 116, 60, 0.1); }
+.oe-opt__mark { width: 17px; height: 17px; border: 1.5px solid rgba(242, 237, 227, 0.26); flex: none; display: block; }
+.oe-opt.is-on .oe-opt__mark { border-color: var(--oe-ember); background: var(--oe-ember); box-shadow: 0 0 12px rgba(224, 116, 60, 0.8); }
+.oe-opt__name { font-size: 15px; flex: 1; }
+.oe-opt__price { font-size: 13.5px; color: #968C7D; }
+/* Sticky so quantity and Add stay reachable however long the option list is. */
+.oe-modal__foot {
+  display: flex; align-items: center; gap: 13px;
+  position: sticky; bottom: 0;
+  margin: 4px -26px 0;
+  padding: 16px 26px 22px;
+  background: linear-gradient(180deg, rgba(14, 12, 10, 0) 0%, #0E0C0A 26%);
+}
+.oe-step--lg button { padding: 12px 17px; font-size: 17px; color: #C3B7A5; }
+.oe-step--lg { border-color: rgba(242, 237, 227, 0.14); background: none; flex: none; }
+.oe-modal__add {
+  flex: 1; padding: 16px; border-radius: 999px;
+  background: var(--oe-ember); color: var(--oe-ink);
+  text-align: center; font: inherit; font-size: 15.5px; font-weight: 600;
+  cursor: pointer; border: 0;
+  box-shadow: 0 20px 40px -18px rgba(224, 116, 60, 0.9);
+  transition: filter .25s ease;
+}
+.oe-modal__add:hover { filter: brightness(1.08); }
+
+.oe-error { border-radius: 13px; border: 1px solid rgba(224, 116, 60, 0.45); background: rgba(224, 116, 60, 0.09); color: var(--oe-ember-soft); font-size: 13.5px; line-height: 1.5; padding: 12px 14px; margin-bottom: 14px; }
+
+/* ---------------- responsive ---------------- */
+
+@media (max-width: 1120px) {
+  .oe-two, .oe-hero, .oe-done__cols { grid-template-columns: minmax(0, 1fr); }
+  .oe-panel { position: static; max-height: none; display: block; }
+  .oe-panel .oe-panel__scroll { overflow: visible; max-height: none; }
+  .oe-heroart { height: 260px; }
+}
+@media (max-width: 760px) {
+  .oe-grid { grid-template-columns: minmax(0, 1fr); }
+  .oe-meta { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .oe-shell { padding-left: 18px; padding-right: 18px; }
+  .oe-fields { grid-template-columns: minmax(0, 1fr); }
+  .oe-field--wide { grid-column: auto; }
+  .oe-section { padding: 20px; }
+  /* under the section title, delivery or pickup spans the card */
+  .oe-section__head .oe-toggle { margin-left: 0; width: 100%; }
+  .oe-section__head .oe-toggle button { flex: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wowrestro-design * { animation: none !important; transition: none !important; }
+}
+
+.wowrestro-design .oe-slots__promise { font-size: 12.5px; color: var(--oe-olive-soft); margin-top: 10px; }
+.wowrestro-design .oe-checkbox { display: flex; align-items: center; gap: 10px; margin-top: 16px; font-size: 14px; color: var(--oe-mute); cursor: pointer; }
+.wowrestro-design .oe-checkbox input { width: 16px; height: 16px; accent-color: var(--oe-ember); }
+
+@media (max-width: 620px) {
+  .wowrestro-design .oe-hero { padding-top: 32px; }
+}
+
+/* hero caption stays readable over any photo */
+.wowrestro-design .oe-heroart::after { background: linear-gradient(190deg, rgba(11, 10, 8, 0) 12%, rgba(11, 10, 8, 0.92)); }
+.wowrestro-design .oe-heroart__cap { text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8); }
+
+/* the hero eyebrow sits on photography, so it needs the light tone, not the dim one */
+.wowrestro-design .oe-heroart__cap .oe-eyebrow { color: #C3B7A5; }
+
+/* the select must sit on exactly the same grid as the text inputs:
+   same height, radius, padding and type - plus our own chevron */
+.wowrestro-design .oe-field select {
+  width: 100%;
+  height: 48px;
+  border: 1px solid var(--oe-line);
+  border-radius: 13px;
+  padding: 0 40px 0 15px;
+  font: inherit;
+  font-size: 15px;
+  line-height: 46px;
+  color: var(--oe-fg);
+  background-color: rgba(242, 237, 227, 0.035);
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='none' stroke='%23A79C8C' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round' d='M1 1.5 6 6.5 11 1.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  transition: border-color .3s ease;
+}
+.wowrestro-design .oe-field select:focus { border-color: rgba(224, 116, 60, 0.55); outline: none; }
+.wowrestro-design .oe-field select:invalid,
+.wowrestro-design .oe-field select option[value=""] { color: var(--oe-dim2); }
+/* a light list in every browser: Windows draws options with these colours, and template 1's
+   dark --oe-fg on #16130F was unreadable. Skinned templates set their own in wowrestro-templates.css. */
+.wowrestro-design .oe-field select option { background: #fff; color: #171713; }
+
+/* ---------- pending states: the tap must be answered immediately ---------- */
+
+@keyframes oe-spin { to { transform: rotate(360deg); } }
+
+.wowrestro-design .oe-spin {
+  width: 13px; height: 13px;
+  margin-right: 8px;
+  border-radius: 50%;
+  border: 2px solid rgba(23, 17, 12, 0.25);
+  border-top-color: var(--oe-ink);
+  display: inline-block;
+  vertical-align: -2px;
+  animation: oe-spin .7s linear infinite;
+}
+.wowrestro-design .oe-add.is-busy {
+  display: inline-flex;
+  align-items: center;
+  cursor: progress;
+  opacity: .85;
+}
+.wowrestro-design .oe-step.is-busy { opacity: .5; pointer-events: none; }
+.wowrestro-design .oe-line.is-busy { opacity: .45; pointer-events: none; transition: opacity .15s ease; }
+
+/* the whole card reads as "working" without moving anything */
+.wowrestro-design .oe-add.is-busy,
+.wowrestro-design .oe-step.is-busy { transition: opacity .15s ease; }
+
+@media (prefers-reduced-motion: reduce) {
+  .wowrestro-design .oe-spin { animation-duration: 2s; }
+}
+
+.wowrestro-design .oe-slots__hint { font-size: 13px; color: var(--oe-dim); line-height: 1.5; }
+
+/* the gateway title and its description are separate lines, not one run of text */
+.wowrestro-design .oe-pay__name,
+.wowrestro-design .oe-pay__desc { display: block; }
+
+/* a keyboard focus ring must not look like a chosen slot */
+.wowrestro-design .oe-slots__list button:focus { outline: none; }
+.wowrestro-design .oe-slots__list button:focus-visible,
+.wowrestro-design .oe-toggle button:focus-visible,
+.wowrestro-design .oe-pay:focus-visible,
+.wowrestro-design .oe-cta:focus-visible,
+.wowrestro-design .oe-add:focus-visible {
+  outline: 2px solid var(--oe-ember-soft);
+  outline-offset: 2px;
+}
+
+/* ---------------- WordPress admin bar ----------------
+   The admin bar is fixed at the top for logged-in users, so anything sticking
+   to top:0 hides behind it. WordPress uses 32px above 782px wide, 46px below,
+   and stops pinning it under 600px. The order panel only sticks above 1120px;
+   below that it flows with the page and must not be capped. */
+@media (min-width: 1121px) {
+  body.admin-bar.wowrestro-design .oe-panel { top: 56px; max-height: calc(100vh - 80px); }   /* 24 + admin bar */
+}
+body.admin-bar.wowrestro-design .oe-modal { padding-top: 56px; }
+body.admin-bar.wowrestro-design .wowrestro-menu { scroll-margin-top: 32px; }
+
+@media (max-width: 782px) {
+  body.admin-bar.wowrestro-design .wowrestro-menu { scroll-margin-top: 46px; }
+}
+@media (max-width: 600px) {
+  /* the admin bar scrolls away at this width, so nothing needs an offset */
+  .wowrestro-design .oe-panel .oe-panel__scroll { overflow: visible; }
+  body.admin-bar.wowrestro-design .oe-modal { padding-top: 24px; }
+  body.admin-bar.wowrestro-design .wowrestro-menu { scroll-margin-top: 0; }
+}
+
+/* ---------- empty order illustration ---------- */
+
+.wowrestro-design .oe-empty__art {
+  width: 92px; height: 92px;
+  margin: 0 auto 18px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: radial-gradient(circle at 50% 35%, rgba(224, 116, 60, 0.16), rgba(224, 116, 60, 0.03) 70%);
+  border: 1px solid rgba(224, 116, 60, 0.22);
+}
+.wowrestro-design .oe-empty__art svg { width: 46px; height: 46px; display: block; }
+.wowrestro-design .oe-art-bag {
+  fill: rgba(224, 116, 60, 0.1);
+  stroke: var(--oe-ember);
+  stroke-width: 2.2;
+  stroke-linejoin: round;
+}
+.wowrestro-design .oe-art-line {
+  stroke: var(--oe-ember-soft);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+}
+.wowrestro-design .oe-art-steam {
+  stroke: rgba(242, 237, 227, 0.45);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+.wowrestro-design .oe-panel__empty .oe-empty__title {
+  font-family: Newsreader, Georgia, serif;
+  font-size: 19px;
+  color: var(--oe-fg);
+  margin-bottom: 7px;
+  letter-spacing: -0.01em;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .wowrestro-design .oe-art-steam { animation: oe-steam 3.2s ease-in-out infinite; transform-origin: center; }
+  .wowrestro-design .oe-art-steam:last-of-type { animation-delay: .5s; }
+}
+@keyframes oe-steam {
+  0%, 100% { opacity: .25; transform: translateY(1px); }
+  50%      { opacity: .8;  transform: translateY(-1.5px); }
+}

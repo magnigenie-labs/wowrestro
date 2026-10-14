@@ -244,8 +244,11 @@ final class WowRestro_Legacy_Migration {
 			}
 		}
 		unset( $settings['_schedule_key'] );
+		// In admin requests (Retry migration, the background runner on admin-ajax) the settings
+		// sanitizer reshapes the value on save, so check for what it stores.
+		$expected = sanitize_option( 'wowrestro_settings', $settings );
 		update_option( 'wowrestro_settings', $settings, false );
-		if ( ! self::option_value_matches( 'wowrestro_settings', $settings ) ) {
+		if ( ! self::option_value_matches( 'wowrestro_settings', $expected ) ) {
 			return self::block_state( $state, __( 'WowRestro settings could not be saved during migration.', 'wowrestro' ) );
 		}
 		return true;

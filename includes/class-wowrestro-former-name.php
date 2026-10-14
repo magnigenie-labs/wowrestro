@@ -43,6 +43,13 @@ final class WowRestro_Former_Name {
 		// WooRestro working so a site does not silently stop sending push notifications.
 		add_filter( 'wowrestro_firebase_service_account', array( __CLASS__, 'old_service_account' ) );
 		add_filter( 'wowrestro_firebase_service_account_path', array( __CLASS__, 'old_service_account_path' ) );
+		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'drop_old_design' ), 100 );
+	}
+
+	/** The WooRestro 0.3 demo's design files, if a site still enqueues them, must not load on top of this one. */
+	public static function drop_old_design() {
+		wp_dequeue_script( 'woorestro-design' );
+		wp_dequeue_style( 'woorestro-design' );
 	}
 
 	/**

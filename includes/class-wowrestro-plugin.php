@@ -32,6 +32,7 @@ require_once WOWRESTRO_PATH . 'includes/class-wowrestro-reservations.php';
 require_once WOWRESTRO_PATH . 'includes/class-wowrestro-dining.php';
 require_once WOWRESTRO_PATH . 'includes/class-wowrestro-analytics.php';
 require_once WOWRESTRO_PATH . 'includes/class-wowrestro-former-name.php';
+require_once WOWRESTRO_PATH . 'includes/class-wowrestro-stores.php';
 
 final class WowRestro_Plugin {
 	/** @var WowRestro_Plugin|null */
@@ -78,6 +79,7 @@ final class WowRestro_Plugin {
 		WowRestro_Dining::init();
 		WowRestro_Analytics::init();
 		WowRestro_Former_Name::init();
+		WowRestro_Stores::init();
 
 		add_action( 'admin_init', array( $this, 'add_privacy_policy' ) );
 	}

@@ -3,7 +3,7 @@
  * Plugin Name:       WowRestro
  * Plugin URI:        https://woorestro.com/
  * Description:       Restaurant ordering and fulfillment operations for WooCommerce.
- * Version:           2.0
+ * Version:           2.0.7
  * Requires at least: 6.2
  * Requires PHP:      7.4
  * Requires Plugins:  woocommerce
@@ -21,7 +21,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'WOWRESTRO_VERSION', '2.0' );
+define( 'WOWRESTRO_VERSION', '2.0.7' );
 define( 'WOWRESTRO_FILE', __FILE__ );
 define( 'WOWRESTRO_PATH', plugin_dir_path( __FILE__ ) );
 define( 'WOWRESTRO_URL', plugin_dir_url( __FILE__ ) );
@@ -51,7 +51,7 @@ function wowrestro_activate() {
 		}
 	}
 	$previous = (string) get_option( 'wowrestro_version', '' );
-	if ( $previous && version_compare( $previous, '2.0', '<' ) ) {
+	if ( $previous && version_compare( $previous, '0.3.0', '<' ) ) {
 		update_option( 'wowrestro_upgrade_from', $previous, false );
 	}
 	$defaults = WowRestro_Fulfillment::defaults();
@@ -70,10 +70,24 @@ function wowrestro_activate() {
 		update_option( 'wowrestro_data_version', WowRestro_Legacy_Migration::DATA_VERSION, false );
 		update_option( 'wowrestro_onboarding_pending', 'yes', false );
 	}
+	wowrestro_restart_stopped_migration();
 	update_option( 'wowrestro_version', WOWRESTRO_VERSION, false );
+	// Activation runs after init, so the /confirmation/ rule is added here or the flush leaves it out.
+	WowRestro_Storefront::confirmation_route();
 	flush_rewrite_rules();
 }
 register_activation_hook( __FILE__, 'wowrestro_activate' );
+
+/**
+ * Builds before 2.0.3 stopped the migration in admin requests on a settings check that could never
+ * pass. A stopped migration runs again after an upgrade and stops again only on a real problem.
+ */
+function wowrestro_restart_stopped_migration() {
+	$state = get_option( 'wowrestro_migration_state' );
+	if ( is_array( $state ) && 'blocked' === ( $state['phase'] ?? '' ) ) {
+		delete_option( 'wowrestro_migration_state' );
+	}
+}
 
 /**
  * Flush staff/tracking rewrite rules when the plugin is disabled.
@@ -121,6 +135,7 @@ function wowrestro_boot() {
 		if ( method_exists( 'WowRestro_Products', 'install_attributes' ) ) {
 			WowRestro_Products::install_attributes();
 		}
+		wowrestro_restart_stopped_migration();
 		update_option( 'wowrestro_flush_rewrite', 'yes', false );
 		update_option( 'wowrestro_version', WOWRESTRO_VERSION, false );
 	}

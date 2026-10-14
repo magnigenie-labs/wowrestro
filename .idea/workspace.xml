@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b7918692-19d9-477d-bd87-4375c4f365bf" name="Changes" comment="Rebrand plugin from WOWRestro to WooRestro.&#10;&#10;- Updated plugin name, description, and documentation references in `wowrestro.php` and `readme.txt`.&#10;- Replaced WOWRestro references with WooRestro across admin menus, product metaboxes, and setting screens.&#10;- Updated user-facing notices, settings descriptions, and plugin action links.&#10;- Refreshed translation source strings in `languages/wowrestro.pot`.&#10;- Cleaned up device streaming configurations in IDE project settings (`.idea/misc.xml`).">
+      <change beforePath="$PROJECT_DIR$/assets/css/wowrestro-design.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/wowrestro-design.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/wowrestro-templates.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/wowrestro-templates.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/images/qr-table-card-food-v1.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/assets/images/qr-table-card-food-v1.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/storefront.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/storefront.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/wowrestro-design.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/wowrestro-design.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/includes/class-wowrestro-checkout.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/class-wowrestro-checkout.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/includes/class-wowrestro-former-name.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/class-wowrestro-former-name.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/includes/class-wowrestro-legacy-migration.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/class-wowrestro-legacy-migration.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/includes/class-wowrestro-notifications.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/class-wowrestro-notifications.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/includes/class-wowrestro-plugin.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/class-wowrestro-plugin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/includes/class-wowrestro-rest-api.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/class-wowrestro-rest-api.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/includes/class-wowrestro-slot-reservations.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/class-wowrestro-slot-reservations.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/includes/class-wowrestro-storefront.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/class-wowrestro-storefront.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readme.txt" beforeDir="false" afterPath="$PROJECT_DIR$/readme.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wowrestro.php" beforeDir="false" afterPath="$PROJECT_DIR$/wowrestro.php" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Rahul9439&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/magnigenie-labs/wowrestro.git&quot;,
+    &quot;accountId&quot;: &quot;e939cf46-540e-4b7a-84a9-40984555ab7f&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5,
+  &quot;fromUser&quot;: false
+}</component>
+  <component name="ProjectId" id="3HAlb7pCegvKErLzUnumJPGxcao" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;CidrDebugProfileConversion&quot;: &quot;true&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;latest-developement&quot;,
+    &quot;git.auto.fetch.suggestion.counter&quot;: &quot;1&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/rahulmishra/Documents/plugins/wowrestro&quot;,
+    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
+  }
+}</component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b7918692-19d9-477d-bd87-4375c4f365bf" name="Changes" comment="" />
+      <created>1785318822629</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1785318822629</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Initial implementation of the WOWRestro ordering system plugin for WooCommerce.&#10;&#10;- Established core plugin architecture including main `WowRestro` class and dependency checks for WooCommerce.&#10;- Implemented comprehensive admin settings interface with tabs for general options, pickup/delivery services, styling, and notifications.&#10;- Added AJAX-based frontend ordering system featuring product modals, live cart updates, and category sidebar navigation.&#10;- Integrated pickup and delivery service logic with support for store hours, time intervals, and &quot;ASAP&quot; ordering.&#10;- Implemented support for product modifiers (add-ons) and enhanced product variation selection via radio buttons.&#10;- Added metadata markers for vegetarian and non-vegetarian items.&#10;- Included asset library for responsive design, custom iconography, and administrative styling.&#10;- Provided a templating system for customizable frontend layouts including cart contents, totals, and product summaries.&#10;- Added license management and automated update support for extensions.">
+      <option name="closed" value="true" />
+      <created>1785318895408</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1785318895408</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Rebrand plugin from WOWRestro to WooRestro.&#10;&#10;- Updated plugin name, description, and documentation references in `wowrestro.php` and `readme.txt`.&#10;- Replaced WOWRestro references with WooRestro across admin menus, product metaboxes, and setting screens.&#10;- Updated user-facing notices, settings descriptions, and plugin action links.&#10;- Refreshed translation source strings in `languages/wowrestro.pot`.&#10;- Cleaned up device streaming configurations in IDE project settings (`.idea/misc.xml`).">
+      <option name="closed" value="true" />
+      <created>1790057490540</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1790057490541</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Initial implementation of the WOWRestro ordering system plugin for WooCommerce.&#10;&#10;- Established core plugin architecture including main `WowRestro` class and dependency checks for WooCommerce.&#10;- Implemented comprehensive admin settings interface with tabs for general options, pickup/delivery services, styling, and notifications.&#10;- Added AJAX-based frontend ordering system featuring product modals, live cart updates, and category sidebar navigation.&#10;- Integrated pickup and delivery service logic with support for store hours, time intervals, and &quot;ASAP&quot; ordering.&#10;- Implemented support for product modifiers (add-ons) and enhanced product variation selection via radio buttons.&#10;- Added metadata markers for vegetarian and non-vegetarian items.&#10;- Included asset library for responsive design, custom iconography, and administrative styling.&#10;- Provided a templating system for customizable frontend layouts including cart contents, totals, and product summaries.&#10;- Added license management and automated update support for extensions." />
+    <MESSAGE value="Rebrand plugin from WOWRestro to WooRestro.&#10;&#10;- Updated plugin name, description, and documentation references in `wowrestro.php` and `readme.txt`.&#10;- Replaced WOWRestro references with WooRestro across admin menus, product metaboxes, and setting screens.&#10;- Updated user-facing notices, settings descriptions, and plugin action links.&#10;- Refreshed translation source strings in `languages/wowrestro.pot`.&#10;- Cleaned up device streaming configurations in IDE project settings (`.idea/misc.xml`)." />
+    <option name="LAST_COMMIT_MESSAGE" value="Rebrand plugin from WOWRestro to WooRestro.&#10;&#10;- Updated plugin name, description, and documentation references in `wowrestro.php` and `readme.txt`.&#10;- Replaced WOWRestro references with WooRestro across admin menus, product metaboxes, and setting screens.&#10;- Updated user-facing notices, settings descriptions, and plugin action links.&#10;- Refreshed translation source strings in `languages/wowrestro.pot`.&#10;- Cleaned up device streaming configurations in IDE project settings (`.idea/misc.xml`)." />
+  </component>
+</project>

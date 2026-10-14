@@ -1,6 +1,7 @@
 /* Olive & Ember order flow - cloned from the design and driven by real
  * WooCommerce data through the Store API:
- *   menu → cart → checkout → order received, all on one page.
+ *   menu → cart on the menu page, then checkout on WooCommerce's checkout page,
+ *   then WooCommerce's order-received page, which WowRestro renders server-side.
  *
  * Every value shown (products, images, categories, prices, currency, gateways,
  * coupons, tax, free-delivery threshold, order status) comes from WooCommerce.
@@ -17,6 +18,8 @@
   // it), and a drawer or sheet cart slides in instead of sitting beside the menu.
   var GROUPED = root.dataset.group === '1';
   var DRAWER = !!root.dataset.cart && root.dataset.cart !== 'side';
+  // WooCommerce's checkout page prints an empty root for the checkout half of the flow.
+  var CHECKOUT = root.dataset.screen === 'checkout';
 
   var nonce = CFG.nonce || '';
   var cart = null;
@@ -27,10 +30,10 @@
   var TODAY = CFG.today || new Date().toISOString().slice(0, 10);   // the store's date
 
   var S = {
-    screen: 'menu',
+    screen: CHECKOUT ? 'checkout' : 'menu',
     cat: 'all',
     query: '',
-    service: 'delivery',
+    service: CFG.mode || 'delivery',   // the choice already made on the menu, kept in the WooCommerce session
     slot: '',                 // '' = as soon as possible; otherwise a slot value from the plugin
     schedule: false,          // the customer picks a day and time instead
     day: '',                  // store-local day the time list shows
@@ -53,8 +56,7 @@
     busy: false, error: '',
     pendingAdd: null,      // product id being added
     pendingLine: null,     // cart line key being changed
-    cartOpen: false,       // drawer/sheet cart templates
-    order: null
+    cartOpen: false        // drawer/sheet cart templates
   };
 
   /* ---------------- helpers ---------------- */
@@ -157,8 +159,14 @@
   var quoteSeq = 0;
   // Keep the server's fee logic in step with the mode the customer picked.
   // WowRestro's Store API update callback stores it and answers with the cart.
+  // The menu page also sends itself, so the checkout and the receipt link back to it and wear its template.
+  function syncData() {
+    var data = { mode: S.service, postcode: S.fields.pin.trim(), requested_at: S.slot || '' };
+    if (!CHECKOUT) { data.menu_url = window.location.href; data.template = root.dataset.template || ''; }
+    return { namespace: 'wowrestro', data: data };
+  }
   function syncMode() {
-    return api('cart/extensions', 'POST', { namespace: 'wowrestro', data: { mode: S.service, postcode: S.fields.pin.trim(), requested_at: S.slot || '' } })
+    return api('cart/extensions', 'POST', syncData())
       .then(function (d) { cart = d; render(); })
       .catch(function () {});
   }
@@ -332,9 +340,6 @@
     if (root.hasAttribute(a)) modalRoot.setAttribute(a, root.getAttribute(a));
   });
   document.body.appendChild(modalRoot);
-
-  // Screen changes start at the top of the order flow, not the top of the page.
-  function toTop() { root.scrollIntoView(); }
 
   // Rebuilding a region drops focus; put it back on the control with the same id.
   function keepFocus(region, build) {
@@ -596,9 +601,10 @@
   }
 
   function heroHtml() {
+    var title = (CFG.hero || 'Order direct|from our kitchen').split('|');
     return '<div>' +
         '<div class="oe-badge"><i></i>' + esc(CFG.storeName) + '</div>' +
-        '<h2 class="oe-hero__title">Order direct<br><em>from our kitchen</em></h2>' +
+        '<h2 class="oe-hero__title">' + esc(title[0]) + (title[1] ? '<br><em>' + esc(title[1]) + '</em>' : '') + '</h2>' +
         (CFG.tagline ? '<p class="oe-hero__lede">' + esc(CFG.tagline) + '</p>' : '') +
         '<div class="oe-hero__row">' +
           serviceToggle() +
@@ -616,7 +622,7 @@
   function listHtml() {
     var list = visibleProducts();
     var q = S.query.trim();
-    var title = q ? 'Search results' : (S.cat === 'all' ? 'Everything we make' : (catName(S.cat) || 'Menu'));
+    var title = q ? 'Search results' : (S.cat === 'all' ? (CFG.heading || 'Everything we make') : (catName(S.cat) || 'Menu'));
     return '<div class="oe-listhead">' +
         '<div><div class="oe-eyebrow">The menu</div><h2>' + esc(title) + '</h2></div>' +
         '<input type="text" class="oe-search" id="oe-search" placeholder="Search the menu" value="' + esc(S.query) + '">' +
@@ -636,7 +642,7 @@
         : '<div class="oe-empty"><div class="oe-empty__title">Nothing on the menu matches that.</div>' +
           '<button type="button" data-clear>Show the full menu</button></div>') +
       '<div class="oe-note">' +
-        '<div>Allergen and dietary information is available on request - ask the kitchen before ordering.</div>' +
+        '<div>' + esc(CFG.note || 'Allergen and dietary information is available on request - ask the kitchen before ordering.') + '</div>' +
         '<span class="oe-note__by">Powered by WowRestro</span>' +
       '</div>';
   }
@@ -986,11 +992,12 @@
   // The button stays pressable while details are missing: pressing it points at them.
   function placeLabel() {
     return S.busy ? 'Placing…'
+      : (!cart ? 'Loading your order…'
       : (!cartCount() ? 'Your order is empty'
       : (belowMinimum() ? 'Minimum ' + money(minimumMinor()) + ' for delivery'
       : (S.schedule && !S.slot ? 'Choose a time'
       : (quoteBlocked() ? (S.slot ? 'Pick another time' : (isDelivery() ? 'Not available for that address' : 'Not available right now'))
-      : 'Place order · ' + money(payableMinor())))));
+      : 'Place order · ' + money(payableMinor()))))));
   }
 
   var checkoutSig = '';
@@ -1013,7 +1020,7 @@
       '<div class="oe-shell oe-checkout">' +
         '<div class="oe-checkout__head">' +
           '<div>' +
-            '<button type="button" class="oe-back" data-go="menu">← Back to the menu</button>' +
+            '<a class="oe-back" href="' + esc(CFG.menuUrl || '/') + '">← Back to the menu</a>' +
             '<h2 class="oe-h1">Checkout</h2>' +
           '</div>' +
         '</div>' +
@@ -1057,7 +1064,9 @@
 
           '<aside class="oe-panel">' +
             '<div class="oe-panel__head"><span class="oe-panel__title">Order summary</span></div>' +
-            '<div class="oe-lines">' + cartLines() + '</div>' +
+            (!cart || cartCount() ? '<div class="oe-lines">' + cartLines() + '</div>'
+              : '<div class="oe-panel__empty"><div class="oe-empty__title">Your order is empty</div>' +
+                '<a href="' + esc(CFG.menuUrl || '/') + '">Pick something from the menu</a></div>') +
             '<div class="oe-coupon">' +
               '<div class="oe-coupon__row">' +
                 '<input type="text" id="oe-coupon" data-coupon placeholder="Coupon code" aria-label="Coupon code" value="' + esc(S.coupon) + '">' +
@@ -1086,114 +1095,35 @@
     }
   }
 
-  /* ---------------- order received ---------------- */
-
-  // The plugin's own order statuses, in the order it transitions them.
-  var STAGES = [
-    { keys: ['wr-new', 'pending', 'processing', 'on-hold'], title: 'Order received', now: 'Sent to the kitchen just now.', done: 'Confirmed.', wait: 'Waiting to be sent.' },
-    { keys: ['wr-accepted'], title: 'Accepted', now: 'The kitchen accepted your order.', done: 'Accepted.', wait: 'Waiting on the kitchen.' },
-    { keys: ['wr-preparing'], title: 'Preparing', now: 'Your food is being cooked now.', done: 'Cooked.', wait: 'Not started yet.' },
-    { keys: ['wr-ready'], title: 'Ready', pickupTitle: 'Ready for collection', now: 'Ready now.', done: 'Ready.', wait: 'Not ready yet.' },
-    { keys: ['wr-out-for-delivery'], title: 'Out for delivery', pickupTitle: 'Collected', now: 'On its way to you.', done: 'Handed to the rider.', wait: 'Not dispatched yet.' },
-    { keys: ['completed'], title: 'Delivered', pickupTitle: 'Collected', now: 'Delivered - enjoy.', done: 'Delivered.', wait: 'Not delivered yet.' }
-  ];
-
-  function trackOrder() {
-    var o = S.order;
-    if (!o || !o.key) return;
-    pluginApi('tracking/' + encodeURIComponent(o.id) + '?key=' + encodeURIComponent(o.key)).then(function (t) {
-      if (!t || !t.status) return;
-      S.order.status = t.status;
-      S.order.statusLabel = t.label || '';
-      if (S.screen === 'done') render();
-    }).catch(function () {});
+  // Details typed at checkout survive a refresh of the page, until the order goes through.
+  var DRAFT = 'wowrestroCheckout';
+  function saveDraft() {
+    try { sessionStorage.setItem(DRAFT, JSON.stringify({ fields: S.fields, note: S.note })); } catch (e) {}
+  }
+  function loadDraft() {
+    try {
+      var d = JSON.parse(sessionStorage.getItem(DRAFT) || 'null');
+      if (!d || !d.fields) return false;
+      Object.keys(S.fields).forEach(function (k) { if (typeof d.fields[k] === 'string') S.fields[k] = d.fields[k]; });
+      S.note = typeof d.note === 'string' ? d.note : '';
+      return true;
+    } catch (e) { return false; }
   }
 
-  function renderDone() {
-    var o = S.order;
-    var at = 0;
-    STAGES.forEach(function (s, i) { if (s.keys.indexOf(o.status) !== -1) at = i; });
-    var f = S.fields;
-    var first = f.name.trim().split(/\s+/)[0] || 'there';
-
-    screen.innerHTML =
-      '<div class="oe-shell oe-done">' +
-        '<div style="text-align:center">' +
-          '<div class="oe-done__tick">✓</div>' +
-          '<div class="oe-done__kicker">Order #' + esc(o.id) + ' confirmed</div>' +
-          '<h2 class="oe-done__title">Thank you, ' + esc(first) + '.<br><em>The kitchen has it.</em></h2>' +
-          '<p class="oe-done__lede">' +
-            "We've sent your confirmation to " + esc(f.email.trim()) + '. ' +
-            (isDelivery()
-              ? 'Your food is on its way to ' + esc(f.address.trim() || 'your address') + '.'
-              : 'Collect from ' + esc(CFG.address || 'the kitchen') + ' when you\'re ready.') +
-          '</p>' +
-        '</div>' +
-
-        '<div class="oe-meta">' +
-          [{ label: 'Order', value: '#' + o.id },
-           { label: 'Placed', value: o.date },
-           { label: 'Total', value: o.total },
-           { label: 'Payment', value: o.payment }].map(function (m) {
-            return '<div class="oe-meta__cell"><div class="oe-meta__label">' + esc(m.label) + '</div>' +
-              '<div class="oe-meta__value">' + esc(m.value) + '</div></div>';
-          }).join('') +
-        '</div>' +
-
-        '<div class="oe-tracker">' +
-          '<div class="oe-tracker__head">' +
-            '<span class="oe-tracker__title">' + (isDelivery() ? 'Tracking your delivery' : 'Your collection') + '</span>' +
-            '<span class="oe-tracker__eta">' + esc(o.statusLabel || o.promised || '') + '</span>' +
-          '</div>' +
-          STAGES.map(function (s, i) {
-            var done = i < at, now = i === at, last = i === STAGES.length - 1;
-            var title = (!isDelivery() && s.pickupTitle) ? s.pickupTitle : s.title;
-            return '<div class="oe-tl' + (done ? ' is-done' : '') + (now ? ' is-now' : '') + '">' +
-              '<div class="oe-tl__rail"><span class="oe-tl__dot"></span>' + (last ? '' : '<span class="oe-tl__line"></span>') + '</div>' +
-              '<div style="padding-bottom:' + (last ? '0' : '22px') + '">' +
-                '<div class="oe-tl__title">' + esc(title) + '</div>' +
-                '<div class="oe-tl__body">' + esc(now ? s.now : (done ? s.done : s.wait)) + '</div>' +
-              '</div>' +
-            '</div>';
-          }).join('') +
-        '</div>' +
-
-        '<div class="oe-done__cols">' +
-          '<div class="oe-recap">' +
-            '<div class="oe-recap__head">Order details</div>' +
-            '<div class="oe-recap__lines">' + o.lines.map(function (l) {
-              return '<div class="oe-recap__line">' +
-                '<div class="oe-recap__img"' + bg(l.img) + '></div>' +
-                '<div style="flex:1;min-width:0">' +
-                  '<div class="oe-recap__name">' + esc(l.qty + ' × ' + l.name) + '</div>' +
-                  '<div class="oe-recap__sub">' + esc(l.sub) + '</div>' +
-                '</div>' +
-                '<div class="oe-recap__price">' + esc(l.total) + '</div>' +
-              '</div>';
-            }).join('') + '</div>' +
-            '<div class="oe-recap__rows">' +
-              o.rows.map(function (r) { return '<div><span>' + esc(r.label) + '</span><b>' + esc(r.value) + '</b></div>'; }).join('') +
-              '<div class="oe-totals__grand" style="display:flex;justify-content:space-between">' +
-                '<span style="font-family:Newsreader,Georgia,serif;font-size:20px">Total paid</span>' +
-                '<span style="font-family:Newsreader,Georgia,serif;font-size:28px">' + esc(o.total) + '</span>' +
-              '</div>' +
-            '</div>' +
-          '</div>' +
-          '<div class="oe-side">' +
-            '<div class="oe-addr">' +
-              '<div class="oe-addr__label">' + (isDelivery() ? 'Delivering to' : 'Collection from') + '</div>' +
-              '<div class="oe-addr__name">' + esc(isDelivery() ? f.name : CFG.storeName) + '</div>' +
-              '<div class="oe-addr__lines">' + esc(isDelivery() ? [f.address, f.city, f.pin].filter(Boolean).join(', ') : (CFG.address || '')) + '</div>' +
-              '<div class="oe-addr__lines" style="margin-top:10px">' + esc([f.phone, f.email].filter(Boolean).join(' · ')) + '</div>' +
-            '</div>' +
-            '<div class="oe-help">' +
-              '<div class="oe-help__title">Something wrong?</div>' +
-              '<div class="oe-help__body">Contact the kitchen and quote order <b>#' + esc(o.id) + '</b>. Changes are possible until the ticket is on the pass.</div>' +
-              '<button type="button" class="oe-again" data-go="menu">Order again</button>' +
-            '</div>' +
-          '</div>' +
-        '</div>' +
-      '</div>';
+  // Otherwise start from what WooCommerce already knows: a signed-in customer's account,
+  // or the last order in this session. A pickup order's address is the store's, so skip that.
+  // Only empty fields: the cart can arrive after the customer has started typing.
+  function prefill() {
+    var b = cart.billing_address || {}, a = cart.shipping_address || {}, store = CFG.store || {};
+    var known = {
+      email: b.email,
+      name: b.first_name === b.last_name ? b.first_name : [b.first_name, b.last_name].filter(Boolean).join(' '),
+      phone: b.phone || a.phone
+    };
+    if (a.address_1 && a.address_1 !== store.address_1 && (!a.country || a.country === CFG.country)) {
+      known.address = a.address_1; known.city = a.city; known.state = a.state; known.pin = a.postcode;
+    }
+    Object.keys(known).forEach(function (k) { if (!String(S.fields[k] || '').trim() && known[k]) S.fields[k] = known[k]; });
   }
 
   /* ---------------- item modal ---------------- */
@@ -1383,12 +1313,16 @@
 
   /* ---------------- render dispatch ---------------- */
 
+  // A header cart badge outside the order flow can follow the order through this event.
+  var announced = null;
   function render() {
-    if (S.screen !== 'menu') menuNodes = null;
     if (S.screen === 'checkout') renderCheckout();
-    else if (S.screen === 'done' && S.order) renderDone();
     else renderMenu();
     renderModal();
+    if (cart && cart !== announced) {
+      announced = cart;
+      document.dispatchEvent(new CustomEvent('wowrestro:cart', { detail: { cart: cart, count: cartCount(), total: money(payableMinor()) } }));
+    }
   }
 
   /* ---------------- actions ---------------- */
@@ -1424,13 +1358,11 @@
     if (d.cartOpen !== undefined) return setCartOpen(!S.cartOpen);
     if (d.cartClose !== undefined) return setCartOpen(false);
     if (d.go) {
-      if (d.go === 'checkout' && !cartCount()) return;
-      setCartOpen(false);
-      S.screen = d.go;
-      checkoutSig = '';
-      if (d.go === 'menu') { S.order = null; S.error = ''; }
-      render();
-      return toTop();
+      // The checkout is WooCommerce's checkout page. The session gets this page's choices first.
+      if (!cartCount() || t.getAttribute('aria-busy')) return;
+      t.setAttribute('aria-busy', 'true');
+      return api('cart/extensions', 'POST', syncData()).catch(function () {})
+        .then(function () { window.location.href = CFG.checkoutUrl; });
     }
     if (d.svc) {
       if (S.service === d.svc) return;
@@ -1512,6 +1444,7 @@
       S.fields.state = t.value;
       S.seen.state = true;
       delete S.serverErrors.state;
+      saveDraft();
       return patchField('state');
     }
     if (t.dataset.optin !== undefined) { S.statusOptIn = !!t.checked; return; }
@@ -1559,6 +1492,7 @@
       delete S.serverErrors[key];
       // Typing must not rebuild the form; a message already showing follows along.
       patchField(key);
+      saveDraft();
       // Postcode drives the delivery zone, fee and minimum.
       if (key === 'pin') {
         clearTimeout(pinTimer);
@@ -1570,7 +1504,7 @@
     }
     if (t.dataset.optin !== undefined) { S.statusOptIn = !!t.checked; return; }
     if (t.dataset.coupon !== undefined) { S.coupon = t.value; return; }
-    if (t.dataset.note !== undefined) { S.note = t.value; }
+    if (t.dataset.note !== undefined) { S.note = t.value; saveDraft(); }
   });
 
   document.addEventListener('keydown', function (e) {
@@ -1595,8 +1529,6 @@
       });
   }
 
-  var trackTimer = null;
-
   function placeOrder() {
     if (S.busy || !canCheckout()) return;
     if (!detailsValid()) {
@@ -1606,9 +1538,13 @@
       return focusFirstInvalid();
     }
 
-    // Card gateways need WooCommerce's own payment fields.
+    // Card gateways need WooCommerce's own payment fields: its standard checkout form, same page.
     if (needsWooCheckout(S.payment)) {
-      syncMode().then(function () { window.location.href = CFG.checkoutUrl; });
+      S.busy = true;
+      render();
+      syncMode().then(function () {
+        window.location.href = CFG.checkoutUrl + (CFG.checkoutUrl.indexOf('?') === -1 ? '?' : '&') + 'wowrestro_gateway=' + encodeURIComponent(S.payment);
+      });
       return;
     }
 
@@ -1643,24 +1579,6 @@
       company: ''
     };
     var note = S.note.trim();
-    var chosen = payments().filter(function (p) { return p.id === S.payment; })[0];
-    var snapshot = {
-      total: money(grandMinor()),
-      lines: cart.items.map(function (i) {
-        return {
-          qty: i.quantity, name: decode(i.name),
-          img: i.images && i.images[0] ? i.images[0].thumbnail : '',
-          sub: lineOptions(i) || money(i.prices.price) + ' each',
-          total: money(i.totals.line_total)
-        };
-      }),
-      rows: [
-        { label: 'Subtotal', value: money(subtotalMinor()) },
-        { label: isDelivery() ? 'Delivery' : 'Pickup', value: shippingMinor() ? money(shippingMinor()) : 'Free' }
-      ].concat(taxMinor() ? [{ label: 'Taxes', value: money(taxMinor()) }] : [])
-       .concat(discountMinor() ? [{ label: 'Discount', value: '−' + money(discountMinor()) }] : [])
-       .concat([{ label: slotLabel(), value: (S.quote && S.quote.promised_label) || 'As soon as possible' }])
-    };
 
     api('checkout', 'POST', {
       billing_address: address,
@@ -1676,26 +1594,9 @@
       },
       extensions: {}
     }).then(function (res) {
-      S.busy = false;
-      S.order = {
-        id: res.order_id,
-        key: res.order_key || '',
-        status: res.status || 'wr-new',
-        promised: S.quote && S.quote.promised_label ? S.quote.promised_label : '',
-        payment: chosen ? chosen.title : '',
-        date: new Date().toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' }),
-        total: snapshot.total,
-        lines: snapshot.lines,
-        rows: snapshot.rows
-      };
-      S.screen = 'done';
-      toTop();
-      clearInterval(trackTimer);
-      trackTimer = setInterval(function () {
-        if (S.screen !== 'done') return clearInterval(trackTimer);
-        trackOrder();
-      }, 20000);
-      api('cart').then(function (d) { cart = d; render(); }).catch(render);
+      // WooCommerce's order-received page is the confirmation; the button stays busy until it loads.
+      try { sessionStorage.removeItem(DRAFT); } catch (e) {}
+      window.location.href = (res.payment_result && res.payment_result.redirect_url) || CFG.menuUrl || '/';
     }).catch(function (e) {
       // WooCommerce still has the last word on an address; mark the field it rejected.
       S.serverErrors = serverFieldErrors(e.data);
@@ -1714,24 +1615,44 @@
   // once so escaping for output doesn't print the entity.
   function named(x) { x.name = decode(x.name); return x; }
 
+  var hadDraft = CHECKOUT && loadDraft();
   render();
   root.dataset.oeReady = '1';   // reveals the design, hides the boot spinner
 
-  api('products?per_page=100').then(function (list) {
-    products = (list || []).filter(function (p) { return p.is_purchasable; }).map(named);
+  if (!CHECKOUT) {
+    // A menu kept to one category shows that category's dishes, and its sub-categories as the tabs.
+    var inCat = CFG.category ? '&category=' + encodeURIComponent(CFG.category) : '';
+    api('products?per_page=100' + inCat).then(function (list) {
+      products = (list || []).filter(function (p) { return p.is_purchasable; }).map(named);
+      render();
+    }).catch(function () {});
+
+    api('products/categories?per_page=100').then(function (list) {
+      list = list || [];
+      var top = CFG.category ? list.filter(function (c) { return c.slug === CFG.category; })[0] : null;
+      cats = list.filter(function (c) { return c.count > 0 && (!CFG.category || (top && c.parent === top.id)); }).map(named);
+      render();
+    }).catch(function () {});
+
+    api('products?per_page=1&orderby=popularity' + inCat).then(function (list) {
+      popular = (list || [])[0] ? named(list[0]) : null;
+      render();
+    }).catch(function () {});
+  }
+
+  api('cart').then(function (d) {
+    cart = d;
+    if (CHECKOUT && !hadDraft) prefill();
+    checkoutSig = '';
     render();
+    syncMode();
   }).catch(function () {});
 
-  api('products/categories?per_page=50').then(function (list) {
-    cats = (list || []).filter(function (c) { return c.count > 0; }).map(named);
-    render();
-  }).catch(function () {});
-
-  api('products?per_page=1&orderby=popularity').then(function (list) {
-    popular = (list || [])[0] ? named(list[0]) : null;
-    render();
-  }).catch(function () {});
-
-  api('cart').then(function (d) { cart = d; render(); syncMode(); }).catch(function () {});
-  restartTime();
+  // A time picked on the menu carries over; the day's list still has to offer it.
+  if (CFG.slot && CFG.slot.value) {
+    S.schedule = true; S.slot = CFG.slot.value; S.day = CFG.slot.day;
+    loadDay(false);
+  } else {
+    restartTime();
+  }
 })();

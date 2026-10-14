@@ -21,8 +21,8 @@
   --t-on-accent: #fff;
   --t-ok: #15803d;
   --t-danger: #b42318;
-  --t-display: Georgia, serif;
-  --t-body: system-ui, sans-serif;
+  --t-display: Poppins, system-ui, sans-serif;
+  --t-body: Poppins, system-ui, sans-serif;
   --t-price: var(--t-display);
   --t-display-weight: 600;
   --t-display-track: -0.01em;
@@ -86,7 +86,7 @@ body.admin-bar .wowrestro-menu[data-skin] { --oe-top: 32px; }
   box-shadow: none !important;
 }
 .wowrestro-design [data-skin] .oe-screen { background: var(--t-bg) !important; color: var(--t-ink) !important; }
-.wowrestro-design [data-skin] :is(.oe-hero__title, .oe-listhead h2, .oe-sec__title, .oe-card__name, .oe-panel__title, .oe-totals__grand span, .oe-h1, .oe-section__title, .oe-done__title, .oe-meta__value, .oe-tracker__title, .oe-recap__head, .oe-help__title, .oe-modal__name, .oe-heroart__name, .oe-empty__title, .wowrestro-oe-suggestions__head h3) {
+.wowrestro-design [data-skin] :is(.oe-hero__title, .oe-listhead h2, .oe-sec__title, .oe-card__name, .oe-panel__title, .oe-totals__grand span, .oe-recap__grand span, .oe-h1, .oe-section__title, .oe-done__title, .oe-meta__value, .oe-tracker__title, .oe-recap__head, .oe-help__title, .oe-modal__name, .oe-heroart__name, .oe-empty__title, .wowrestro-oe-suggestions__head h3) {
   font-family: var(--t-display) !important;
   font-weight: var(--t-display-weight);
   letter-spacing: var(--t-display-track);
@@ -262,7 +262,8 @@ body.admin-bar .wowrestro-menu[data-skin] { --oe-top: 32px; }
 .wowrestro-design [data-skin] .oe-freebar__track { background: var(--t-line); }
 .wowrestro-design [data-skin] .oe-freebar__fill { background: var(--t-ok); }
 .wowrestro-design [data-skin] .oe-totals { color: var(--t-muted); }
-.wowrestro-design [data-skin] :is(.oe-totals b, .oe-totals__grand span) { color: var(--t-ink) !important; }
+.wowrestro-design [data-skin] :is(.oe-totals b, .oe-totals__grand span, .oe-recap__grand span, .oe-instructions) { color: var(--t-ink) !important; }
+.wowrestro-design [data-skin] .oe-recap__grand { border-color: var(--t-line); }
 .wowrestro-design [data-skin] .oe-totals__grand { border-color: var(--t-line); }
 .wowrestro-design [data-skin] :is(.oe-cta, .oe-panel .oe-cta, .oe-modal__add, .oe-again) {
   justify-content: center; /* features.css makes the sticky checkout a flex row on short screens */
@@ -281,7 +282,7 @@ body.admin-bar .wowrestro-menu[data-skin] { --oe-top: 32px; }
 
 .wowrestro-design [data-skin] .oe-back { color: var(--t-muted); }
 .wowrestro-design [data-skin] .oe-back:hover { color: var(--t-link); }
-.wowrestro-design [data-skin] :is(.oe-section, .oe-tracker, .oe-recap, .oe-addr) {
+.wowrestro-design [data-skin] :is(.oe-section, .oe-tracker, .oe-recap, .oe-addr, .oe-instructions) {
   background: var(--t-surface);
   border: var(--t-border-w) solid var(--t-line);
   border-radius: var(--t-radius);
@@ -778,7 +779,7 @@ body.admin-bar .wowrestro-menu[data-cart="drawer"] .oe-cartwrap { top: 32px; }
 [data-skin="editorial"] {
   --t-bg: #f7f5f2; --t-surface: #fff; --t-ink: #171717; --t-muted: #5b5854; --t-line: rgba(23, 23, 23, .1);
   --t-accent: #171717;
-  --t-display: "Fraunces", Georgia, serif; --t-body: "Inter", system-ui, sans-serif;
+  --t-display: Poppins, system-ui, sans-serif; --t-body: Poppins, system-ui, sans-serif;
   --t-display-weight: 500; --t-display-track: -0.02em;
   --t-radius: 16px; --t-img-radius: 14px; --t-thumb-radius: 10px; --t-shadow: none;
 }
@@ -787,7 +788,7 @@ body.admin-bar .wowrestro-menu[data-cart="drawer"] .oe-cartwrap { top: 32px; }
 [data-skin="tiles"] {
   --t-bg: #f6f3ff; --t-surface: #fff; --t-ink: #1c1330; --t-muted: #5a5374; --t-line: rgba(28, 19, 48, .12);
   --t-accent: #6d28d9;
-  --t-display: "Outfit", system-ui, sans-serif; --t-body: "Work Sans", system-ui, sans-serif;
+  --t-display: Poppins, system-ui, sans-serif; --t-body: Poppins, system-ui, sans-serif;
   --t-display-weight: 700; --t-display-track: -0.02em;
   --t-radius: 22px; --t-img-radius: 22px; --t-thumb-radius: 12px;
   --t-shadow: 0 12px 32px rgba(58, 28, 120, .10);
@@ -796,7 +797,7 @@ body.admin-bar .wowrestro-menu[data-cart="drawer"] .oe-cartwrap { top: 32px; }
 [data-skin="menucard"] {
   --t-bg: #fafafa; --t-surface: #fff; --t-ink: #111; --t-muted: #595959; --t-line: #e8e8e8;
   --t-accent: #c3351b;
-  --t-display: "Geist", system-ui, sans-serif; --t-body: "Geist", system-ui, sans-serif;
+  --t-display: Poppins, system-ui, sans-serif; --t-body: Poppins, system-ui, sans-serif;
   --t-display-weight: 600; --t-display-track: -0.03em; --t-price: var(--t-body);
   --t-radius: 16px; --t-thumb-radius: 10px; --t-shadow: 0 1px 2px rgba(0, 0, 0, .04);
 }
@@ -806,7 +807,7 @@ body.admin-bar .wowrestro-menu[data-cart="drawer"] .oe-cartwrap { top: 32px; }
 [data-skin="delivery"] {
   --t-bg: #fff; --t-surface: #fff; --t-surface-2: #f2f4f7; --t-ink: #101828; --t-muted: #475467; --t-line: #e4e7ec;
   --t-accent: #0e7a3e;
-  --t-display: "DM Sans", system-ui, sans-serif; --t-body: "DM Sans", system-ui, sans-serif;
+  --t-display: Poppins, system-ui, sans-serif; --t-body: Poppins, system-ui, sans-serif;
   --t-display-weight: 700; --t-display-track: -0.02em; --t-price: var(--t-body);
   --t-radius: 16px; --t-img-radius: 12px; --t-shadow: none;
 }
@@ -814,7 +815,7 @@ body.admin-bar .wowrestro-menu[data-cart="drawer"] .oe-cartwrap { top: 32px; }
 [data-skin="grill"] {
   --t-bg: #12100d; --t-surface: #1c1915; --t-ink: #f5efe6; --t-muted: #b3a896; --t-line: rgba(245, 239, 230, .13);
   --t-accent: #f59e0b; --t-on-accent: #1a1204;
-  --t-display: "Barlow Condensed", system-ui, sans-serif; --t-body: "Barlow", system-ui, sans-serif;
+  --t-display: Poppins, system-ui, sans-serif; --t-body: Poppins, system-ui, sans-serif;
   --t-display-weight: 700; --t-display-track: .01em; --t-display-case: uppercase;
   --t-radius: 6px; --t-btn-radius: 6px; --t-img-radius: 6px; --t-thumb-radius: 6px;
   --t-min: 240px;
@@ -824,7 +825,7 @@ body.admin-bar .wowrestro-menu[data-cart="drawer"] .oe-cartwrap { top: 32px; }
 [data-skin="story"] {
   --t-bg: #f4f4f5; --t-surface: #fff; --t-ink: #18181b; --t-muted: #52525b; --t-line: rgba(24, 24, 27, .08);
   --t-accent: #c61a3f;
-  --t-display: "Onest", system-ui, sans-serif; --t-body: "Onest", system-ui, sans-serif;
+  --t-display: Poppins, system-ui, sans-serif; --t-body: Poppins, system-ui, sans-serif;
   --t-display-weight: 700; --t-display-track: -0.02em; --t-price: var(--t-body);
   --t-radius: 28px; --t-img-radius: 20px; --t-thumb-radius: 12px;
   --t-shadow: 0 1px 2px rgba(24, 24, 27, .04), 0 12px 32px rgba(24, 24, 27, .06);
@@ -838,7 +839,7 @@ body.admin-bar .wowrestro-menu[data-cart="drawer"] .oe-cartwrap { top: 32px; }
   --t-bg: #f6f6f2; --t-surface: #fff; --t-ink: #111; --t-muted: #55554f; --t-line: rgba(17, 17, 17, .1);
   --t-accent: #c6f432; --t-on-accent: #111; --t-link: #3d6310;
   --t-add-bg: var(--t-accent); --t-add-ink: #111; --t-add-line: var(--t-accent);
-  --t-display: "Funnel Display", system-ui, sans-serif; --t-body: "Inter", system-ui, sans-serif;
+  --t-display: Poppins, system-ui, sans-serif; --t-body: Poppins, system-ui, sans-serif;
   --t-display-weight: 700; --t-display-track: -0.03em; --t-price: var(--t-body);
   --t-radius: 22px; --t-img-radius: 22px; --t-thumb-radius: 12px;
   --t-shadow: 0 10px 30px rgba(17, 17, 17, .06);
@@ -852,7 +853,7 @@ body.admin-bar .wowrestro-menu[data-cart="drawer"] .oe-cartwrap { top: 32px; }
 [data-skin="noir"] {
   --t-bg: #0b0b0b; --t-surface: #151515; --t-ink: #f5f5f4; --t-muted: #a8a29e; --t-line: rgba(245, 245, 244, .12);
   --t-accent: #f5f5f4; --t-on-accent: #0b0b0b;
-  --t-display: "Gloock", Georgia, serif; --t-body: "Inter", system-ui, sans-serif;
+  --t-display: Poppins, system-ui, sans-serif; --t-body: Poppins, system-ui, sans-serif;
   --t-display-weight: 400; --t-display-track: -0.01em;
   --t-radius: 0px; --t-img-radius: 0px; --t-thumb-radius: 4px; --t-shadow: none;
 }
@@ -862,7 +863,7 @@ body.admin-bar .wowrestro-menu[data-cart="drawer"] .oe-cartwrap { top: 32px; }
 [data-skin="bakery"] {
   --t-bg: #fff3f5; --t-surface: #fff; --t-ink: #3a1c29; --t-muted: #74475a; --t-line: rgba(58, 28, 41, .12);
   --t-accent: #c2185b;
-  --t-display: "Fredoka", system-ui, sans-serif; --t-body: "Nunito", system-ui, sans-serif;
+  --t-display: Poppins, system-ui, sans-serif; --t-body: Poppins, system-ui, sans-serif;
   --t-display-weight: 600; --t-display-track: 0;
   --t-radius: 28px; --t-img-radius: 28px; --t-thumb-radius: 14px;
   --t-shadow: 0 14px 34px rgba(194, 24, 91, .10);
@@ -871,7 +872,7 @@ body.admin-bar .wowrestro-menu[data-cart="drawer"] .oe-cartwrap { top: 32px; }
 [data-skin="showcase"] {
   --t-bg: #0b0b10; --t-surface: #17171f; --t-ink: #f5f5f7; --t-muted: #a4a4b3; --t-line: rgba(245, 245, 247, .11);
   --t-accent: #ff5a5f; --t-on-accent: #1a0406;
-  --t-display: "Sora", system-ui, sans-serif; --t-body: "Inter", system-ui, sans-serif;
+  --t-display: Poppins, system-ui, sans-serif; --t-body: Poppins, system-ui, sans-serif;
   --t-display-weight: 700; --t-display-track: -0.02em;
   --t-radius: 12px; --t-btn-radius: 8px; --t-img-radius: 12px; --t-thumb-radius: 8px;
 }
@@ -880,7 +881,7 @@ body.admin-bar .wowrestro-menu[data-cart="drawer"] .oe-cartwrap { top: 32px; }
 [data-skin="bento"] {
   --t-bg: #f5f5f7; --t-surface: #fff; --t-ink: #1d1d1f; --t-muted: #5d5d65; --t-line: rgba(0, 0, 0, .08);
   --t-accent: #0066cc;
-  --t-display: "Plus Jakarta Sans", system-ui, sans-serif; --t-body: "Plus Jakarta Sans", system-ui, sans-serif;
+  --t-display: Poppins, system-ui, sans-serif; --t-body: Poppins, system-ui, sans-serif;
   --t-display-weight: 800; --t-display-track: -0.025em;
   --t-radius: 26px; --t-img-radius: 26px; --t-thumb-radius: 12px;
   --t-shadow: 0 1px 2px rgba(0, 0, 0, .04), 0 10px 30px rgba(0, 0, 0, .06);
@@ -889,7 +890,7 @@ body.admin-bar .wowrestro-menu[data-cart="drawer"] .oe-cartwrap { top: 32px; }
 [data-skin="quick"] {
   --t-bg: #f6f7f9; --t-surface: #fff; --t-ink: #0f1115; --t-muted: #555c69; --t-line: #e6e8ec;
   --t-accent: #4f46e5;
-  --t-display: "Albert Sans", system-ui, sans-serif; --t-body: "Albert Sans", system-ui, sans-serif;
+  --t-display: Poppins, system-ui, sans-serif; --t-body: Poppins, system-ui, sans-serif;
   --t-display-weight: 700; --t-display-track: -0.02em; --t-price: var(--t-body);
   --t-radius: 14px; --t-btn-radius: 10px; --t-img-radius: 10px; --t-thumb-radius: 10px; --t-shadow: none;
 }
@@ -900,7 +901,7 @@ body.admin-bar .wowrestro-menu[data-cart="drawer"] .oe-cartwrap { top: 32px; }
 [data-skin="farm"] {
   --t-bg: #f3f1ea; --t-surface: #fff; --t-ink: #1f2a1c; --t-muted: #535d4c; --t-line: rgba(31, 42, 28, .1);
   --t-accent: #2f5d3a;
-  --t-display: "Young Serif", Georgia, serif; --t-body: "Figtree", system-ui, sans-serif;
+  --t-display: Poppins, system-ui, sans-serif; --t-body: Poppins, system-ui, sans-serif;
   --t-display-weight: 400; --t-display-track: -0.01em;
   --t-radius: 20px; --t-img-radius: 14px; --t-thumb-radius: 10px;
   --t-shadow: 0 1px 2px rgba(31, 42, 28, .04), 0 10px 28px rgba(31, 42, 28, .06);
@@ -909,7 +910,7 @@ body.admin-bar .wowrestro-menu[data-cart="drawer"] .oe-cartwrap { top: 32px; }
 [data-skin="afterdark"] {
   --t-bg: #0e0f11; --t-surface: #16171a; --t-ink: #f4f4f5; --t-muted: #a1a1aa; --t-line: rgba(244, 244, 245, .1);
   --t-accent: #facc15; --t-on-accent: #111;
-  --t-display: "Space Grotesk", system-ui, sans-serif; --t-body: "Inter", system-ui, sans-serif;
+  --t-display: Poppins, system-ui, sans-serif; --t-body: Poppins, system-ui, sans-serif;
   --t-display-weight: 600; --t-display-track: -0.02em; --t-price: var(--t-body);
   --t-radius: 14px; --t-btn-radius: 10px; --t-thumb-radius: 8px;
 }
@@ -924,7 +925,7 @@ body.admin-bar .wowrestro-menu[data-cart="drawer"] .oe-cartwrap { top: 32px; }
 [data-skin="spice"] {
   --t-bg: #fff8ef; --t-surface: #fff; --t-ink: #2a190d; --t-muted: #664d3b; --t-line: rgba(42, 25, 13, .12);
   --t-accent: #b3261e;
-  --t-display: "Gabarito", system-ui, sans-serif; --t-body: "Mukta", system-ui, sans-serif;
+  --t-display: Poppins, system-ui, sans-serif; --t-body: Poppins, system-ui, sans-serif;
   --t-display-weight: 800; --t-display-track: -0.02em; --t-price: var(--t-body);
   --t-radius: 16px; --t-btn-radius: 10px; --t-img-radius: 14px;
   --t-shadow: 0 10px 26px rgba(42, 25, 13, .08);
@@ -941,7 +942,7 @@ body.admin-bar .wowrestro-menu[data-cart="drawer"] .oe-cartwrap { top: 32px; }
 [data-skin="nordic"] {
   --t-bg: #f2f4f3; --t-surface: #fff; --t-ink: #1c272b; --t-muted: #505f67; --t-line: rgba(28, 39, 43, .12);
   --t-accent: #2e5b60;
-  --t-display: "Hanken Grotesk", system-ui, sans-serif; --t-body: "Hanken Grotesk", system-ui, sans-serif;
+  --t-display: Poppins, system-ui, sans-serif; --t-body: Poppins, system-ui, sans-serif;
   --t-display-weight: 700; --t-display-track: -0.02em; --t-price: var(--t-body);
   --t-radius: 4px; --t-btn-radius: 4px; --t-img-radius: 4px; --t-thumb-radius: 4px; --t-shadow: none;
 }
@@ -949,7 +950,7 @@ body.admin-bar .wowrestro-menu[data-cart="drawer"] .oe-cartwrap { top: 32px; }
 [data-skin="kiosk"] {
   --t-bg: #eef1f5; --t-surface: #fff; --t-ink: #0b1220; --t-muted: #475467; --t-line: rgba(11, 18, 32, .1);
   --t-accent: #c40f2a;
-  --t-display: "Rubik", system-ui, sans-serif; --t-body: "Rubik", system-ui, sans-serif;
+  --t-display: Poppins, system-ui, sans-serif; --t-body: Poppins, system-ui, sans-serif;
   --t-display-weight: 800; --t-display-track: -0.02em;
   --t-radius: 22px; --t-btn-radius: 16px; --t-img-radius: 16px; --t-thumb-radius: 12px;
   --t-shadow: 0 8px 20px rgba(11, 18, 32, .08);
@@ -962,7 +963,7 @@ body.admin-bar .wowrestro-menu[data-cart="drawer"] .oe-cartwrap { top: 32px; }
 [data-skin="med"] {
   --t-bg: #f5ece0; --t-surface: #fffaf2; --t-ink: #2a221e; --t-muted: #65574c; --t-line: rgba(42, 34, 30, .15);
   --t-accent: #a3452a;
-  --t-display: "DM Serif Display", Georgia, serif; --t-body: "Mulish", system-ui, sans-serif;
+  --t-display: Poppins, system-ui, sans-serif; --t-body: Poppins, system-ui, sans-serif;
   --t-display-weight: 400; --t-display-track: -0.01em;
   --t-radius: 18px; --t-img-radius: 999px 999px 18px 18px; --t-thumb-radius: 10px; --t-shadow: none;
 }
@@ -971,7 +972,7 @@ body.admin-bar .wowrestro-menu[data-cart="drawer"] .oe-cartwrap { top: 32px; }
 [data-skin="neon"] {
   --t-bg: #0c0520; --t-surface: #170b33; --t-ink: #f8f2ff; --t-muted: #b6a7d6; --t-line: rgba(248, 242, 255, .13);
   --t-accent: #ff3ea5; --t-on-accent: #1a0012; --t-link: #ff7cc4;
-  --t-display: "Syne", system-ui, sans-serif; --t-body: "Space Grotesk", system-ui, sans-serif;
+  --t-display: Poppins, system-ui, sans-serif; --t-body: Poppins, system-ui, sans-serif;
   --t-display-weight: 800; --t-display-track: -0.02em;
   --t-radius: 20px; --t-img-radius: 20px; --t-thumb-radius: 12px;
   --t-shadow: 0 0 0 1px rgba(255, 62, 165, .28), 0 18px 50px rgba(255, 62, 165, .14);
@@ -981,7 +982,7 @@ body.admin-bar .wowrestro-menu[data-cart="drawer"] .oe-cartwrap { top: 32px; }
 [data-skin="juice"] {
   --t-bg: #effaf3; --t-surface: #fff; --t-ink: #10302a; --t-muted: #3e5f56; --t-line: rgba(16, 48, 42, .12);
   --t-accent: #0b7661;
-  --t-display: "Unbounded", system-ui, sans-serif; --t-body: "Nunito", system-ui, sans-serif;
+  --t-display: Poppins, system-ui, sans-serif; --t-body: Poppins, system-ui, sans-serif;
   --t-display-weight: 700; --t-display-track: -0.02em; --t-price: var(--t-body);
   --t-radius: 26px; --t-img-radius: 26px; --t-thumb-radius: 14px;
   --t-shadow: 0 14px 32px rgba(11, 122, 100, .10);
@@ -994,7 +995,7 @@ body.admin-bar .wowrestro-menu[data-cart="drawer"] .oe-cartwrap { top: 32px; }
 [data-skin="taqueria"] {
   --t-bg: #fff5ed; --t-surface: #fff; --t-ink: #26140b; --t-muted: #634231; --t-line: rgba(38, 20, 11, .12);
   --t-accent: #bc3f0c;
-  --t-display: "Big Shoulders Display", Impact, sans-serif; --t-body: "Work Sans", system-ui, sans-serif;
+  --t-display: Poppins, system-ui, sans-serif; --t-body: Poppins, system-ui, sans-serif;
   --t-display-weight: 800; --t-display-track: 0; --t-display-case: uppercase; --t-price: var(--t-body);
   --t-radius: 18px; --t-btn-radius: 999px; --t-img-radius: 14px; --t-thumb-radius: 10px;
   --t-shadow: 0 10px 26px rgba(38, 20, 11, .08);
@@ -1004,7 +1005,7 @@ body.admin-bar .wowrestro-menu[data-cart="drawer"] .oe-cartwrap { top: 32px; }
 [data-skin="coffee"] {
   --t-bg: #f5f3f0; --t-surface: #fff; --t-ink: #1c1917; --t-muted: #57534e; --t-line: rgba(28, 25, 23, .1);
   --t-accent: #3b2a20;
-  --t-display: "Schibsted Grotesk", system-ui, sans-serif; --t-body: "Schibsted Grotesk", system-ui, sans-serif;
+  --t-display: Poppins, system-ui, sans-serif; --t-body: Poppins, system-ui, sans-serif;
   --t-display-weight: 700; --t-display-track: -0.02em; --t-price: var(--t-body);
   --t-radius: 14px; --t-img-radius: 10px; --t-thumb-radius: 10px; --t-shadow: none;
 }
@@ -1013,7 +1014,7 @@ body.admin-bar .wowrestro-menu[data-cart="drawer"] .oe-cartwrap { top: 32px; }
 [data-skin="ramen"] {
   --t-bg: #141111; --t-surface: #1e1919; --t-ink: #f6efe6; --t-muted: #b8aa9d; --t-line: rgba(246, 239, 230, .12);
   --t-accent: #ef4444; --t-on-accent: #160404; --t-link: #ff7b7b;
-  --t-display: "Dela Gothic One", Impact, sans-serif; --t-body: "Zen Kaku Gothic New", system-ui, sans-serif;
+  --t-display: Poppins, system-ui, sans-serif; --t-body: Poppins, system-ui, sans-serif;
   --t-display-weight: 400; --t-display-track: 0;
   --t-radius: 2px; --t-btn-radius: 2px; --t-img-radius: 2px; --t-thumb-radius: 2px;
 }
@@ -1027,7 +1028,7 @@ body.admin-bar .wowrestro-menu[data-cart="drawer"] .oe-cartwrap { top: 32px; }
   --t-bg: #f4f6f5; --t-surface: #fff; --t-ink: #1c1c1c; --t-muted: #535957; --t-line: rgba(0, 0, 0, .09);
   --t-accent: #0b771c;
   --t-add-bg: #fff; --t-add-ink: #0b771c; --t-add-line: #0b771c;
-  --t-display: "Nunito Sans", system-ui, sans-serif; --t-body: "Nunito Sans", system-ui, sans-serif;
+  --t-display: Poppins, system-ui, sans-serif; --t-body: Poppins, system-ui, sans-serif;
   --t-display-weight: 800; --t-display-track: -0.01em; --t-price: var(--t-body);
   --t-radius: 12px; --t-btn-radius: 8px; --t-img-radius: 10px; --t-thumb-radius: 8px; --t-shadow: none;
   --t-min: 172px; --t-gap: 12px; --t-img-h: 150px;
@@ -1045,7 +1046,7 @@ body.admin-bar .wowrestro-menu[data-cart="drawer"] .oe-cartwrap { top: 32px; }
 [data-skin="garden"] {
   --t-bg: #edf2e6; --t-surface: #fafcf6; --t-ink: #1b291d; --t-muted: #48594a; --t-line: rgba(27, 41, 29, .12);
   --t-accent: #2d6a2f;
-  --t-display: "Instrument Serif", Georgia, serif; --t-body: "Instrument Sans", system-ui, sans-serif;
+  --t-display: Poppins, system-ui, sans-serif; --t-body: Poppins, system-ui, sans-serif;
   --t-display-weight: 400; --t-display-track: -0.01em;
   --t-radius: 24px; --t-img-radius: 24px; --t-thumb-radius: 12px; --t-shadow: none;
 }
@@ -1054,7 +1055,7 @@ body.admin-bar .wowrestro-menu[data-cart="drawer"] .oe-cartwrap { top: 32px; }
 [data-skin="sushi"] {
   --t-bg: #0b1220; --t-surface: #111a2c; --t-ink: #eef2f7; --t-muted: #9aa6b8; --t-line: rgba(238, 242, 247, .1);
   --t-accent: #ff8a65; --t-on-accent: #1a0b06;
-  --t-display: "Urbanist", system-ui, sans-serif; --t-body: "Inter", system-ui, sans-serif;
+  --t-display: Poppins, system-ui, sans-serif; --t-body: Poppins, system-ui, sans-serif;
   --t-display-weight: 800; --t-display-track: -0.02em; --t-price: var(--t-body);
   --t-radius: 16px; --t-img-radius: 14px; --t-thumb-radius: 10px;
 }
@@ -1063,7 +1064,7 @@ body.admin-bar .wowrestro-menu[data-cart="drawer"] .oe-cartwrap { top: 32px; }
 [data-skin="poke"] {
   --t-bg: #f4faf8; --t-surface: #fff; --t-ink: #10263a; --t-muted: #465768; --t-line: rgba(16, 38, 58, .12);
   --t-accent: #0f766e;
-  --t-display: "Lexend", system-ui, sans-serif; --t-body: "Lexend", system-ui, sans-serif;
+  --t-display: Poppins, system-ui, sans-serif; --t-body: Poppins, system-ui, sans-serif;
   --t-display-weight: 700; --t-display-track: -0.02em; --t-price: var(--t-body);
   --t-radius: 24px; --t-img-radius: 24px; --t-thumb-radius: 14px;
   --t-shadow: 0 14px 34px rgba(16, 38, 58, .08);
@@ -1073,7 +1074,7 @@ body.admin-bar .wowrestro-menu[data-cart="drawer"] .oe-cartwrap { top: 32px; }
 [data-skin="canteen"] {
   --t-bg: #fbf8f3; --t-surface: #fff; --t-ink: #1c1917; --t-muted: #57534e; --t-line: rgba(28, 25, 23, .1);
   --t-accent: #9f1239;
-  --t-display: "Familjen Grotesk", system-ui, sans-serif; --t-body: "Inter", system-ui, sans-serif;
+  --t-display: Poppins, system-ui, sans-serif; --t-body: Poppins, system-ui, sans-serif;
   --t-display-weight: 700; --t-display-track: -0.02em; --t-price: var(--t-body);
   --t-radius: 18px; --t-thumb-radius: 10px; --t-shadow: none;
 }
@@ -1086,7 +1087,7 @@ body.admin-bar .wowrestro-menu[data-cart="drawer"] .oe-cartwrap { top: 32px; }
 [data-skin="brunch"] {
   --t-bg: #fffaf0; --t-surface: #fff; --t-ink: #1f1a14; --t-muted: #5d554a; --t-line: rgba(31, 26, 20, .1);
   --t-accent: #a94e08;
-  --t-display: "Epilogue", system-ui, sans-serif; --t-body: "Epilogue", system-ui, sans-serif;
+  --t-display: Poppins, system-ui, sans-serif; --t-body: Poppins, system-ui, sans-serif;
   --t-display-weight: 800; --t-display-track: -0.03em; --t-price: var(--t-body);
   --t-radius: 22px; --t-img-radius: 16px; --t-thumb-radius: 12px;
   --t-shadow: 0 12px 30px rgba(180, 83, 9, .08);
@@ -1095,7 +1096,7 @@ body.admin-bar .wowrestro-menu[data-cart="drawer"] .oe-cartwrap { top: 32px; }
 [data-skin="hall"] {
   --t-bg: #f3f3f0; --t-surface: #fff; --t-ink: #151515; --t-muted: #52524e; --t-line: rgba(21, 21, 21, .12);
   --t-accent: #0b6e80;
-  --t-display: "Bricolage Grotesque", system-ui, sans-serif; --t-body: "Figtree", system-ui, sans-serif;
+  --t-display: Poppins, system-ui, sans-serif; --t-body: Poppins, system-ui, sans-serif;
   --t-display-weight: 800; --t-display-track: -0.03em;
   --t-radius: 14px; --t-btn-radius: 10px; --t-img-radius: 10px; --t-thumb-radius: 8px;
 }
@@ -1104,7 +1105,7 @@ body.admin-bar .wowrestro-menu[data-cart="drawer"] .oe-cartwrap { top: 32px; }
 [data-skin="glass"] {
   --t-bg: #0b0a14; --t-surface: #16142a; --t-ink: #f5f3ff; --t-muted: #b4aed0; --t-line: rgba(245, 243, 255, .14);
   --t-accent: #a78bfa; --t-on-accent: #150b2e; --t-link: #c4b5fd;
-  --t-display: "Red Hat Display", system-ui, sans-serif; --t-body: "Inter", system-ui, sans-serif;
+  --t-display: Poppins, system-ui, sans-serif; --t-body: Poppins, system-ui, sans-serif;
   --t-display-weight: 700; --t-display-track: -0.02em;
   --t-radius: 24px; --t-img-radius: 20px; --t-thumb-radius: 12px;
   --t-shadow: 0 20px 50px rgba(0, 0, 0, .35);
@@ -1128,7 +1129,7 @@ body.admin-bar .wowrestro-menu[data-cart="drawer"] .oe-cartwrap { top: 32px; }
 [data-skin="boba"] {
   --t-bg: #eefaf6; --t-surface: #fff; --t-ink: #2e1a47; --t-muted: #5d4f75; --t-line: rgba(46, 26, 71, .1);
   --t-accent: #a21caf;
-  --t-display: "M PLUS Rounded 1c", system-ui, sans-serif; --t-body: "M PLUS Rounded 1c", system-ui, sans-serif;
+  --t-display: Poppins, system-ui, sans-serif; --t-body: Poppins, system-ui, sans-serif;
   --t-display-weight: 800; --t-display-track: -0.01em; --t-price: var(--t-body);
   --t-radius: 28px; --t-img-radius: 28px; --t-thumb-radius: 14px;
   --t-shadow: 0 14px 34px rgba(162, 28, 175, .10);
@@ -1138,7 +1139,7 @@ body.admin-bar .wowrestro-menu[data-cart="drawer"] .oe-cartwrap { top: 32px; }
 [data-skin="catering"] {
   --t-bg: #f5f7fa; --t-surface: #fff; --t-ink: #0f172a; --t-muted: #475569; --t-line: #e2e8f0;
   --t-accent: #1d4ed8;
-  --t-display: "IBM Plex Sans", system-ui, sans-serif; --t-body: "IBM Plex Sans", system-ui, sans-serif; --t-price: "IBM Plex Mono", ui-monospace, monospace;
+  --t-display: Poppins, system-ui, sans-serif; --t-body: Poppins, system-ui, sans-serif; --t-price: var(--t-body);
   --t-display-weight: 600; --t-display-track: -0.01em;
   --t-radius: 6px; --t-btn-radius: 6px; --t-img-radius: 6px; --t-thumb-radius: 6px; --t-shadow: none;
 }
@@ -1148,7 +1149,7 @@ body.admin-bar .wowrestro-menu[data-cart="drawer"] .oe-cartwrap { top: 32px; }
 [data-skin="swiss"] {
   --t-bg: #fff; --t-surface: #fff; --t-surface-2: #f2f2f2; --t-ink: #000; --t-muted: #474747; --t-line: #000;
   --t-accent: #cd0511;
-  --t-display: "Inter Tight", system-ui, sans-serif; --t-body: "Inter", system-ui, sans-serif;
+  --t-display: Poppins, system-ui, sans-serif; --t-body: Poppins, system-ui, sans-serif;
   --t-display-weight: 800; --t-display-track: -0.04em; --t-price: var(--t-body);
   --t-radius: 0px; --t-btn-radius: 0px; --t-img-radius: 0px; --t-thumb-radius: 0px; --t-shadow: none;
 }
@@ -1159,7 +1160,7 @@ body.admin-bar .wowrestro-menu[data-cart="drawer"] .oe-cartwrap { top: 32px; }
 [data-skin="pizzeria"] {
   --t-bg: #fff8f1; --t-surface: #fff; --t-ink: #1a1210; --t-muted: #5e4c45; --t-line: rgba(26, 18, 16, .1);
   --t-accent: #c1272d;
-  --t-display: "Anton", Impact, sans-serif; --t-body: "Inter", system-ui, sans-serif;
+  --t-display: Poppins, system-ui, sans-serif; --t-body: Poppins, system-ui, sans-serif;
   --t-display-weight: 400; --t-display-track: .01em; --t-display-case: uppercase; --t-price: var(--t-body);
   --t-radius: 18px; --t-img-radius: 14px; --t-thumb-radius: 10px;
   --t-shadow: 0 10px 26px rgba(26, 18, 16, .08);

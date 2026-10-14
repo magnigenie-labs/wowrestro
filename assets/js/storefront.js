@@ -294,7 +294,8 @@
 	}
 
 	function renderCartSuggestions() {
-		const panel = document.querySelector( '.oe-panel' );
+		// The menu's order panel only: a suggestion opens its dish card, which the checkout page doesn't have.
+		const panel = document.querySelector( '[data-region="panel"]' );
 		if ( ! panel ) return;
 		let column = panel.closest( '.wowrestro-oe-cart-column' );
 		const suggestions = cartStateLoaded && ! panel.querySelector( '.oe-panel__empty' ) ? cartSuggestions() : [];

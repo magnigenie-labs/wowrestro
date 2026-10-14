@@ -1572,6 +1572,7 @@ final class WowRestro_REST_API {
 		$data['status']      = $order->get_status();
 		$data['label']       = wc_get_order_status_name( $order->get_status() );
 		$data['promised_at'] = $order->get_meta( '_wowrestro_promised_at' ) ?: $data['promised_at'];
+		$data['tracker']     = WowRestro_Storefront::tracker_html( $order );
 		return self::public_response( $data, 200, true );
 	}
 

@@ -649,7 +649,10 @@ final class WowRestro_Slot_Reservations {
 		$now     = current_time( 'mysql', true );
 		$minutes = max( 1, absint( WowRestro_Fulfillment::settings()['hold_minutes'] ) );
 		$expires = $order_id ? null : gmdate( 'Y-m-d H:i:s', time() + $minutes * MINUTE_IN_SECONDS );
-		$result  = $wpdb->insert(
+		// A taken position is the expected answer, not a fault: keep it out of the PHP error log.
+		// last_error is still set, so the checks below see it.
+		$suppress = $wpdb->suppress_errors( true );
+		$result   = $wpdb->insert(
 			self::table_name(),
 			array(
 				'token'              => $token,
@@ -666,6 +669,7 @@ final class WowRestro_Slot_Reservations {
 			),
 			array( '%s', '%s', '%d', '%d', '%s', '%s', '%s', $order_id ? '%d' : null, $order_id ? null : '%s', '%s', '%s' )
 		);
+		$wpdb->suppress_errors( $suppress );
 		if ( false !== $result ) {
 			return true;
 		}
@@ -673,6 +677,7 @@ final class WowRestro_Slot_Reservations {
 		if ( false !== strpos( $error, 'duplicate entry' ) || false !== strpos( $error, 'unique constraint failed' ) ) {
 			return false;
 		}
+		error_log( 'WowRestro: a kitchen slot could not be reserved: ' . $wpdb->last_error ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- A real database fault, logged since the insert's own output is suppressed.
 		return new WP_Error( 'wowrestro_storage_unavailable', __( 'The kitchen slot could not be reserved.', 'wowrestro' ) );
 	}
 

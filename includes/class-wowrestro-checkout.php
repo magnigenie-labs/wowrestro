@@ -106,6 +106,11 @@ final class WowRestro_Checkout {
 		if ( isset( $data['postcode'] ) ) {
 			WC()->session->set( 'wowrestro_postcode', substr( sanitize_text_field( (string) $data['postcode'] ), 0, 20 ) );
 		}
+		// The menu page sends itself, so the checkout and the receipt link back to it and wear its template.
+		if ( isset( $data['menu_url'] ) ) {
+			WC()->session->set( 'wowrestro_menu_url', wp_validate_redirect( esc_url_raw( (string) $data['menu_url'] ), '' ) );
+			WC()->session->set( 'wowrestro_menu_template', min( 36, absint( $data['template'] ?? 0 ) ) );
+		}
 		if ( array_key_exists( 'tip', $data ) && class_exists( 'WowRestro_Cart' ) ) {
 			$tip = WowRestro_Cart::set_tip( $data['tip'] );
 			if ( is_wp_error( $tip ) ) {
@@ -495,7 +500,7 @@ final class WowRestro_Checkout {
 	}
 
 	public static function checkout_assets() {
-		if ( ! is_checkout() || is_wc_endpoint_url( 'order-received' ) ) {
+		if ( ! is_checkout() || is_wc_endpoint_url( 'order-received' ) || WowRestro_Storefront::is_restaurant_checkout() ) {
 			return;
 		}
 		wp_enqueue_style( 'wowrestro-storefront', WOWRESTRO_URL . 'assets/css/storefront.css', array(), WOWRESTRO_VERSION );

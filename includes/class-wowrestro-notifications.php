@@ -77,7 +77,8 @@ final class WowRestro_Notifications {
 
 	private static function tracking_url( $order ) {
 		$token = sanitize_text_field( (string) $order->get_meta( '_wowrestro_tracking_token' ) );
-		$url   = $token ? rest_url( 'wowrestro/v1/tracking/' . rawurlencode( $token ) ) : '';
+		// The order-received page carries the live tracker; the token route is JSON for apps.
+		$url = $token ? $order->get_checkout_order_received_url() : '';
 		return (string) apply_filters( 'wowrestro_tracking_url', $url, $token, $order );
 	}
 }

@@ -2,7 +2,7 @@
    to live WooCommerce data. Scoped to the .wowrestro-design body class, which
    WowRestro adds to any page holding the menu. */
 
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap");
 
 .wowrestro-design {
   --oe-bg: #0B0A08;
@@ -25,16 +25,16 @@
    alone, and everything below styles only the order flow and its dialog. */
 .wowrestro-design :is(.wowrestro-menu, .oe-modalroot) {
   color: var(--oe-fg);
-  font-family: Manrope, -apple-system, "Segoe UI", sans-serif;
+  font-family: Poppins, -apple-system, "Segoe UI", sans-serif;
   -webkit-font-smoothing: antialiased;
   text-wrap: pretty;
 }
 .wowrestro-design :is(.wowrestro-menu, .oe-modalroot) a { color: var(--oe-ember); text-decoration: none; transition: color .25s ease; }
 .wowrestro-design :is(.wowrestro-menu, .oe-modalroot) a:hover { color: var(--oe-ember-soft); }
-.wowrestro-design :is(.wowrestro-menu, .oe-modalroot) ::selection { background: rgba(224, 116, 60, 0.35); color: #fff; }
+.wowrestro-design :is(.wowrestro-menu, .oe-modalroot) ::selection { background: color-mix(in srgb, var(--oe-ember) 35%, transparent); color: #fff; }
 .wowrestro-design :is(.wowrestro-menu, .oe-modalroot) :is(input, textarea, select) { font-family: inherit; }
 .wowrestro-design :is(.wowrestro-menu, .oe-modalroot) :is(input, textarea)::placeholder { color: var(--oe-dim2); }
-.wowrestro-design :is(.wowrestro-menu, .oe-modalroot) :is(input, textarea):focus { border-color: rgba(224, 116, 60, 0.55) !important; outline: none; }
+.wowrestro-design :is(.wowrestro-menu, .oe-modalroot) :is(input, textarea):focus { border-color: color-mix(in srgb, var(--oe-ember) 55%, transparent) !important; outline: none; }
 /* Theme content styles (".entry-content h2", "p") must not resize the order flow's own type. */
 .wowrestro-design .wowrestro-menu :where(h1, h2, h3) { color: inherit; }
 
@@ -67,7 +67,7 @@
   border: 0;
   border-radius: 0;
   color: var(--oe-fg);
-  font-family: Manrope, -apple-system, "Segoe UI", sans-serif;
+  font-family: Poppins, -apple-system, "Segoe UI", sans-serif;
 }
 
 /* ---------------- first paint ----------------
@@ -102,7 +102,7 @@
 .wowrestro-design .oe-screen { border-radius: inherit; }
 
 .oe-shell { max-width: 1280px; margin: 0 auto; padding-left: 32px; padding-right: 32px; }
-.oe-serif { font-family: Newsreader, Georgia, serif; font-weight: 500; letter-spacing: -0.02em; }
+.oe-serif { font-family: Poppins, -apple-system, "Segoe UI", sans-serif; font-weight: 500; letter-spacing: -0.02em; }
 .oe-eyebrow { font-size: 11.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--oe-dim); }
 
 /* ---------------- hero ---------------- */
@@ -118,7 +118,7 @@
 }
 .oe-badge i { width: 6px; height: 6px; border-radius: 50%; background: var(--oe-olive); display: block; animation: oe-pulse 2.6s ease-in-out infinite; }
 .wowrestro-design .oe-hero__title {
-  font-family: Newsreader, Georgia, serif;
+  font-family: Poppins, -apple-system, "Segoe UI", sans-serif;
   font-weight: 400;
   font-size: clamp(44px, 5.6vw, 78px);
   line-height: 0.98;
@@ -147,15 +147,15 @@
 }
 .oe-heroart::after { content: ""; position: absolute; inset: 0; background: linear-gradient(190deg, rgba(11, 10, 8, 0) 30%, rgba(11, 10, 8, 0.85)); }
 .oe-heroart__cap { position: absolute; left: 24px; right: 24px; bottom: 22px; z-index: 2; display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; }
-.oe-heroart__name { font-family: Newsreader, Georgia, serif; font-size: 27px; font-weight: 500; letter-spacing: -0.02em; margin-top: 6px; }
-.oe-heroart__price { font-family: Newsreader, Georgia, serif; font-size: 24px; white-space: nowrap; }
+.oe-heroart__name { font-family: Poppins, -apple-system, "Segoe UI", sans-serif; font-size: 27px; font-weight: 500; letter-spacing: -0.02em; margin-top: 6px; }
+.oe-heroart__price { font-family: Poppins, -apple-system, "Segoe UI", sans-serif; font-size: 24px; white-space: nowrap; }
 
 /* ---------------- menu + cart columns ---------------- */
 
 .oe-two { display: grid; grid-template-columns: minmax(0, 1fr) 384px; gap: 40px; align-items: start; padding-top: 12px; padding-bottom: 110px; }
 
 .oe-listhead { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 20px; padding-bottom: 18px; border-bottom: 1px solid rgba(242, 237, 227, 0.09); }
-.wowrestro-design .oe-listhead h2 { font-family: Newsreader, Georgia, serif; font-weight: 400; font-size: 38px; letter-spacing: -0.02em; margin: 8px 0 0; }
+.wowrestro-design .oe-listhead h2 { font-family: Poppins, -apple-system, "Segoe UI", sans-serif; font-weight: 400; font-size: 38px; letter-spacing: -0.02em; margin: 8px 0 0; }
 .oe-search {
   width: 240px; height: 44px;
   border: 1px solid rgba(242, 237, 227, 0.11);
@@ -186,19 +186,19 @@
   transition: border-color .35s ease, transform .35s ease;
   display: flex; flex-direction: column;
 }
-.oe-card:hover { border-color: rgba(224, 116, 60, 0.42); transform: translateY(-3px); }
+.oe-card:hover { border-color: color-mix(in srgb, var(--oe-ember) 42%, transparent); transform: translateY(-3px); }
 .oe-card__img { position: relative; height: 212px; background: rgba(242, 237, 227, 0.04) center/cover no-repeat; }
 .oe-tag {
   position: absolute; top: 14px; left: 14px;
   padding: 6px 12px; border-radius: 999px;
   background: rgba(11, 10, 8, 0.72); backdrop-filter: blur(8px);
   font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--oe-ember-soft); border: 1px solid rgba(224, 116, 60, 0.4);
+  color: var(--oe-ember-soft); border: 1px solid color-mix(in srgb, var(--oe-ember) 40%, transparent);
 }
 .oe-card__body { padding: 20px 22px 22px; display: flex; flex-direction: column; flex: 1; min-width: 0; }
 .oe-card__top { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; }
-.oe-card__name { font-family: Newsreader, Georgia, serif; font-size: 23px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.2; }
-.oe-card__price { font-family: Newsreader, Georgia, serif; font-size: 21px; white-space: nowrap; }
+.oe-card__name { font-family: Poppins, -apple-system, "Segoe UI", sans-serif; font-size: 23px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.2; }
+.oe-card__price { font-family: Poppins, -apple-system, "Segoe UI", sans-serif; font-size: 21px; white-space: nowrap; }
 .oe-card__desc { font-size: 14.5px; line-height: 1.55; color: #968C7D; margin-top: 9px; flex: 1; }
 .oe-card__foot { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-top: 18px; }
 .oe-card__meta { font-size: 12.5px; color: var(--oe-dim2); letter-spacing: 0.04em; }
@@ -212,12 +212,12 @@
 }
 .oe-add:hover { background: var(--oe-ember); }
 
-.oe-step { display: flex; align-items: center; gap: 2px; border: 1px solid rgba(224, 116, 60, 0.45); border-radius: 999px; background: rgba(224, 116, 60, 0.1); }
+.oe-step { display: flex; align-items: center; gap: 2px; border: 1px solid color-mix(in srgb, var(--oe-ember) 45%, transparent); border-radius: 999px; background: color-mix(in srgb, var(--oe-ember) 10%, transparent); }
 .oe-step button { padding: 8px 15px; cursor: pointer; font: inherit; font-size: 16px; color: var(--oe-ember-soft); line-height: 1; border: 0; background: none; }
 .oe-step span { font-size: 14.5px; min-width: 20px; text-align: center; font-weight: 600; }
 
 .oe-empty { text-align: center; padding: 64px 24px; border: 1px dashed rgba(242, 237, 227, 0.14); border-radius: 22px; }
-.oe-empty__title { font-family: Newsreader, Georgia, serif; font-size: 24px; color: #C3B7A5; }
+.oe-empty__title { font-family: Poppins, -apple-system, "Segoe UI", sans-serif; font-size: 24px; color: #C3B7A5; }
 .oe-empty button { display: inline-block; margin-top: 16px; font: inherit; font-size: 14.5px; color: var(--oe-ember); cursor: pointer; border: 0; background: none; }
 
 .oe-note {
@@ -265,7 +265,7 @@
 .oe-panel .oe-panel__scroll::-webkit-scrollbar { width: 6px; }
 .oe-panel .oe-panel__scroll::-webkit-scrollbar-thumb { background: rgba(242, 237, 227, 0.14); border-radius: 6px; }
 .oe-panel__head { padding: 22px 24px 18px; border-bottom: 1px solid rgba(242, 237, 227, 0.075); display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
-.oe-panel__title { font-family: Newsreader, Georgia, serif; font-size: 22px; font-weight: 500; letter-spacing: -0.02em; }
+.oe-panel__title { font-family: Poppins, -apple-system, "Segoe UI", sans-serif; font-size: 22px; font-weight: 500; letter-spacing: -0.02em; }
 .oe-panel__svc { font-size: 12.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--oe-dim); }
 .oe-panel__empty { padding: 44px 28px; text-align: center; font-size: 14.5px; line-height: 1.6; color: var(--oe-dim); }
 .oe-panel__ring { width: 46px; height: 46px; border-radius: 50%; border: 1px dashed rgba(242, 237, 227, 0.2); margin: 0 auto 16px; }
@@ -294,7 +294,7 @@
   border: 1px solid var(--oe-line); background: transparent; color: #968C7D;
   transition: all .25s ease;
 }
-.oe-slots__list button.is-on { border-color: rgba(224, 116, 60, 0.55); background: rgba(224, 116, 60, 0.14); color: var(--oe-fg); }
+.oe-slots__list button.is-on { border-color: color-mix(in srgb, var(--oe-ember) 55%, transparent); background: color-mix(in srgb, var(--oe-ember) 14%, transparent); color: var(--oe-fg); }
 /* Template 1 is light, while these colours come from the dark base design; and
    features.css tints every order-panel button, which hid the chosen time option.
    Unchosen options go plain, and the confirmed time reads at full contrast. */
@@ -311,8 +311,8 @@
 .oe-totals b { color: var(--oe-fg); font-weight: 400; }
 .oe-totals .is-free { color: var(--oe-olive-soft); }
 .oe-totals__grand { align-items: baseline; padding-top: 14px; margin-top: 4px; border-top: 1px solid var(--oe-line); }
-.oe-totals__grand span:first-child { font-family: Newsreader, Georgia, serif; font-size: 20px; color: var(--oe-fg); }
-.oe-totals__grand span:last-child { font-family: Newsreader, Georgia, serif; font-size: 26px; color: var(--oe-fg); }
+.oe-totals__grand span:first-child { font-family: Poppins, -apple-system, "Segoe UI", sans-serif; font-size: 20px; color: var(--oe-fg); }
+.oe-totals__grand span:last-child { font-family: Poppins, -apple-system, "Segoe UI", sans-serif; font-size: 26px; color: var(--oe-fg); }
 
 .oe-cta {
   display: block; width: 100%;
@@ -320,7 +320,7 @@
   background: var(--oe-ember); color: var(--oe-ink);
   text-align: center; font: inherit; font-size: 16px; font-weight: 600;
   cursor: pointer; border: 0;
-  box-shadow: 0 22px 44px -20px rgba(224, 116, 60, 0.9);
+  box-shadow: 0 22px 44px -20px color-mix(in srgb, var(--oe-ember) 90%, transparent);
   transition: filter .25s ease;
 }
 .oe-cta:hover { filter: brightness(1.08); }
@@ -334,7 +334,7 @@
 .oe-checkout__head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 34px; }
 .oe-back { font: inherit; font-size: 14px; color: var(--oe-dim); cursor: pointer; border: 0; background: none; padding: 0; }
 .oe-back:hover { color: var(--oe-ember); }
-.wowrestro-design .oe-h1 { font-family: Newsreader, Georgia, serif; font-weight: 400; font-size: clamp(38px, 4.4vw, 56px); letter-spacing: -0.025em; margin: 12px 0 0; }
+.wowrestro-design .oe-h1 { font-family: Poppins, -apple-system, "Segoe UI", sans-serif; font-weight: 400; font-size: clamp(38px, 4.4vw, 56px); letter-spacing: -0.025em; margin: 12px 0 0; }
 
 .oe-sections { display: grid; gap: 18px; }
 .oe-section { border: 1px solid rgba(242, 237, 227, 0.085); border-radius: 22px; background: rgba(242, 237, 227, 0.022); padding: 26px 28px; }
@@ -344,11 +344,11 @@
 .oe-section .oe-fields + .oe-slots { margin-top: 22px; }
 .oe-section__num {
   width: 27px; height: 27px; border-radius: 50%;
-  border: 1px solid rgba(224, 116, 60, 0.45); background: rgba(224, 116, 60, 0.1);
+  border: 1px solid color-mix(in srgb, var(--oe-ember) 45%, transparent); background: color-mix(in srgb, var(--oe-ember) 10%, transparent);
   color: var(--oe-ember-soft); font-size: 13px; font-weight: 600;
   display: flex; align-items: center; justify-content: center; flex: none;
 }
-.oe-section__title { font-family: Newsreader, Georgia, serif; font-size: 24px; font-weight: 500; letter-spacing: -0.02em; }
+.oe-section__title { font-family: Poppins, -apple-system, "Segoe UI", sans-serif; font-size: 24px; font-weight: 500; letter-spacing: -0.02em; }
 
 .oe-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
 .oe-field--wide { grid-column: span 2; }
@@ -377,9 +377,9 @@
   color: var(--oe-fg); font: inherit; text-align: left;
   transition: all .3s ease;
 }
-.oe-pay.is-on { border-color: rgba(224, 116, 60, 0.55); background: rgba(224, 116, 60, 0.09); }
+.oe-pay.is-on { border-color: color-mix(in srgb, var(--oe-ember) 55%, transparent); background: color-mix(in srgb, var(--oe-ember) 9%, transparent); }
 .oe-pay__mark { width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid rgba(242, 237, 227, 0.26); flex: none; display: block; }
-.oe-pay.is-on .oe-pay__mark { border-color: var(--oe-ember); background: var(--oe-ember); box-shadow: 0 0 12px rgba(224, 116, 60, 0.8); }
+.oe-pay.is-on .oe-pay__mark { border-color: var(--oe-ember); background: var(--oe-ember); box-shadow: 0 0 12px color-mix(in srgb, var(--oe-ember) 80%, transparent); }
 .oe-pay__name { font-size: 15.5px; font-weight: 600; letter-spacing: -0.01em; }
 .oe-pay__desc { font-size: 13.5px; color: #968C7D; margin-top: 3px; }
 
@@ -397,7 +397,7 @@
   font: inherit; font-size: 14px; color: #C3B7A5; cursor: pointer;
   background: none; white-space: nowrap; transition: all .25s ease;
 }
-.oe-coupon button:hover { border-color: rgba(224, 116, 60, 0.6); color: var(--oe-ember-soft); }
+.oe-coupon button:hover { border-color: color-mix(in srgb, var(--oe-ember) 60%, transparent); color: var(--oe-ember-soft); }
 .oe-coupon__msg { font-size: 12.5px; margin-top: 9px; line-height: 1.5; }
 .oe-coupon__msg.is-ok { color: var(--oe-olive-soft); }
 .oe-coupon__msg.is-bad { color: var(--oe-ember-soft); }
@@ -412,24 +412,24 @@
   display: flex; align-items: center; justify-content: center;
 }
 .oe-done__kicker { font-size: 11.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--oe-dim); }
-.wowrestro-design .oe-done__title { font-family: Newsreader, Georgia, serif; font-weight: 400; font-size: clamp(40px, 5vw, 66px); letter-spacing: -0.025em; line-height: 1.04; margin: 16px 0 0; }
+.wowrestro-design .oe-done__title { font-family: Poppins, -apple-system, "Segoe UI", sans-serif; font-weight: 400; font-size: clamp(40px, 5vw, 66px); letter-spacing: -0.025em; line-height: 1.04; margin: 16px 0 0; }
 .oe-done__title em { font-style: italic; color: var(--oe-ember); }
-.oe-done__lede { font-size: 17px; line-height: 1.6; color: var(--oe-mute); margin: 18px auto 0; max-width: 52ch; }
+.wowrestro-design .oe-done__lede { font-size: 17px; line-height: 1.6; color: var(--oe-mute); margin: 18px auto 0; max-width: 52ch; }
 
 .oe-meta { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; margin-top: 44px; border: 1px solid var(--oe-line); border-radius: 20px; overflow: hidden; background: rgba(242, 237, 227, 0.09); }
 .oe-meta__cell { background: #100E0B; padding: 22px 24px; }
 .oe-meta__label { font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--oe-dim); }
-.oe-meta__value { font-family: Newsreader, Georgia, serif; font-size: 22px; margin-top: 9px; letter-spacing: -0.01em; }
+.oe-meta__value { font-family: Poppins, -apple-system, "Segoe UI", sans-serif; font-size: 22px; margin-top: 9px; letter-spacing: -0.01em; }
 
 .oe-tracker { margin-top: 18px; border: 1px solid var(--oe-line); border-radius: 22px; background: var(--oe-panel); padding: 28px 30px; }
 .oe-tracker__head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 14px; margin-bottom: 26px; }
-.oe-tracker__title { font-family: Newsreader, Georgia, serif; font-size: 24px; font-weight: 500; letter-spacing: -0.02em; }
+.oe-tracker__title { font-family: Poppins, -apple-system, "Segoe UI", sans-serif; font-size: 24px; font-weight: 500; letter-spacing: -0.02em; }
 .oe-tracker__eta { font-size: 14px; color: var(--oe-olive-soft); }
 .oe-tl { display: flex; gap: 18px; }
 .oe-tl__rail { display: flex; flex-direction: column; align-items: center; flex: none; }
 .oe-tl__dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid rgba(242, 237, 227, 0.18); display: block; flex: none; margin-top: 3px; }
 .oe-tl.is-done .oe-tl__dot { border-color: var(--oe-ember); background: var(--oe-ember); }
-.oe-tl.is-now .oe-tl__dot { border-color: var(--oe-ember); background: var(--oe-ember); box-shadow: 0 0 14px rgba(224, 116, 60, 0.85); }
+.oe-tl.is-now .oe-tl__dot { border-color: var(--oe-ember); background: var(--oe-ember); box-shadow: 0 0 14px color-mix(in srgb, var(--oe-ember) 85%, transparent); }
 .oe-tl__line { width: 2px; flex: 1; background: rgba(242, 237, 227, 0.12); display: block; }
 .oe-tl.is-done .oe-tl__line { background: var(--oe-ember); }
 .oe-tl__title { font-size: 16px; font-weight: 600; color: var(--oe-dim2); letter-spacing: -0.01em; }
@@ -438,13 +438,13 @@
 
 .oe-done__cols { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: 18px; margin-top: 18px; align-items: start; }
 .oe-recap { border: 1px solid var(--oe-line); border-radius: 22px; background: rgba(242, 237, 227, 0.022); overflow: hidden; }
-.oe-recap__head { padding: 24px 28px 18px; border-bottom: 1px solid rgba(242, 237, 227, 0.075); font-family: Newsreader, Georgia, serif; font-size: 24px; font-weight: 500; letter-spacing: -0.02em; }
+.oe-recap__head { padding: 24px 28px 18px; border-bottom: 1px solid rgba(242, 237, 227, 0.075); font-family: Poppins, -apple-system, "Segoe UI", sans-serif; font-size: 24px; font-weight: 500; letter-spacing: -0.02em; }
 .oe-recap__lines { padding: 6px 28px 0; }
 .oe-recap__line { display: flex; gap: 16px; align-items: center; padding: 17px 0; border-bottom: 1px solid var(--oe-line-soft); }
 .oe-recap__img { width: 58px; height: 58px; border-radius: 14px; flex: none; background: rgba(242, 237, 227, 0.05) center/cover no-repeat; box-shadow: inset 0 0 0 1px rgba(242, 237, 227, 0.1); }
 .oe-recap__name { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; }
 .oe-recap__sub { font-size: 13px; color: var(--oe-dim2); margin-top: 4px; line-height: 1.5; }
-.oe-recap__price { font-family: Newsreader, Georgia, serif; font-size: 19px; white-space: nowrap; }
+.oe-recap__price { font-family: Poppins, -apple-system, "Segoe UI", sans-serif; font-size: 19px; white-space: nowrap; }
 .oe-recap__rows { padding: 18px 28px 26px; display: grid; gap: 10px; font-size: 14.5px; color: var(--oe-mute); }
 .oe-recap__rows > div { display: flex; justify-content: space-between; gap: 16px; }
 .oe-recap__rows b { color: var(--oe-fg); font-weight: 400; }
@@ -454,12 +454,45 @@
 .oe-addr__label { font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--oe-dim); margin-bottom: 14px; }
 .oe-addr__name { font-size: 15.5px; line-height: 1.7; color: var(--oe-fg); }
 .oe-addr__lines { font-size: 14.5px; line-height: 1.7; color: #968C7D; }
-.oe-help { border: 1px solid rgba(224, 116, 60, 0.28); border-radius: 22px; background: rgba(224, 116, 60, 0.06); padding: 24px 26px; }
-.oe-help__title { font-family: Newsreader, Georgia, serif; font-size: 21px; font-weight: 500; letter-spacing: -0.02em; }
+.oe-help { border: 1px solid color-mix(in srgb, var(--oe-ember) 28%, transparent); border-radius: 22px; background: color-mix(in srgb, var(--oe-ember) 6%, transparent); padding: 24px 26px; }
+.oe-help__title { font-family: Poppins, -apple-system, "Segoe UI", sans-serif; font-size: 21px; font-weight: 500; letter-spacing: -0.02em; }
 .oe-help__body { font-size: 14.5px; line-height: 1.6; color: #C3B7A5; margin-top: 10px; }
 .oe-help__body b { color: var(--oe-fg); font-weight: 400; }
 .oe-again { margin-top: 18px; width: 100%; padding: 13px; border-radius: 13px; background: var(--oe-fg); color: var(--oe-ink); font: inherit; font-size: 15px; font-weight: 600; cursor: pointer; border: 0; transition: background .25s ease; }
 .oe-again:hover { background: var(--oe-ember); }
+
+/* The server-rendered receipt on WooCommerce's order-received page: lists and headings
+   without the theme's list and paragraph spacing. */
+.oe-done__head { text-align: center; }
+/* WooCommerce caps its .woocommerce wrapper at 1000px on block themes. */
+.wowrestro-design .woocommerce:has(> .wowrestro-receipt) { max-width: none; }
+.wowrestro-design .oe-meta, .wowrestro-design .oe-meta dd { margin-left: 0; margin-right: 0; margin-bottom: 0; }
+.wowrestro-design .oe-tl-list { list-style: none; margin: 0; padding: 0; }
+.wowrestro-design .oe-tl { margin: 0; padding: 0; }
+.oe-tl__text { display: block; padding-bottom: 22px; }
+.oe-tl:last-child .oe-tl__text { padding-bottom: 0; }
+.oe-tl:last-child .oe-tl__line { display: none; }
+.oe-tl__title, .oe-tl__body { display: block; }
+.wowrestro-design .oe-tracker > .oe-tl__body { margin: 0; }
+.oe-recap__text { flex: 1; min-width: 0; }
+.oe-recap__grand { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding-top: 14px; margin-top: 4px; border-top: 1px solid var(--oe-line); color: var(--oe-fg); font-family: Poppins, -apple-system, "Segoe UI", sans-serif; font-size: 20px; }
+.oe-recap__grand span:last-child { font-size: 28px; }
+.oe-addr__contact { margin-top: 10px; }
+.wowrestro-design .oe-again { display: block; text-align: center; text-decoration: none; }
+.oe-instructions { margin-top: 18px; border: 1px solid var(--oe-line); border-radius: 22px; background: var(--oe-panel); padding: 22px 26px; font-size: 15px; line-height: 1.6; }
+.wowrestro-design .oe-instructions :is(h2, h3) { font-size: 18px; font-weight: 600; margin: 0 0 10px; color: inherit; }
+.wowrestro-design .oe-instructions :is(p, ul) { margin: 0 0 10px; }
+.wowrestro-design .oe-instructions > :last-child, .wowrestro-design .oe-instructions section > :last-child { margin-bottom: 0; }
+/* Template 1's light panel tints every button alike, which left the main action looking disabled. */
+.wowrestro-design .wowrestro-menu:not([data-skin]) .oe-panel .oe-cta:not([disabled]),
+.wowrestro-design .oe-modalroot:not([data-skin]) .oe-modal__add:not([disabled]) { background: var(--oe-ember) !important; border-color: var(--oe-ember) !important; color: #fff !important; }
+/* Template 1 is light; the receipt's base greys were drawn for a dark page. */
+.wr-template-1 .oe-tl__dot { border-color: rgba(23, 23, 19, .28); }
+.wr-template-1 .oe-tl__line { background: var(--oe-line); }
+.wr-template-1 .oe-tl.is-done .oe-tl__line { background: var(--oe-ember); }
+.wr-template-1 :is(.oe-tl.is-done, .oe-tl.is-now) .oe-tl__dot { border-color: var(--oe-ember); }
+.wr-template-1 :is(.oe-help__body, .oe-addr__lines) { color: var(--oe-mute); }
+.wr-template-1 .oe-tracker__eta { color: #2f6b3a; }
 
 /* ---------------- order bar ----------------
    Fixed to the foot of the screen once the order has items. Drawer and sheet
@@ -525,7 +558,7 @@ body.wowrestro-design:has(.oe-cartbar__btn) { padding-bottom: calc(82px + env(sa
   font-size: 19px; line-height: 1; cursor: pointer; color: var(--oe-fg); border: 0;
 }
 .oe-modal__cap { position: absolute; left: 26px; right: 26px; bottom: 20px; z-index: 2; }
-.oe-modal__name { font-family: Newsreader, Georgia, serif; font-size: 28px; font-weight: 500; letter-spacing: -0.02em; }
+.oe-modal__name { font-family: Poppins, -apple-system, "Segoe UI", sans-serif; font-size: 28px; font-weight: 500; letter-spacing: -0.02em; }
 .oe-modal__desc { font-size: 14px; color: var(--oe-mute); margin-top: 6px; line-height: 1.5; }
 .oe-modal__body {
   padding: 24px 26px 0;
@@ -548,9 +581,9 @@ body.wowrestro-design:has(.oe-cartbar__btn) { padding-bottom: calc(82px + env(sa
   transition: all .28s ease;
 }
 .oe-opt + .oe-opt { margin-top: 9px; }
-.oe-opt.is-on { border-color: rgba(224, 116, 60, 0.55); background: rgba(224, 116, 60, 0.1); }
+.oe-opt.is-on { border-color: color-mix(in srgb, var(--oe-ember) 55%, transparent); background: color-mix(in srgb, var(--oe-ember) 10%, transparent); }
 .oe-opt__mark { width: 17px; height: 17px; border: 1.5px solid rgba(242, 237, 227, 0.26); flex: none; display: block; }
-.oe-opt.is-on .oe-opt__mark { border-color: var(--oe-ember); background: var(--oe-ember); box-shadow: 0 0 12px rgba(224, 116, 60, 0.8); }
+.oe-opt.is-on .oe-opt__mark { border-color: var(--oe-ember); background: var(--oe-ember); box-shadow: 0 0 12px color-mix(in srgb, var(--oe-ember) 80%, transparent); }
 .oe-opt__name { font-size: 15px; flex: 1; }
 .oe-opt__price { font-size: 13.5px; color: #968C7D; }
 /* Sticky so quantity and Add stay reachable however long the option list is. */
@@ -568,7 +601,7 @@ body.wowrestro-design:has(.oe-cartbar__btn) { padding-bottom: calc(82px + env(sa
   background: var(--oe-ember); color: var(--oe-ink);
   text-align: center; font: inherit; font-size: 15.5px; font-weight: 600;
   cursor: pointer; border: 0;
-  box-shadow: 0 20px 40px -18px rgba(224, 116, 60, 0.9);
+  box-shadow: 0 20px 40px -18px color-mix(in srgb, var(--oe-ember) 90%, transparent);
   transition: filter .25s ease;
 }
 .oe-modal__add:hover { filter: brightness(1.08); }
@@ -634,7 +667,7 @@ body.wowrestro-design:has(.oe-cartbar__btn) { padding-bottom: calc(82px + env(sa
   appearance: none;
   transition: border-color .3s ease;
 }
-.wowrestro-design .oe-field select:focus { border-color: rgba(224, 116, 60, 0.55); outline: none; }
+.wowrestro-design .oe-field select:focus { border-color: color-mix(in srgb, var(--oe-ember) 55%, transparent); outline: none; }
 .wowrestro-design .oe-field select:invalid,
 .wowrestro-design .oe-field select option[value=""] { color: var(--oe-dim2); }
 /* a light list in every browser: Windows draws options with these colours, and template 1's
@@ -667,6 +700,16 @@ body.wowrestro-design:has(.oe-cartbar__btn) { padding-bottom: calc(82px + env(sa
 /* the whole card reads as "working" without moving anything */
 .wowrestro-design .oe-add.is-busy,
 .wowrestro-design .oe-step.is-busy { transition: opacity .15s ease; }
+
+/* Checkout buttons save the pickup or delivery choice before the checkout page opens:
+   the label gives way to a spinner and the button keeps its size. */
+.wowrestro-design :is(.oe-cta, .oe-cartbar__btn)[aria-busy="true"] { position: relative; color: transparent !important; cursor: progress; }
+.wowrestro-design :is(.oe-cta, .oe-cartbar__btn)[aria-busy="true"] > * { visibility: hidden; }
+.wowrestro-design :is(.oe-cta, .oe-cartbar__btn)[aria-busy="true"]::after {
+  content: ""; position: absolute; top: 50%; left: 50%; width: 18px; height: 18px; margin: -9px 0 0 -9px;
+  border-radius: 50%; border: 2px solid color-mix(in srgb, var(--t-on-accent, #fff) 35%, transparent); border-top-color: var(--t-on-accent, #fff);
+  animation: oe-spin .7s linear infinite;
+}
 
 @media (prefers-reduced-motion: reduce) {
   .wowrestro-design .oe-spin { animation-duration: 2s; }
@@ -717,12 +760,12 @@ body.admin-bar.wowrestro-design .wowrestro-menu { scroll-margin-top: 32px; }
   margin: 0 auto 18px;
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  background: radial-gradient(circle at 50% 35%, rgba(224, 116, 60, 0.16), rgba(224, 116, 60, 0.03) 70%);
-  border: 1px solid rgba(224, 116, 60, 0.22);
+  background: radial-gradient(circle at 50% 35%, color-mix(in srgb, var(--oe-ember) 16%, transparent), color-mix(in srgb, var(--oe-ember) 3%, transparent) 70%);
+  border: 1px solid color-mix(in srgb, var(--oe-ember) 22%, transparent);
 }
 .wowrestro-design .oe-empty__art svg { width: 46px; height: 46px; display: block; }
 .wowrestro-design .oe-art-bag {
-  fill: rgba(224, 116, 60, 0.1);
+  fill: color-mix(in srgb, var(--oe-ember) 10%, transparent);
   stroke: var(--oe-ember);
   stroke-width: 2.2;
   stroke-linejoin: round;
@@ -738,7 +781,7 @@ body.admin-bar.wowrestro-design .wowrestro-menu { scroll-margin-top: 32px; }
   stroke-linecap: round;
 }
 .wowrestro-design .oe-panel__empty .oe-empty__title {
-  font-family: Newsreader, Georgia, serif;
+  font-family: Poppins, -apple-system, "Segoe UI", sans-serif;
   font-size: 19px;
   color: var(--oe-fg);
   margin-bottom: 7px;

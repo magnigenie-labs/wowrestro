@@ -113,7 +113,7 @@ final class WowRestro_Analytics {
 				foreach ( $order->get_items() as $item ) {
 					$id       = $item->get_product_id();
 					$quantity = (float) $item->get_quantity() + (float) $order->get_qty_refunded_for_item( $item->get_id() );
-					$item_net = (float) $item->get_total() + (float) $order->get_total_refunded_for_item( $item->get_id() );
+					$item_net = (float) $item->get_total() - (float) $order->get_total_refunded_for_item( $item->get_id() );
 					if ( ! isset( $products[ $id ] ) ) {
 						$product   = $item->get_product();
 						$image_id = $product ? $product->get_image_id() : 0;

@@ -820,9 +820,15 @@ final class WowRestro_App {
 				return new WP_Error( 'wowrestro_product_variation_attributes', __( 'Simple variation entry supports products with one variation attribute.', 'wowrestro' ), array( 'status' => 400 ) );
 			}
 		}
+		$image_id = absint( $input['imageId'] ?? 0 );
+		if ( $image_id && ( ! current_user_can( 'upload_files' ) || ! wp_attachment_is_image( $image_id ) ) ) {
+			return new WP_Error( 'wowrestro_product_image', __( 'Choose a valid image from the Media Library.', 'wowrestro' ), array( 'status' => 400 ) );
+		}
 		$converted_to_variable = $id && 'variable' === $type && $product->is_type( 'simple' );
 		$converted_to_simple   = $id && 'simple' === $type && $product->is_type( 'variable' );
 		try {
+			$sku = sanitize_text_field( $input['sku'] ?? '' );
+			$product->set_sku( $sku );
 			if ( $converted_to_variable || $converted_to_simple ) {
 				$converted = wp_set_object_terms( $id, $type, 'product_type' );
 				if ( is_wp_error( $converted ) ) {
@@ -833,7 +839,7 @@ final class WowRestro_App {
 				$product = $converted_to_variable ? new WC_Product_Variable( $id ) : new WC_Product_Simple( $id );
 			}
 			$product->set_name( sanitize_text_field( $input['name'] ?? '' ) );
-			$product->set_sku( sanitize_text_field( $input['sku'] ?? '' ) );
+			$product->set_sku( $sku );
 			$product->set_short_description( wp_kses_post( $input['description'] ?? '' ) );
 			if ( $product->is_type( 'simple' ) ) {
 				$regular_price = wc_format_decimal( $input['price'] ?? 0 );
@@ -844,10 +850,6 @@ final class WowRestro_App {
 			}
 			$product->set_stock_status( 'Out of stock' === (string) ( $input['stock'] ?? '' ) ? 'outofstock' : 'instock' );
 			$product->set_status( 'Draft' === (string) ( $input['status'] ?? '' ) ? 'draft' : 'publish' );
-			$image_id = absint( $input['imageId'] ?? 0 );
-			if ( $image_id && ( ! current_user_can( 'upload_files' ) || ! wp_attachment_is_image( $image_id ) ) ) {
-				return new WP_Error( 'wowrestro_product_image', __( 'Choose a valid image from the Media Library.', 'wowrestro' ), array( 'status' => 400 ) );
-			}
 			$product->set_image_id( $image_id );
 			$product->update_meta_data( WowRestro_Products::MENU_ITEM_META, 'yes' );
 			$product->save();

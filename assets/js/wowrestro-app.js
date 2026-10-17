@@ -268,6 +268,20 @@
 			}
 		},
 
+		/** Add the table to a card's menu link so orders from it are tagged dine-in at that table. */
+		qrTableUrl: function ( value, table ) {
+			try {
+				var parsed = new URL( value );
+				table = String( table || '' ).trim();
+				if ( table && ! parsed.searchParams.has( 'wr_table' ) ) {
+					parsed.search += ( parsed.search ? '&' : '' ) + 'wr_table=' + encodeURIComponent( table );
+				}
+				return parsed.toString();
+			} catch ( error ) {
+				return value;
+			}
+		},
+
 		loadImage: function ( url ) {
 			return new Promise( function ( resolve, reject ) {
 				var image = new Image();
@@ -314,6 +328,27 @@
 			}
 		},
 
+		/** Wrap measured card text, including long words, without dropping the brand name. */
+		qrTextLines: function ( context, value, width ) {
+			var lines = [];
+			var line = '';
+			String( value ).trim().split( /\s+/ ).forEach( function ( word ) {
+				if ( line && context.measureText( line + ' ' + word ).width <= width ) {
+					line += ' ' + word;
+					return;
+				}
+				if ( line ) { lines.push( line ); line = ''; }
+				Array.from( word ).forEach( function ( character ) {
+					if ( line && context.measureText( line + character ).width > width ) {
+						lines.push( line ); line = '';
+					}
+					line += character;
+				} );
+			} );
+			if ( line ) { lines.push( line ); }
+			return lines;
+		},
+
 		downloadQr: function ( record ) {
 			var scale = 256 === Number( record.size ) ? 1 : ( 512 === Number( record.size ) ? 1.5 : 0.75 );
 			var qr = WR.qrCanvas( record.url, 420 * scale );
@@ -322,7 +357,7 @@
 			}
 			var backgroundUrl = record.backgroundUrl || appAssets.qrBackground || '';
 			var brandLogoUrl = restaurantProfile.logo_url || appAssets.brandLogo || appAssets.mark || '';
-			var brandLabel = String( restaurantProfile.name || WR.boot.siteName || 'Restaurant' ).slice( 0, 18 );
+			var brandLabel = String( restaurantProfile.name || WR.boot.siteName || 'Restaurant' );
 			return Promise.all( [ WR.loadImage( backgroundUrl ), WR.loadImage( brandLogoUrl ) ] ).then( function ( images ) {
 				var card = document.createElement( 'canvas' );
 				var name = String( record.name || 'Table' ).slice( 0, 32 ).toUpperCase();
@@ -335,14 +370,17 @@
 				context.fillStyle = 'rgba(3,4,28,.48)';
 				context.fillRect( 0, 0, 1200, 1800 );
 				context.fillStyle = 'rgba(255,255,255,.96)';
+				context.font = '700 16px Inter, Arial, sans-serif';
+				var brandLines = WR.qrTextLines( context, brandLabel, 136 );
 				context.beginPath();
-				context.roundRect( 72, 72, 160, 160, 36 );
+				context.roundRect( 72, 72, 160, Math.max( 160, 120 + brandLines.length * 20 ), 36 );
 				context.fill();
 				WR.drawImageContain( context, images[ 1 ], 92, 85, 120, 90 );
 				context.fillStyle = '#17172a';
 				context.textAlign = 'center';
-				context.font = '700 18px Inter, Arial, sans-serif';
-				context.fillText( brandLabel, 152, 207 );
+				brandLines.forEach( function ( line, index ) {
+					context.fillText( line, 152, ( 1 === brandLines.length ? 207 : 194 ) + index * 20 );
+				} );
 				context.fillStyle = 'rgba(7,8,31,.78)';
 				context.strokeStyle = 'rgba(255,255,255,.32)';
 				context.lineWidth = 2;
@@ -646,7 +684,7 @@
 	      { id: 2, name: 'Northern Quarter', address: '7 Tib Street, Manchester', phone: '+44 161 555 0177', modules: 'Ordering', status: 'Published' },
 	      { id: 3, name: 'Airport Kiosk', address: 'T2 Departures, MAN', phone: '+44 161 555 0190', modules: 'Ordering', status: 'Draft' }
 	    ]),
-	    qrcodes: boot('qrcodes', []),
+	    qrcodes: boot('qrcodes', []).map(qr => Object.assign({}, qr, { url: WR.qrTableUrl(qr.url, qr.name) })),
 	    qrPreview: null,
 	    confirm: null,
 	    categories: boot('categories', [
@@ -1452,7 +1490,7 @@
 	        return Object.assign(base, { isLink: true, isInput: false, hasLabel: false, onClick: f.onClick });
 	      }
 	      if (f.kind === 'qrpreview') {
-	        const url = this.val('q_url', (settings.links || {}).menu || '');
+	        const url = WR.qrTableUrl(this.val('q_url', (settings.links || {}).menu || ''), this.val('q_name', ''));
 	        const name = String(this.val('q_name', '') || 'Your table');
 	        const background = this.val('q_background', { id: 0, url: appAssets.qrBackground || '' });
 	        const image = WR.qrDataUrl(url, 256);
@@ -1658,7 +1696,7 @@
 	        rows: rows.map(it => ({ cells: [
 	          avatar(it.name, it.sku + ' · ' + it.sold + ' sold', it.icon, it.color, it.imageUrl),
 	          plain(it.category),
-	          it.sale ? price(this.money(it.sale), this.money(it.price)) : price(this.money(it.price)),
+	          Number(it.sale) > 0 && Number(it.sale) < Number(it.price) ? price(this.money(it.sale), this.money(it.price)) : price(this.money(it.price)),
 	          chips(it.labels.map(n => { const l = this.labelBy(n); return { label: l.name, color: l.color, icon: l.icon }; })),
 	          badge(it.stock, this.stockDot(it.stock)),
 	          badge(it.status, it.status === 'Published' ? '#00c950' : '#f0b100'),
@@ -1724,7 +1762,7 @@
 	          actions(() => this.go('/food-menu/labels/update/' + l.id, st.group), null)
 	        ] })),
 	        count: rows.length + (rows.length === 1 ? ' label' : ' labels'),
-	        emptyTitle: 'No labels yet', emptyDescription: 'Create badges like Vegan or Spicy and attach them to any item.'
+	        emptyTitle: 'No labels yet', emptyDescription: 'Create Veg or Non-Veg badges and attach them to menu items.'
 	      };
 	    } else if (route === '/food-menu/nutrition') {
 	      const rows = st.items.filter(it => !ls || it.name.toLowerCase().indexOf(ls) > -1);
@@ -1996,9 +2034,10 @@
 	          { kind: 'note', label: '', span: '1 / -1', value: st.modifiers.length ? 'Selected groups appear on the menu item in the order shown above.' : 'No reusable add-on groups exist yet. Save this item, then create one from Food Menu → Add-ons.' }
 	        ]});
 	      }
+	      const savingDraft = this.val('i_status', d.status) === 'Draft';
 	      formCfg = {
-	        submitLabel: itemId ? 'Update Item' : 'Publish Item',
-	        message: itemId ? 'Menu item updated' : 'Menu item published',
+	        submitLabel: savingDraft ? 'Save Draft' : (itemId ? 'Update Item' : 'Publish Item'),
+	        message: savingDraft ? 'Menu item saved as draft' : (itemId ? 'Menu item updated' : 'Menu item published'),
 	        back: '/food-menu/items', group: st.group,
 	        sections: formSections.concat([
 	          { title: 'Product Labels', description: 'Badges render on the menu card and inside the details popup.', fields: [
@@ -2011,11 +2050,13 @@
 	          ]}
 	        ]),
 	        onSubmit: () => {
+	          const name = String(this.val('i_name', d.name) || '').trim();
+	          if (!name) return Promise.reject(new Error('Enter an item name.'));
 	          const image = this.val('i_image', d.image) || { id: 0, url: '' };
 	          const newVariations = showVariationSections ? (this.val('i_variations', []) || []).filter(row => String(row.name || '').trim()) : [];
           const rec = {
 	            id: itemId,
-	            name: this.val('i_name', d.name) || 'Untitled item',
+	            name,
 	            sku: this.val('i_sku', d.sku),
 	            category: this.val('i_category', d.category),
 	            price: this.val('i_price', d.price),
@@ -2059,7 +2100,8 @@
 	          ]}
 	        ],
 	        onSubmit: () => {
-	          const name = this.val('c_name', d.name) || 'Untitled category';
+	          const name = String(this.val('c_name', d.name) || '').trim();
+	          if (!name) return Promise.reject(new Error('Enter a category name.'));
 	          const rec = {
 	            id: catId,
 	            name, slug: this.val('c_slug', d.slug) || this.slugify(name),
@@ -2085,7 +2127,8 @@
 	          ]}
 	        ],
 	        onSubmit: () => {
-	          const name = this.val('b_name', d.name) || 'Untitled brand';
+	          const name = String(this.val('b_name', d.name) || '').trim();
+	          if (!name) return Promise.reject(new Error('Enter a brand name.'));
 	          const rec = { id: brandId, name, slug: this.val('b_slug', d.slug) || this.slugify(name), description: this.val('b_desc', d.description) };
 	          return WR.post('/workspace/brand', rec).then(saved => this.setState(s => ({
 	            brands: brandId ? s.brands.map(x => x.id === brandId ? saved : x) : s.brands.concat([saved]),
@@ -2101,8 +2144,8 @@
 	        message: labelId ? 'Label updated' : 'Label added',
 	        back: '/food-menu/labels', group: st.group,
 	        sections: [
-	          { title: 'Product Label', description: 'Pick a colour and an icon - the badge renders on every menu card and details popup.', fields: [
-	            { kind: 'input', key: 'lb_name', label: 'Label name', def: d.name, placeholder: 'e.g. Vegan' },
+	          { title: 'Product Label', description: 'Choose Veg or Non-Veg, then customise its badge colour and icon.', fields: [
+	            { kind: 'select', key: 'lb_name', label: 'Label name', def: d.name, options: [{ label: 'Select Veg or Non-Veg', value: '' }, 'Veg', 'Non-Veg'] },
 	            { kind: 'swatch', key: 'lb_color', label: 'Badge colour', def: d.color,
 	              options: ['#2B4BFF', '#00a63e', '#e7000b', '#00B5D8', '#9333e9', '#f0b100', '#00bba7', '#1d222b'] },
 	            { kind: 'iconpick', key: 'lb_icon', label: 'Icon', def: d.icon, span: '1 / -1',
@@ -2110,9 +2153,12 @@
 	          ]}
 	        ],
 	        onSubmit: () => {
+	          const name = String(this.val('lb_name', d.name) || '').trim();
+	          if (!name) return Promise.reject(new Error('Enter a label name.'));
+	          if (!['Veg', 'Non-Veg'].includes(name)) return Promise.reject(new Error('Choose Veg or Non-Veg.'));
 	          const rec = {
 	            id: labelId,
-	            name: this.val('lb_name', d.name) || 'New label',
+	            name,
 	            color: this.val('lb_color', d.color), icon: this.val('lb_icon', d.icon)
 	          };
 	          return WR.post('/workspace/label', rec).then(saved => this.setState(s => ({
@@ -2275,7 +2321,7 @@
 	          if (!name) throw new Error('Enter a table or QR code name.');
 	          if (!/^https?:\/\//i.test(url)) throw new Error('Enter a complete http or https page URL.');
 	          const background = this.val('q_background', { id: 0, url: appAssets.qrBackground || '' });
-	          return WR.post('/workspace/qr-code', { name, url, size: Number(this.val('q_size', '256')), backgroundId: Number(background.id || 0) }).then(record => {
+	          return WR.post('/workspace/qr-code', { name, url: WR.qrTableUrl(url, name), size: Number(this.val('q_size', '256')), backgroundId: Number(background.id || 0) }).then(record => {
 	            this.setState(s => ({ qrcodes: s.qrcodes.some(qr => qr.id === record.id) ? s.qrcodes.map(qr => qr.id === record.id ? record : qr) : s.qrcodes.concat([record]) }));
 	          });
 	        },
@@ -2351,7 +2397,7 @@
 
 	    const submitCurrentForm = () => {
 	      if (!formCfg) return;
-	      Promise.resolve(formCfg.onSubmit ? formCfg.onSubmit() : null).then(() => {
+	      Promise.resolve().then(() => formCfg.onSubmit ? formCfg.onSubmit() : null).then(() => {
 	        this._formDirty = false;
 	        this.toast(formCfg.message);
 	        this.go(formCfg.back, formCfg.group);

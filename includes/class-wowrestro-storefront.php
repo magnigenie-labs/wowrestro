@@ -152,6 +152,11 @@ final class WowRestro_Storefront {
 			// ponytail: the free-delivery progress bar stays off; feed it the zone's free_shipping min_amount if a store needs it.
 			'freeShippingMin' => 0,
 			'payments'        => $payments,
+			'tips'            => array(
+				'enabled' => WowRestro_Cart::tips_enabled(),
+				'presets' => WowRestro_Cart::tip_presets(),
+				'custom'  => 'yes' === ( $settings['custom_tips'] ?? 'no' ),
+			),
 			'currency'        => array(
 				'symbol'   => html_entity_decode( get_woocommerce_currency_symbol(), ENT_QUOTES, 'UTF-8' ),
 				'minor'    => wc_get_price_decimals(),

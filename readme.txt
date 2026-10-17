@@ -4,8 +4,8 @@ Tags: restaurant, food ordering, woocommerce, pickup, delivery
 Donate link: https://paypal.me/magnigeeks
 Requires PHP: 7.4
 Requires at least: 6.2
-Tested up to: 6.7
-Stable tag: 2.0.7
+Tested up to: 7.1
+Stable tag: 2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -90,35 +90,6 @@ No, you don't need any special theme to run this plugin. It works with all theme
 
 == Changelog ==
 
-= 2.0.7 =
-* Added: store pages. An ordering page whose menu shortcode sets a product category, `[wowrestro_menu category="bakery"]`, runs as its own store: it gets its own checkout and confirmation under its page (/bakery/checkout/, /bakery/confirmation/), and orders, receipts and email links remember the store. The shortcode can also set the store's `name`, switcher `label`, `tagline`, `hero` (two lines split by |), menu `heading`, `note`, colours (`accent`, `ink`, `paper`), corner `radius` in pixels, `type="shop"` (the receipt talks about the store, not the kitchen) and `header="store"` (a store header with a live cart pill and a store footer in place of the theme's). All store pages share one WooCommerce cart: a store's menu drops dishes added in another store, and /checkout/ or another store's checkout sends the cart to its own store.
-* Added: `[wowrestro_store_switcher label="" brand="" brand_url="" cta="" cta_url=""]`, a bar linking the store pages. On a store page with `header="store"` it sits above the store header.
-* Changed: the WooRestro 0.3 demo's old design files are no longer loaded if a site still enqueues them.
-
-= 2.0.6 =
-* Changed: after checkout the confirmation opens at /confirmation/ (or a site's own /…/confirmation/), with no order number or key in the address. A keyed link, after checkout or from an email, is remembered in that browser's session and redirects to the clean address, which shows that order and survives a refresh. Keyed links still work everywhere, so emails open on any device; links a payment gateway added its own parameters to are left alone so it can finish the payment. With no order in the session, /confirmation/ goes back to the menu.
-
-= 2.0.5 =
-* Fixed: every order into a part-booked kitchen slot wrote one "WordPress database error Duplicate entry" line to the PHP error log for each position already taken. Those collisions are how a slot is claimed safely, so they are no longer logged; a real database fault while reserving still is.
-
-= 2.0.4 =
-* Fixed: after activating the plugin (a new install, or switching over from WooRestro), /confirmation/ pages returned "not found" until Settings > Permalinks was opened. Activation now adds the route before WordPress rebuilds its rules.
-* Fixed: switching over from WooRestro by activation left a migration stopped by the 2.0.3 bug stopped; activation now restarts it, as updating already did.
-
-= 2.0.3 =
-* Fixed: the data migration stopped with "settings could not be saved during migration" whenever it ran in an admin request (Retry migration, or the background runner on admin-ajax). It compared the saved settings with the unsanitized value, and the settings sanitizer always reshapes it. A migration stopped by this runs again after the update.
-
-= 2.0.2 =
-* Changed: restaurant orders confirm at /confirmation/{order}/?key=… instead of /checkout/order-received/{order}/?key=…, after checkout, when a gateway returns, and in emails. It is still WooCommerce's order-received page underneath, so gateway thank-you hooks, conversion tracking and the guest email check behave as before, and old links keep working. Sites on plain permalinks keep WooCommerce's address.
-* Changed: the QR table card photo is recompressed (same size and look), which brings the plugin zip under the common 2 MB upload limit.
-* Changed: the order flow's text (menu, item dialog, cart, checkout and confirmation) uses Poppins on every template, in place of each template's own fonts.
-
-= 2.0.1 =
-* New: the `wowrestro_design_config` filter. Through it a menu page can keep to one product category (`category`, its sub-categories become the tabs), and change the hero line (`hero`, "First line|second line"), the menu heading (`heading`) and the line under the menu (`note`).
-* New: the order flow fires a `wowrestro:cart` event on the document with the item count and the formatted total whenever the cart changes, for a header cart badge outside the menu.
-* Fixed: template 1 tinted every button in the order panel alike, so Checkout, Place order and the options dialog's Add looked disabled. They are solid in the template's colour again.
-* Fixed: selected times, the chosen payment method, step numbers, quantity steppers and card hovers used a fixed orange instead of the template's colour.
-
 = 2.0 =
 * Major Release: Complete architectural modernization for high-performance restaurant operations.
 * Added: WooCommerce High-Performance Order Storage (HPOS) and Cart & Checkout Blocks compatibility.
@@ -126,6 +97,8 @@ No, you don't need any special theme to run this plugin. It works with all theme
 * Added: Operational order statuses (New, Accepted, Preparing, Ready, Out for Delivery, Completed, Cancelled) decoupled from payment statuses.
 * Added: Atomic shared-kitchen capacity and slot reservations ledger with InnoDB transactional safety.
 * Added: Single-page ordering storefront app powered by WooCommerce Store API, including 36 modern menu templates.
+* Added: Store pages. An ordering page whose menu shortcode sets a product category, `[wowrestro_menu category="bakery"]`, runs as its own store: it gets its own checkout and confirmation under its page (/bakery/checkout/, /bakery/confirmation/), and orders, receipts and email links remember the store. The shortcode can also set the store's `name`, switcher `label`, `tagline`, `hero` (two lines split by |), menu `heading`, `note`, colours (`accent`, `ink`, `paper`), corner `radius` in pixels, `type="shop"` (the receipt talks about the store, not the kitchen) and `header="store"` (a store header with a live cart pill and a store footer in place of the theme's). All store pages share one WooCommerce cart: a store's menu drops dishes added in another store, and /checkout/ or another store's checkout sends the cart to its own store.
+* Added: `[wowrestro_store_switcher label="" brand="" brand_url="" cta="" cta_url=""]`, a bar linking the store pages. On a store page with `header="store"` it sits above the store header.
 * Added: Modern Gutenberg menu block and Elementor widget for flexible menu embedding.
 * Added: Reusable Modifier Groups custom post type (`wowrestro_mod_group`) with min/max selection bounds, single/multi choices, default options, and immutable order snapshots.
 * Added: Table reservations management system (`[wowrestro_reservations]`) with slot capacity, guest limits, and deposit support.
@@ -135,11 +108,24 @@ No, you don't need any special theme to run this plugin. It works with all theme
 * Added: In-board manual / phone order entry with item selection, custom delivery/pickup timing, and payment collection.
 * Added: Tip calculation support (percentage presets and custom flat amounts) on cart and checkout.
 * Added: Live customer order tracking page and shortcode (`[wowrestro_tracking]`) with progress updates on Thank You page and emails.
+* Added: The `wowrestro_design_config` filter. Through it a menu page can keep to one product category (`category`, its sub-categories become the tabs), and change the hero line (`hero`, "First line|second line"), the menu heading (`heading`) and the line under the menu (`note`).
+* Added: The order flow fires a `wowrestro:cart` event on the document with the item count and the formatted total whenever the cart changes, for a header cart badge outside the menu.
 * Added: Comprehensive REST API under `wowrestro/v1` namespace for menu, availability, operations, devices, and tracking.
 * Added: Resumable, non-destructive legacy data migration tool for seamless upgrades from WOWRestro 1.x and WooRestro.
 * Added: Guided 4-step onboarding wizard for first-time restaurant setup.
 * Added: Built-in HPOS-safe restaurant sales analytics and operational reporting.
 * Added: Site Health diagnostic checks for checkout compatibility, configuration, and capacity ledger health.
+* Changed: After checkout the confirmation opens at /confirmation/ (or a site's own /…/confirmation/), with no order number or key in the address. A keyed link, after checkout or from an email, is remembered in that browser's session and redirects to the clean address, which shows that order and survives a refresh. Keyed links still work everywhere, so emails open on any device; links a payment gateway added its own parameters to are left alone so it can finish the payment. With no order in the session, /confirmation/ goes back to the menu.
+* Changed: Restaurant orders confirm at clean confirmation routes instead of /checkout/order-received/{order}/?key=…, while maintaining gateway thank-you hooks, conversion tracking, and guest email check behavior. Old links keep working. Sites on plain permalinks keep WooCommerce's address.
+* Changed: The QR table card photo is recompressed (same size and look), which brings the plugin zip under the common 2 MB upload limit.
+* Changed: The order flow's text (menu, item dialog, cart, checkout and confirmation) uses Poppins on every template, in place of each template's own fonts.
+* Changed: The WooRestro 0.3 demo's old design files are no longer loaded if a site still enqueues them.
+* Fixed: Every order into a part-booked kitchen slot wrote one "WordPress database error Duplicate entry" line to the PHP error log for each position already taken. Those collisions are how a slot is claimed safely, so they are no longer logged; a real database fault while reserving still is.
+* Fixed: After activating the plugin (a new install, or switching over from WooRestro), /confirmation/ pages returned "not found" until Settings > Permalinks was opened. Activation now adds the route before WordPress rebuilds its rules.
+* Fixed: Switching over from WooRestro by activation left a migration stopped by the settings check stopped; activation now restarts it, as updating already did.
+* Fixed: The data migration stopped with "settings could not be saved during migration" whenever it ran in an admin request (Retry migration, or the background runner on admin-ajax). It compared the saved settings with the unsanitized value, and the settings sanitizer always reshapes it. A migration stopped by this runs again after the update.
+* Fixed: Template 1 tinted every button in the order panel alike, so Checkout, Place order and the options dialog's Add looked disabled. They are solid in the template's colour again.
+* Fixed: Selected times, the chosen payment method, step numbers, quantity steppers and card hovers used a fixed orange instead of the template's colour.
 * Removed: Legacy jQuery dependencies (jquery.timepicker, jquery.toast, jquery.tipTip) and outdated template files in favor of lightweight vanilla scripts and Phosphor icon fonts.
 
 = 1.3.1 - 13th April 2022 =
@@ -174,30 +160,8 @@ No, you don't need any special theme to run this plugin. It works with all theme
 
 == Upgrade Notice ==
 
-= 2.0.7 =
-* Store pages: an ordering page limited to one category can run as its own store, with its own checkout, confirmation, name and colours.
-
-= 2.0.6 =
-* Order confirmations open at a clean address, /confirmation/, with no order number or key in it.
-
-= 2.0.5 =
-* Stops kitchen-slot reservations filling the PHP error log with "Duplicate entry" lines.
-
-= 2.0.4 =
-* Fixes /confirmation/ pages returning "not found" after the plugin is activated, until permalinks were saved.
-
-= 2.0.3 =
-* Fixes the data migration stopping with "settings could not be saved during migration". A stopped migration runs again after this update.
-
-= 2.0.2 =
-* Order confirmations move to their own address, /confirmation/{order}/. Links already sent to /checkout/order-received/ keep working.
-* The order flow's text uses Poppins on every menu template.
-
-= 2.0.1 =
-* Template 1's Checkout and Place order buttons no longer look disabled, and its selected options use the template's own colour.
-
 = 2.0 =
-Major release 2.0 brings HPOS compatibility, Checkout Blocks support, a live Kitchen Order Board, slot reservations, and a redesigned modifier engine. An automatic, non-destructive data migration wizard will run on first activation to migrate your 1.x settings, modifiers, and orders.
+Major release 2.0 brings HPOS compatibility, Checkout Blocks support, a live Kitchen Order Board, slot reservations, store pages, clean confirmation URLs, and a redesigned modifier engine. An automatic, non-destructive data migration wizard will run on first activation to migrate your 1.x settings, modifiers, and orders.
 
 = 1.3.1 =
 Please take a backup of your site before updating the plugin.

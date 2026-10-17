@@ -185,7 +185,9 @@
         // otherwise picking 20:15 would rebuild the list around 20:15 and the
         // selection would appear to jump.
         if (!S.slot) S.baseAt = (q && q.promised_at) ? q.promised_at : '';
-        render();
+        // Persist the selected time as soon as its quote is accepted. Waiting
+        // for Checkout loses the choice when the customer reloads the menu.
+        return syncMode();
       })
       .catch(function () {});
   }
@@ -535,17 +537,41 @@
     '</div>';
   }
 
+  function tipControls() {
+    if (!CFG.tips || !CFG.tips.enabled || !cartCount()) return '';
+    var disabled = S.busy ? ' disabled' : '';
+    return '<div class="oe-coupon"><div class="oe-field"><label for="oe-tip">Add a tip</label>' +
+      '<select id="oe-tip" data-tip' + disabled + '><option value="">Choose a tip</option><option value="none">No tip / remove tip</option>' +
+      (CFG.tips.presets || []).map(function (p) { return '<option value="percent:' + esc(p) + '">' + esc(p) + '%</option>'; }).join('') +
+      '</select></div>' + (CFG.tips.custom ? '<div class="oe-coupon__row"><input id="oe-tip-custom" type="number" min="0" step="' + Math.pow(10, -CUR.minor) + '" aria-label="Custom tip amount" placeholder="Custom tip amount"' + disabled + '><button type="button" data-applytip' + disabled + '>Apply tip</button></div>' : '') +
+      '<div class="oe-fineprint">Tips use the discounted item total. The applied amount appears in your order summary.</div></div>';
+  }
+
+  function applyTip(raw) {
+    if (S.busy || !CFG.tips || !CFG.tips.enabled || !cartCount()) return Promise.resolve();
+    var parts = String(raw).split(':'), value = Number(parts[1]);
+    var valid = raw === 'none' || (parts.length === 2 && parts[1].trim() !== '' && isFinite(value) &&
+      ((parts[0] === 'percent' && (CFG.tips.presets || []).indexOf(value) !== -1) ||
+       (parts[0] === 'custom' && CFG.tips.custom && value >= 0)));
+    if (!valid) { S.error = 'Choose an available tip or enter a valid custom amount.'; render(); return Promise.resolve(); }
+    S.busy = true; S.error = ''; render();
+    return api('cart/extensions', 'POST', { namespace: 'wowrestro-tip', data: { tip: raw } })
+      .then(function (data) { S.busy = false; setCart(data); })
+      .catch(fail);
+  }
+
   function totalsBlock(withTax) {
     if (!cart) return '';
     var rows = '<div><span>Subtotal</span><b data-total="subtotal">' + money(cart.totals.total_items) + '</b></div>';
     if (discountMinor()) rows += '<div><span>Discount</span><span class="is-free" data-total="discount">−' + money(discountMinor()) + '</span></div>';
     if (isDelivery()) {
-      var fee = cartHasPluginFee() ? shippingMinor() + feesMinor() : quoteFeeMinor();
+      var fee = cartHasPluginFee() ? shippingMinor() : quoteFeeMinor();
       // (pickup never shows a fee - see the branch below)
       rows += '<div><span>Delivery</span>' + (fee ? '<b data-total="fee">' + money(fee) + '</b>' : '<span class="is-free" data-total="fee">Free</span>') + '</div>';
     } else {
       rows += '<div><span>Pickup</span><span class="is-free" data-total="fee">Free</span></div>';
     }
+    (cart.fees || []).forEach(function (fee) { rows += '<div><span>' + esc(decode(fee.name)) + '</span><b>' + money(fee.totals.total) + '</b></div>'; });
     if (withTax && taxMinor()) rows += '<div><span>Taxes</span><b data-total="tax">' + money(taxMinor()) + '</b></div>';
     rows += '<div class="oe-totals__grand"><span>Total</span><span data-total="grand">' + money(payableMinor()) + '</span></div>';
     return '<div class="oe-totals">' + rows + '</div>';
@@ -720,7 +746,7 @@
     var structureSig = [
       cart ? cart.items.map(function (i) { return i.key; }).join(',') : 'none',
       S.service, S.slot, timeSig(), quoteSig, S.error, belowMinimum(), canCheckout(),
-      !!discountMinor(), !!taxMinor(), cartHasPluginFee()
+      !!discountMinor(), !!taxMinor(), cartHasPluginFee(), JSON.stringify(cart && cart.fees || [])
     ].join('|');
     var numbersSig = cartSignature();
 
@@ -792,7 +818,7 @@
     set('grand', money(payableMinor()));
     if (discountMinor()) set('discount', '−' + money(discountMinor()));
     if (isDelivery()) {
-      var fee = cartHasPluginFee() ? shippingMinor() + feesMinor() : quoteFeeMinor();
+      var fee = cartHasPluginFee() ? shippingMinor() : quoteFeeMinor();
       set('fee', fee ? money(fee) : 'Free');
     }
     var cta = menuNodes.panel.querySelector('.oe-cta');
@@ -1074,7 +1100,7 @@
               '</div>' +
               (S.couponMsg ? '<div class="oe-coupon__msg ' + (S.couponOk ? 'is-ok' : 'is-bad') + '">' + esc(S.couponMsg) + '</div>' : '') +
             '</div>' +
-            totalsBlock(true) +
+            tipControls() + totalsBlock(true) +
             '<div class="oe-panel__pay">' +
               (S.error ? '<div class="oe-error" role="alert">' + esc(S.error) + '</div>' : '') +
               (belowMinimum() ? '<div class="oe-error">Delivery orders start at ' + money(minimumMinor()) + '.</div>' : '') +
@@ -1351,7 +1377,7 @@
   }
 
   document.addEventListener('click', function (e) {
-    var t = e.target.closest('[data-go],[data-add],[data-qty],[data-key],[data-remove],[data-when],[data-svc],[data-cat],[data-clear],[data-pay],[data-applycoupon],[data-place],[data-close],[data-mqty],[data-modaladd],[data-opt],[data-cart-open],[data-cart-close]');
+    var t = e.target.closest('[data-go],[data-add],[data-qty],[data-key],[data-remove],[data-when],[data-svc],[data-cat],[data-clear],[data-pay],[data-applycoupon],[data-applytip],[data-place],[data-close],[data-mqty],[data-modaladd],[data-opt],[data-cart-open],[data-cart-close]');
     if (!t || !root.contains(t) && !modalRoot.contains(t)) return;
     var d = t.dataset;
 
@@ -1432,6 +1458,7 @@
       return addVariation(mp, v, S.mqty);
     }
 
+    if (d.applytip !== undefined) return applyTip('custom:' + document.getElementById('oe-tip-custom').value);
     if (d.applycoupon !== undefined) return applyCoupon();
     if (d.place !== undefined) return placeOrder();
   });
@@ -1447,6 +1474,7 @@
       saveDraft();
       return patchField('state');
     }
+    if (t.dataset.tip !== undefined) return applyTip(t.value);
     if (t.dataset.optin !== undefined) { S.statusOptIn = !!t.checked; return; }
     if (t.dataset.day !== undefined) {
       S.day = t.value;

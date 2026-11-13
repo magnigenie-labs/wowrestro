@@ -1,6 +1,6 @@
 === WowRestro - Restaurant Ordering & Operations for WooCommerce ===
 Contributors: magnigenie, sagarseth9, devashu0011
-Tags: restaurant, food ordering, woocommerce, pickup, delivery
+Tags: restaurant, food ordering, online ordering, pickup, delivery
 Donate link: https://paypal.me/magnigeeks
 Requires PHP: 7.4
 Requires at least: 6.2
@@ -9,84 +9,172 @@ Stable tag: 2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-WowRestro is a complete restaurant ordering and fulfillment operations system for WooCommerce.
+Transform WooCommerce into a commission-free restaurant ordering powerhouse with app-like menus, QR dine-in, live kitchen order board, and table reservations.
 
 == Description ==
 
-WooRestro is an online ordering system powered by WooCommerce. WooRestro allows you to offer both Takeaway/Pickup and Delivery services to your customers. Using WooRestro, you can easily create a responsive food ordering system for free.
+**WowRestro** is a complete, commission-free restaurant online ordering and kitchen operations system built specifically for WooCommerce. 
 
-Now you can easily convert your website visitors to customers using the WooRestro ordering interface. WooRestro helps you convert your WooCommerce store into an online takeaway/delivery system by providing a modern and responsive menu design.
+Say goodbye to hefty 15–30% aggregator commissions. With WowRestro, you own your customer relationships, keep 100% of your profits, and deliver a slick, lightning-fast ordering experience that keeps hungry diners coming back for more.
 
-Some of the possible use cases of WooRestro include online food delivery/takeaway businesses, online grocery delivery/takeaway businesses, online flower delivery/takeaway systems, laundry services, etc.
+Whether you run a bustling pizzeria, trendy cafe, bakery, cloud kitchen, food truck, bar, or multi-location restaurant chain, WowRestro equips you with an enterprise-grade digital ordering suite right inside WordPress.
 
-WooRestro enables you to easily add modifiers/options/add-ons for your food items directly from the product add/edit screen of WooCommerce.
+👉 [Live Demo](https://www.woorestro.com/#demo)
+---
 
-The WooRestro layout is implemented on your site using the [wowrestro] shortcode. The plugin automatically creates a page called ORDER ONLINE, which contains the [wowrestro] shortcode and is used for the ordering interface presented to your customers.
+### 🚀 Why WowRestro Boosts Customer Engagement & Sales
 
-= Shortcode Attributes =
+* **App-Like Speed & Flow**: Powered by the WooCommerce Store API, customers browse categories, configure toppings, and checkout in seconds without annoying full-page reloads.
+* **Frictionless Mobile-First Experience**: Over 80% of food orders happen on smartphones. WowRestro is engineered from the ground up for thumb-friendly mobile ordering.
+* **Irresistible Food Customization**: Visual modifier popups make upselling toppings, crusts, dips, sizes, and combos effortless.
+* **Contactless Dine-In QR Ordering**: Seat guests, let them scan their table QR code, browse your interactive digital menu, and order directly to their table.
+* **Real-Time Customer Order Tracking**: Keep diners excited and informed with live visual progress updates from "Order Placed" to "Out for Delivery".
 
-* category: Comma-separated list of category slugs.
-* show_search (yes, no): Allows you to show/hide the search bar.
+---
 
-= Shortcode Examples =
+### 🌟 Key Features Built for Modern Restaurants
 
-* [wowrestro]
-* [wowrestro category="main-course,lunch,starters"]
-* [wowrestro category="main-course,lunch,starters" show_search="no"]
+#### 📱 High-Converting Menu Storefront (36 Modern Templates)
+* **Single-Page Ordering App**: Fast, responsive menu layout with sticky categories, search bar, and live floating cart.
+* **36 Designer Templates**: Tailored layouts for pizza places, burger joints, sushi bars, bakeries, cafes, and fine dining.
+* **Gutenberg Block & Elementor Widget**: Embed your interactive food menu anywhere with drag-and-drop ease.
+* **Dietary Badges & Info**: Highlight Veg, Non-Veg, Vegan, Gluten-Free, or Spicy items at a glance.
 
-= Why Use WooRestro =
+#### 🍕 Advanced Modifiers, Add-ons & Option Groups
+* **Custom Modifier Groups**: Add checkboxes, radio buttons, or quantity selectors for extras and add-ons.
+* **Selection Limits**: Enforce required minimums and maximums (e.g., "Choose 1 sauce", "Pick up to 3 toppings").
+* **Pre-Selected Defaults**: Guide customer choices with default selections to speed up checkout.
+* **Immutable Snapshots**: Order modifiers are permanently locked into the receipt, preventing discrepancies.
 
-* WooRestro is built with a mobile-first design approach, as most of your customers will use their mobile phones to order online.
-* Powered by WooCommerce, which makes it more powerful.
-* Ability to easily add modifiers for your items.
-* Allows you to set items as Veg or Non-Veg.
-* Support for variable products.
-* Completely developer-friendly with sufficient hooks to alter any functionality of the plugin.
+#### 🧑‍🍳 Real-Time Kitchen Order Board (KDS)
+* **Live Operational Board**: Separate order operations into New, Accepted, Preparing, Ready, Out for Delivery, and Completed.
+* **Push Notifications & Sound Alerts**: Real-time Firebase Cloud Messaging (FCM HTTP v1) alerts your kitchen staff instantly the moment an order arrives.
+* **Manual / Phone Order Entry**: Take walk-in or phone orders straight from the order board.
+* **Staff Access Roles**: Assign dedicated `Kitchen Manager`, `Kitchen Staff`, or `Waiter` roles without exposing sensitive WordPress admin settings.
 
-= WooRestro Demo =
+#### 🪑 Dine-In QR Table Ordering
+* **Contactless Digital Table Menus**: Print automatic QR codes for each table.
+* **Automatic Table Tracking**: Orders placed via table QR code are tagged with the table number and session automatically.
+* **Fast Re-Ordering**: Guests can order extra drinks or desserts throughout their meal.
 
-Check out [WooRestro Demo](https://demo.wowrestro.com/)
-Check out [Documentation](https://docs.wowrestro.com/)
+#### 📅 Table Reservations Management
+* **Interactive Booking Widget**: Embed table reservations with `[wowrestro_reservations]`.
+* **Guest Counts & Slot Capacities**: Control available seats and time slots to prevent overbooking.
+* **Booking Confirmation & Statuses**: Manage pending, confirmed, seated, and cancelled reservations.
 
-= Need Help? =
+#### ⏱️ Smart Kitchen Capacity & Slot Reservations
+* **Avoid Kitchen Overwhelm**: Cap the maximum number of orders per time slot (e.g., max 10 orders every 15 minutes).
+* **Atomic InnoDB Ledger**: Concurrency-safe slot reservations ensure duplicate slot claims never occur during peak lunch and dinner rushes.
+* **Delivery & Pickup Windows**: Flexible lead times, advance ordering dates, and service-specific schedules.
 
-You can use the support forum for this plugin to share any issues you are experiencing, and our support team will make sure to provide you with a quick resolution for your problems.
+#### 🏪 Multi-Store & Category-Specific Pages
+* **Dedicated Store Pages**: Run independent ordering pages for sub-brands (e.g., `/bakery/` or `/cocktail-bar/`) with their own branding, colours, header, and clean confirmation page (`/confirmation/`).
+* **Store Switcher Bar**: Seamlessly navigate between locations or concepts using `[wowrestro_store_switcher]`.
+* **Shared WooCommerce Cart**: Smart cart handling ensures orders remain isolated to the correct storefront.
 
-You can also reach out to us at [support@wowrestro.com](mailto:support@wowrestro.com)
+#### 📍 Multi-Location Branch Support
+* Assign menu items, operational hours, and orders to specific restaurant branches.
+* Allow customers to choose their closest branch using `[wowrestro_location_selector]`.
 
+#### 💳 Seamless Checkout, Tipping & Tracking
+* **Clean Confirmation URLs**: Polished `/confirmation/` experience that securely restores the customer's order session without ugly query keys.
+* **Tip Suggestions**: Preset percentage buttons (10%, 15%, 20%) and custom tip fields at checkout.
+* **HPOS Compatible**: 100% compatible with WooCommerce High-Performance Order Storage and Checkout Blocks.
+* **Zero jQuery Bloat**: Built with vanilla JavaScript and lightweight SVG icons for peak speed and Google Core Web Vitals scores.
+
+---
+
+### 📋 Shortcode Quick Reference
+
+Embed WowRestro anywhere on your WordPress site using these flexible shortcodes:
+
+* `[wowrestro]` – Displays the default online ordering menu.
+* `[wowrestro template="2" layout="tabs"]` – Displays template 2 with tabbed category navigation.
+* `[wowrestro category="pizza,pasta" show_search="no"]` – Restricts the menu to specific categories.
+* `[wowrestro_menu category="bakery" name="Artisan Bakery" header="store"]` – Builds a branded store page.
+* `[wowrestro_store_switcher label="Our Brands" brand="Main Kitchen"]` – Adds a navigation switcher between store pages.
+* `[wowrestro_reservations]` – Embeds the table reservation booking form.
+* `[wowrestro_tracking]` – Displays customer order tracking and status lookup.
+* `[wowrestro_staff_panel]` – Staff ordering terminal for dine-in and POS table orders.
+* `[wowrestro_location_selector]` – Branch switcher for multi-location venues.
+
+---
+
+### 💡 Ideal For Every Food Business
+
+* Restaurants & Bistros
+* Pizzerias & Italian Trattorias
+* Burger Joints & Fast Food
+* Cafes, Coffee Shops & Bakeries
+* Ghost Kitchens & Cloud Kitchens
+* Bars, Pubs & Breweries
+* Food Trucks & Pop-up Eateries
+* Catering & Meal Prep Services
+
+---
 == Installation ==
 
-1. Login to your WordPress dashboard and navigate to Plugins > Add New.
-2. Search for WooRestro.
-3. Click Install and activate the plugin.
-4. Once the plugin is activated, it will create a page called Order Online with the shortcode [wowrestro]. This page will list all your items.
-5. After activating the plugin, you can navigate to the WooRestro menu on your dashboard and start setting up different settings for the plugin.
+= Minimum Requirements =
+* WordPress 6.2 or higher
+* WooCommerce 8.9 or higher
+* PHP 7.4 or higher (PHP 8.1+ recommended)
+
+= Automatic Installation =
+1. Log in to your WordPress Dashboard.
+2. Go to **Plugins > Add New**.
+3. Search for **WowRestro**.
+4. Click **Install Now** and then **Activate**.
+5. The 4-step setup wizard will guide you through your business hours, service types (Delivery / Pickup / Dine-in), and ordering page setup.
+
+= Manual Installation =
+1. Download the plugin zip file from WordPress.org.
+2. Go to **Plugins > Add New > Upload Plugin** in your WordPress admin.
+3. Choose the zip file and click **Install Now**.
+4. Activate the plugin and follow the onboarding wizard.
 
 == Frequently Asked Questions ==
 
-= How can I add my products to the order online page? =
-You can easily add your products from the WooCommerce Products menu. You just need to make sure the product you are adding is marked as a WooRestro item.
+= Does WowRestro charge any commission on orders? =
+No! WowRestro is 100% commission-free. Unlike Deliveroo, UberEats, or DoorDash that take 20–30% of every sale, you keep all of your revenue and customer data.
 
-= Does it require WooCommerce? =
-Yes, the plugin is built as an extension to WooCommerce, so it's necessary to have WooCommerce installed and active before adding this plugin.
+= Can customers order on mobile without installing an app? =
+Yes! WowRestro provides a Progressive Web App (PWA) style single-page experience directly in mobile browsers. Customers browse menus, pick toppings, and pay instantly without downloading anything from the app store.
 
-= Do I need any specific theme to make this plugin work correctly? =
-No, you don't need any special theme to run this plugin. It works with all themes that support WooCommerce.
+= How do the food modifiers and add-ons work? =
+Under **WowRestro > Modifier Groups**, you can create reusable modifier sets (e.g., "Choose Crust", "Extra Toppings", "Choice of Dressing"). You can configure single-choice radio buttons, multi-choice checkboxes, minimum/maximum selection rules, and prices for each choice. Then assign them to any food product with a single click.
+
+= Can I prevent kitchen overload during peak rush hours? =
+Yes! WowRestro features built-in Kitchen Capacity and Slot Reservations. You can define how many orders your kitchen can handle in each 15, 30, or 60-minute window. Once a slot reaches capacity, customers are prompted to select the next available time slot.
+
+= How does Dine-In QR Table Ordering work? =
+Each dining table can have its own QR code generated from the WowRestro dining settings. When a guest scans the QR code with their phone camera, the menu opens with their table number pre-selected. Their order is sent straight to the Kitchen Order Board tagged with their table number.
+
+= How do kitchen staff get notified of new orders? =
+Staff can keep the **Kitchen Order Board** open on any tablet, iPad, or computer screen. WowRestro uses real-time push notifications (Firebase FCM) and audible chimes so the kitchen is alerted immediately when a new order lands.
+
+= Can I use WowRestro with page builders like Elementor or the Block Editor? =
+Yes! WowRestro includes both a native Gutenberg Block and an Elementor Widget for the menu, plus flexible shortcodes for full customization in any theme or builder.
+
+= Is it compatible with WooCommerce HPOS and Checkout Blocks? =
+Yes! WowRestro is fully declared compatible with WooCommerce High-Performance Order Storage (HPOS) and both classic checkout and the new Cart & Checkout Blocks.
+
+= Can I migrate my settings from WooRestro 1.x? =
+Yes! WowRestro 2.0 includes an automatic, non-destructive legacy migration tool that safely upgrades your settings, legacy modifiers, and order history.
 
 == Screenshots ==
 
-1. WooRestro items list
-2. WooRestro Order Setting
-3. Simple WooRestro item with modifiers
-4. Variable WooRestro item with modifiers
-5. WooRestro Mobile Layout
-6. WooRestro Item edit screen
-7. WooRestro General Settings
-8. WooRestro Service Settings
-9. WooRestro Pickup Service Settings
-10. WooRestro Delivery Service Settings
-11. WooRestro Style Settings
-12. WooRestro Notifications Settings
+1. Interactive mobile-first online food ordering menu with category tabs
+2. Food item modifier popup with toppings, choices, and quantity selectors
+3. Live Kitchen Order Board (KDS) with audio chimes and real-time order columns
+4. Dine-in QR code table ordering flow for contactless table service
+5. Table reservation booking widget with guest count and time slot selection
+6. Order confirmation and live visual order tracking timeline
+7. Multi-store page builder with custom branding, hero headers, and themes
+8. Kitchen capacity and time slot reservation settings
+9. Delivery and pickup service scheduling rules
+10. Modifier Group creator with min/max rules and pricing
+11. Guided 4-step onboarding wizard for quick restaurant launch
+12. HPOS-compatible restaurant sales analytics and performance reports
 
 == Changelog ==
 

@@ -8,7 +8,7 @@
  * Requires PHP:      7.4
  * Requires Plugins:  woocommerce
  * WC requires at least: 8.9
- * WC tested up to: 10.9
+ * WC tested up to: 11.2.1
  * Author:            WowRestro
  * Author URI:        https://woorestro.com/
  * Text Domain:       wowrestro

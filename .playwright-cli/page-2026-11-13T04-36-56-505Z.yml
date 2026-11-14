@@ -1,0 +1,338 @@
+- generic [active] [ref=f2e1]:
+  - link "Skip to content" [ref=f2e2] [cursor=pointer]:
+    - /url: "#wp--skip-link--target"
+  - generic [ref=f2e3]:
+    - banner [ref=f2e4]:
+      - generic [ref=f2e6]:
+        - paragraph [ref=f2e7]:
+          - link "WowRestro Local QA" [ref=f2e8] [cursor=pointer]:
+            - /url: http://127.0.0.1:18889
+        - link "Cart" [ref=f2e10] [cursor=pointer]:
+          - /url: http://127.0.0.1:18889/cart/
+    - main [ref=f2e16]:
+      - generic [ref=f2e19]:
+        - form "Checkout" [ref=f2e21]:
+          - group "Contact information" [ref=f2e22]:
+            - heading "Contact information" [level=2] [ref=f2e26]
+            - generic [ref=f2e28]:
+              - generic [ref=f2e29]:
+                - textbox "Email address" [ref=f2e30]: native-pickup@example.test
+                - generic [ref=f2e31]: Email address
+              - paragraph [ref=f2e32]: You are currently checking out as a guest.
+          - group "Shipping address" [ref=f2e33]:
+            - heading "Shipping address" [level=2] [ref=f2e37]
+            - generic [ref=f2e38]:
+              - generic [ref=f2e39]:
+                - generic [ref=f2e41]:
+                  - generic [ref=f2e42]:
+                    - generic [ref=f2e43]: Native Pickup QA
+                    - generic [ref=f2e44]: 10 Test Street, London, SW1A 1AA, United Kingdom (UK), 07700900123
+                  - button "Edit shipping address" [ref=f2e45] [cursor=pointer]: Edit
+                - option "Select a country/region" [disabled]
+                - option "Afghanistan"
+                - option "Åland Islands"
+                - option "Albania"
+                - option "Algeria"
+                - option "American Samoa"
+                - option "Andorra"
+                - option "Angola"
+                - option "Anguilla"
+                - option "Antarctica"
+                - option "Antigua and Barbuda"
+                - option "Argentina"
+                - option "Armenia"
+                - option "Aruba"
+                - option "Australia"
+                - option "Austria"
+                - option "Azerbaijan"
+                - option "Bahamas"
+                - option "Bahrain"
+                - option "Bangladesh"
+                - option "Barbados"
+                - option "Belarus"
+                - option "Belau"
+                - option "Belgium"
+                - option "Belize"
+                - option "Benin"
+                - option "Bermuda"
+                - option "Bhutan"
+                - option "Bolivia"
+                - option "Bonaire, Saint Eustatius and Saba"
+                - option "Bosnia and Herzegovina"
+                - option "Botswana"
+                - option "Bouvet Island"
+                - option "Brazil"
+                - option "British Indian Ocean Territory"
+                - option "Brunei"
+                - option "Bulgaria"
+                - option "Burkina Faso"
+                - option "Burundi"
+                - option "Cambodia"
+                - option "Cameroon"
+                - option "Canada"
+                - option "Cape Verde"
+                - option "Cayman Islands"
+                - option "Central African Republic"
+                - option "Chad"
+                - option "Chile"
+                - option "China"
+                - option "Christmas Island"
+                - option "Cocos (Keeling) Islands"
+                - option "Colombia"
+                - option "Comoros"
+                - option "Congo (Brazzaville)"
+                - option "Congo (Kinshasa)"
+                - option "Cook Islands"
+                - option "Costa Rica"
+                - option "Croatia"
+                - option "Cuba"
+                - option "Curaçao"
+                - option "Cyprus"
+                - option "Czech Republic"
+                - option "Denmark"
+                - option "Djibouti"
+                - option "Dominica"
+                - option "Dominican Republic"
+                - option "Ecuador"
+                - option "Egypt"
+                - option "El Salvador"
+                - option "Equatorial Guinea"
+                - option "Eritrea"
+                - option "Estonia"
+                - option "Eswatini"
+                - option "Ethiopia"
+                - option "Falkland Islands"
+                - option "Faroe Islands"
+                - option "Fiji"
+                - option "Finland"
+                - option "France"
+                - option "French Guiana"
+                - option "French Polynesia"
+                - option "French Southern Territories"
+                - option "Gabon"
+                - option "Gambia"
+                - option "Georgia"
+                - option "Germany"
+                - option "Ghana"
+                - option "Gibraltar"
+                - option "Greece"
+                - option "Greenland"
+                - option "Grenada"
+                - option "Guadeloupe"
+                - option "Guam"
+                - option "Guatemala"
+                - option "Guernsey"
+                - option "Guinea"
+                - option "Guinea-Bissau"
+                - option "Guyana"
+                - option "Haiti"
+                - option "Heard Island and McDonald Islands"
+                - option "Honduras"
+                - option "Hong Kong"
+                - option "Hungary"
+                - option "Iceland"
+                - option "India"
+                - option "Indonesia"
+                - option "Iran"
+                - option "Iraq"
+                - option "Ireland"
+                - option "Isle of Man"
+                - option "Israel"
+                - option "Italy"
+                - option "Ivory Coast"
+                - option "Jamaica"
+                - option "Japan"
+                - option "Jersey"
+                - option "Jordan"
+                - option "Kazakhstan"
+                - option "Kenya"
+                - option "Kiribati"
+                - option "Kosovo"
+                - option "Kuwait"
+                - option "Kyrgyzstan"
+                - option "Laos"
+                - option "Latvia"
+                - option "Lebanon"
+                - option "Lesotho"
+                - option "Liberia"
+                - option "Libya"
+                - option "Liechtenstein"
+                - option "Lithuania"
+                - option "Luxembourg"
+                - option "Macao"
+                - option "Madagascar"
+                - option "Malawi"
+                - option "Malaysia"
+                - option "Maldives"
+                - option "Mali"
+                - option "Malta"
+                - option "Marshall Islands"
+                - option "Martinique"
+                - option "Mauritania"
+                - option "Mauritius"
+                - option "Mayotte"
+                - option "Mexico"
+                - option "Micronesia"
+                - option "Moldova"
+                - option "Monaco"
+                - option "Mongolia"
+                - option "Montenegro"
+                - option "Montserrat"
+                - option "Morocco"
+                - option "Mozambique"
+                - option "Myanmar"
+                - option "Namibia"
+                - option "Nauru"
+                - option "Nepal"
+                - option "Netherlands"
+                - option "New Caledonia"
+                - option "New Zealand"
+                - option "Nicaragua"
+                - option "Niger"
+                - option "Nigeria"
+                - option "Niue"
+                - option "Norfolk Island"
+                - option "North Korea"
+                - option "North Macedonia"
+                - option "Northern Mariana Islands"
+                - option "Norway"
+                - option "Oman"
+                - option "Pakistan"
+                - option "Palestinian Territory"
+                - option "Panama"
+                - option "Papua New Guinea"
+                - option "Paraguay"
+                - option "Peru"
+                - option "Philippines"
+                - option "Pitcairn"
+                - option "Poland"
+                - option "Portugal"
+                - option "Puerto Rico"
+                - option "Qatar"
+                - option "Reunion"
+                - option "Romania"
+                - option "Russia"
+                - option "Rwanda"
+                - option "Saint Barthélemy"
+                - option "Saint Helena"
+                - option "Saint Kitts and Nevis"
+                - option "Saint Lucia"
+                - option "Saint Martin (Dutch part)"
+                - option "Saint Martin (French part)"
+                - option "Saint Pierre and Miquelon"
+                - option "Saint Vincent and the Grenadines"
+                - option "Samoa"
+                - option "San Marino"
+                - option "São Tomé and Príncipe"
+                - option "Saudi Arabia"
+                - option "Senegal"
+                - option "Serbia"
+                - option "Seychelles"
+                - option "Sierra Leone"
+                - option "Singapore"
+                - option "Slovakia"
+                - option "Slovenia"
+                - option "Solomon Islands"
+                - option "Somalia"
+                - option "South Africa"
+                - option "South Georgia/Sandwich Islands"
+                - option "South Korea"
+                - option "South Sudan"
+                - option "Spain"
+                - option "Sri Lanka"
+                - option "Sudan"
+                - option "Suriname"
+                - option "Svalbard and Jan Mayen"
+                - option "Sweden"
+                - option "Switzerland"
+                - option "Syria"
+                - option "Taiwan"
+                - option "Tajikistan"
+                - option "Tanzania"
+                - option "Thailand"
+                - option "Timor-Leste"
+                - option "Togo"
+                - option "Tokelau"
+                - option "Tonga"
+                - option "Trinidad and Tobago"
+                - option "Tunisia"
+                - option "Türkiye"
+                - option "Turkmenistan"
+                - option "Turks and Caicos Islands"
+                - option "Tuvalu"
+                - option "Uganda"
+                - option "Ukraine"
+                - option "United Arab Emirates"
+                - option "United Kingdom (UK)" [selected]
+                - option "United States (US)"
+                - option "United States (US) Minor Outlying Islands"
+                - option "Uruguay"
+                - option "Uzbekistan"
+                - option "Vanuatu"
+                - option "Vatican"
+                - option "Venezuela"
+                - option "Vietnam"
+                - option "Virgin Islands (British)"
+                - option "Virgin Islands (US)"
+                - option "Wallis and Futuna"
+                - option "Western Sahara"
+                - option "Yemen"
+                - option "Zambia"
+                - option "Zimbabwe"
+              - generic [ref=f2e47] [cursor=pointer]:
+                - checkbox "Use same address for billing" [checked] [ref=f2e48]
+                - generic [ref=f2e49]: Use same address for billing
+          - group "Shipping options" [ref=f2e50]:
+            - heading "Shipping options" [level=2] [ref=f2e54]
+            - generic [ref=f2e60]:
+              - generic [ref=f2e61] [cursor=pointer]:
+                - radio "Pickup at QA Kitchen Free" [checked] [ref=f2e62]
+                - generic [ref=f2e64]:
+                  - generic [ref=f2e65]: Pickup at QA Kitchen
+                  - generic [ref=f2e66]: Free
+              - generic [ref=f2e67] [cursor=pointer]:
+                - radio "QA Delivery £3.50" [ref=f2e68]
+                - generic [ref=f2e70]:
+                  - generic [ref=f2e71]: QA Delivery
+                  - generic [ref=f2e72]: £3.50
+          - group "Payment options" [ref=f2e75]:
+            - heading "Payment options" [level=2] [ref=f2e79]
+            - generic "Loading payment options…" [ref=f2e81]
+          - group "Additional order information" [ref=f2e86]:
+            - heading "Additional order information" [level=2] [ref=f2e90]
+            - generic [ref=f2e92]:
+              - generic [ref=f2e95]:
+                - generic [ref=f2e96]: How would you like your order?
+                - combobox "How would you like your order?" [ref=f2e97]:
+                  - option "Select a how would you like your order?" [disabled]
+                  - option "Pickup" [selected]
+                  - option "Delivery"
+              - generic [ref=f2e99] [cursor=pointer]:
+                - checkbox "Send me restaurant status updates by email (optional)" [ref=f2e100]
+                - generic [ref=f2e101]: Send me restaurant status updates by email (optional)
+              - generic [ref=f2e102]:
+                - textbox "Requested time (optional)" [ref=f2e103]: 2026-11-13T07:15:00Z
+                - generic [ref=f2e104]: Requested time (optional)
+          - generic [ref=f2e109] [cursor=pointer]:
+            - checkbox "Add a note to your order" [ref=f2e110]
+            - generic [ref=f2e111]: Add a note to your order
+          - generic [ref=f2e112]: By proceeding with your purchase you agree to our Terms and Conditions and Privacy Policy
+          - button "Place Order" [ref=f2e115] [cursor=pointer]
+        - generic [ref=f2e119]:
+          - heading "Order summary" [level=2] [ref=f2e121]
+          - generic [ref=f2e123]:
+            - generic "Loading products in cart…" [ref=f2e125]
+            - heading [level=2] [ref=f2e136]:
+              - button "Add coupons" [ref=f2e137] [cursor=pointer]
+            - generic [ref=f2e140]:
+              - generic [ref=f2e142]:
+                - generic [ref=f2e143]: Subtotal
+                - generic "Loading price…" [ref=f2e144]
+              - generic [ref=f2e147]:
+                - generic [ref=f2e148]: Delivery
+                - generic "Loading price…" [ref=f2e149]
+                - generic [ref=f2e150]: Pickup at QA Kitchen
+            - generic [ref=f2e153]:
+              - generic [ref=f2e154]: Total
+              - generic "Loading price…" [ref=f2e155]
+  - status [ref=f2e158]

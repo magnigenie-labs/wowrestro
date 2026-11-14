@@ -1,0 +1,121 @@
+- generic [active] [ref=f1e1]:
+  - link "Skip to content" [ref=f1e2] [cursor=pointer]:
+    - /url: "#wp--skip-link--target"
+  - generic [ref=f1e3]:
+    - banner [ref=f1e4]:
+      - generic [ref=f1e7]:
+        - paragraph [ref=f1e8]:
+          - link "WowRestro Local QA" [ref=f1e9] [cursor=pointer]:
+            - /url: http://127.0.0.1:18889
+        - navigation [ref=f1e11]:
+          - list [ref=f1e16]:
+            - list [ref=f1e17]:
+              - listitem [ref=f1e18]:
+                - link "Add-on pagination QA" [ref=f1e19] [cursor=pointer]:
+                  - /url: http://127.0.0.1:18889/?page_id=82
+              - listitem [ref=f1e20]:
+                - link "Cart" [ref=f1e21] [cursor=pointer]:
+                  - /url: http://127.0.0.1:18889/?page_id=6
+              - listitem [ref=f1e22]:
+                - link "Checkout" [ref=f1e23] [cursor=pointer]:
+                  - /url: http://127.0.0.1:18889/?page_id=7
+              - listitem [ref=f1e24]:
+                - link "My account" [ref=f1e25] [cursor=pointer]:
+                  - /url: http://127.0.0.1:18889/?page_id=8
+              - listitem [ref=f1e26]:
+                - link "Sample Page" [ref=f1e27] [cursor=pointer]:
+                  - /url: http://127.0.0.1:18889/?page_id=2
+              - listitem [ref=f1e28]:
+                - link "Shop" [ref=f1e29] [cursor=pointer]:
+                  - /url: http://127.0.0.1:18889/?page_id=5
+    - main [ref=f1e30]:
+      - generic [ref=f1e31]:
+        - heading "Add-on pagination QA" [level=1] [ref=f1e32]
+        - generic [ref=f1e35]:
+          - generic [ref=f1e36]:
+            - generic [ref=f1e37]:
+              - generic [ref=f1e38]: Add-on pagination QA
+              - heading [level=2] [ref=f1e40]:
+                - text: Order direct
+                - emphasis [ref=f1e41]: from our kitchen
+              - group "Delivery or pickup" [ref=f1e43]:
+                - button "Delivery" [pressed] [ref=f1e44] [cursor=pointer]
+                - button "Pickup" [ref=f1e45] [cursor=pointer]
+            - generic [ref=f1e47]:
+              - generic [ref=f1e48]:
+                - generic [ref=f1e49]: Most ordered
+                - generic [ref=f1e50]: ZZ Pagination required extra dish
+              - generic [ref=f1e51]: $12.50
+          - generic [ref=f1e52]:
+            - generic [ref=f1e53]:
+              - generic [ref=f1e54]:
+                - generic [ref=f1e55]:
+                  - generic [ref=f1e56]: The menu
+                  - heading "Everything we make" [level=2] [ref=f1e57]
+                - textbox "Search the menu" [ref=f1e58]
+              - button "All 1" [ref=f1e60] [cursor=pointer]:
+                - generic [ref=f1e61]: All
+                - generic [ref=f1e62]: "1"
+              - article [ref=f1e64]:
+                - img "ZZ Pagination required extra dish" [ref=f1e65]:
+                  - generic [ref=f1e66]: Popular
+                - generic [ref=f1e67]:
+                  - generic [ref=f1e68]:
+                    - generic [ref=f1e69]: ZZ Pagination required extra dish
+                    - generic [ref=f1e70]: $12.50
+                  - generic [ref=f1e71]:
+                    - generic [ref=f1e137]: Pagination QA target
+                    - button "Add ZZ Pagination required extra dish" [ref=f1e138] [cursor=pointer]: Add
+              - generic [ref=f1e74]:
+                - generic [ref=f1e75]: Allergen and dietary information is available on request - ask the kitchen before ordering.
+                - generic [ref=f1e76]: Powered by WowRestro
+            - complementary [ref=f1e77]:
+              - generic [ref=f1e139]:
+                - generic [ref=f1e140]: Your order
+                - generic [ref=f1e141]: Delivery
+              - generic [ref=f1e142]: Choose between 1 and 1 options for Pagination required extra.
+              - generic [ref=f1e143]:
+                - generic [ref=f1e150]: Your order is empty
+                - generic [ref=f1e151]: Pick something from the menu and it'll appear here.
+    - contentinfo [ref=f1e90]:
+      - generic [ref=f1e92]:
+        - generic [ref=f1e93]:
+          - heading [level=2] [ref=f1e96]:
+            - link "WowRestro Local QA" [ref=f1e97] [cursor=pointer]:
+              - /url: http://127.0.0.1:18889
+          - generic [ref=f1e98]:
+            - navigation "2" [ref=f1e99]:
+              - list [ref=f1e100]:
+                - listitem [ref=f1e101]:
+                  - link "Blog" [ref=f1e102] [cursor=pointer]:
+                    - /url: "#"
+                - listitem [ref=f1e103]:
+                  - link "About" [ref=f1e104] [cursor=pointer]:
+                    - /url: "#"
+                - listitem [ref=f1e105]:
+                  - link "FAQs" [ref=f1e106] [cursor=pointer]:
+                    - /url: "#"
+                - listitem [ref=f1e107]:
+                  - link "Authors" [ref=f1e108] [cursor=pointer]:
+                    - /url: "#"
+            - navigation "3" [ref=f1e109]:
+              - list [ref=f1e110]:
+                - listitem [ref=f1e111]:
+                  - link "Events" [ref=f1e112] [cursor=pointer]:
+                    - /url: "#"
+                - listitem [ref=f1e113]:
+                  - link "Shop" [ref=f1e114] [cursor=pointer]:
+                    - /url: "#"
+                - listitem [ref=f1e115]:
+                  - link "Patterns" [ref=f1e116] [cursor=pointer]:
+                    - /url: "#"
+                - listitem [ref=f1e117]:
+                  - link "Themes" [ref=f1e118] [cursor=pointer]:
+                    - /url: "#"
+        - generic [ref=f1e120]:
+          - paragraph [ref=f1e121]: Twenty Twenty-Five
+          - paragraph [ref=f1e122]:
+            - text: Designed with
+            - link "WordPress" [ref=f1e123] [cursor=pointer]:
+              - /url: https://wordpress.org
+  - status [ref=f1e124]

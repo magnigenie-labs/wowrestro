@@ -4,8 +4,8 @@ Tags: restaurant, food ordering, woocommerce, pickup, delivery
 Donate link: https://paypal.me/magnigeeks
 Requires PHP: 7.4
 Requires at least: 6.2
-Tested up to: 6.7
-Stable tag: 2.0.7
+Tested up to: 7.1
+Stable tag: 2.0.11
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -90,6 +90,33 @@ No, you don't need any special theme to run this plugin. It works with all theme
 
 == Changelog ==
 
+= 2.0.11 =
+* Fixed: Handoff to native WooCommerce payment forms preserves customer details, kitchen notes, preferences and scheduled fulfillment. Failed synchronization stops checkout and allows retry.
+* Fixed: Payments completed after fulfillment capacity expires retain their financial transaction and flag the order for staff review without overbooking the kitchen.
+* Fixed: Repeated payment callbacks release locks correctly; orders requiring capacity review cannot reclaim a fulfillment slot.
+* Fixed: Failed, cancelled and refunded receipts display their actual payment state. Failed payable orders offer a payment retry, and confirmed receipts clear stale checkout drafts only when the cart is empty.
+
+= 2.0.10 =
+* Fixed: Menus load all product pages, retain required add-ons beyond the first 60 products, support plain REST permalinks, and exclude hidden products and empty categories.
+* Fixed: Scheduled pickup and delivery choices carry into native WooCommerce Blocks and classic checkout. Delayed contact prefill preserves customer edits.
+* Fixed: Checkout rejects an unavailable requested delivery method instead of silently creating a pickup order.
+* Fixed: Saved add-on choices and item instructions appear on receipts, customer order details and emails; pickup receipts use the restaurant contact details.
+* Fixed: Guest email verification preserves its form submission when opening an order confirmation link; plain-text emails retain apostrophes in item instructions.
+* Fixed: Kitchen tickets show selected extras and readable addresses. Repeated checkout saves preserve one workflow status, history and tracking token, and existing duplicate metadata is repaired.
+* Fixed: Legacy order discovery avoids expensive metadata joins, and order metadata queries work without warnings on both HPOS and legacy WordPress order storage.
+* Fixed: Startup and upgrades defer translated setup work until WordPress initialization.
+* Tested with WordPress 7.1.4 and WooCommerce 11.3.0, including real guest pickup, scheduled delivery, native checkout, QR table orders, coupons and taxes.
+
+= 2.0.9 =
+* Fixed: Restaurant Schedule now edits opening hours for every pickup and delivery day, including split shifts. Closed days retain their hours, and invalid or overlapping hours are rejected before saving.
+* Fixed: Decimal prices can be typed and saved for add-ons, products, variations and reservation booking amounts. Decimal points survive workspace redraws, comma decimals are accepted, and invalid prices are rejected.
+* Fixed: Saving settings preserves zero preorder days, delivery lead time and late grace time. An unchanged, incomplete restaurant profile no longer blocks schedule changes.
+* Fixed: Product edits preserve blank and zero prices, out-of-stock and backorder states, and publication status in translated workspaces.
+
+= 2.0.8 =
+* Fixed: QR table cards from Workspace > QR code now carry their table in the link (`?wr_table=<card name>`), so orders placed after a scan show as "Dine-in · Table <name>" on the orders board. Cards made before this update pick up the table too; download them again to print the fixed QR code.
+* Changed: the Table sessions screen is no longer in the WowRestro menu. It only held internal records linking dine-in orders to a table, and its Add New button made posts that did nothing. The table still shows on each order on the orders board.
+
 = 2.0.7 =
 * Added: store pages. An ordering page whose menu shortcode sets a product category, `[wowrestro_menu category="bakery"]`, runs as its own store: it gets its own checkout and confirmation under its page (/bakery/checkout/, /bakery/confirmation/), and orders, receipts and email links remember the store. The shortcode can also set the store's `name`, switcher `label`, `tagline`, `hero` (two lines split by |), menu `heading`, `note`, colours (`accent`, `ink`, `paper`), corner `radius` in pixels, `type="shop"` (the receipt talks about the store, not the kitchen) and `header="store"` (a store header with a live cart pill and a store footer in place of the theme's). All store pages share one WooCommerce cart: a store's menu drops dishes added in another store, and /checkout/ or another store's checkout sends the cart to its own store.
 * Added: `[wowrestro_store_switcher label="" brand="" brand_url="" cta="" cta_url=""]`, a bar linking the store pages. On a store page with `header="store"` it sits above the store header.
@@ -173,6 +200,18 @@ No, you don't need any special theme to run this plugin. It works with all theme
 * Initial public release.
 
 == Upgrade Notice ==
+
+= 2.0.11 =
+* Fixes native payment handoff, late-payment fulfillment handling and payment-state receipts. Includes the earlier schedule, decimal-price and checkout fixes.
+
+= 2.0.10 =
+* Fixes additional menu, checkout and receipt issues found through local WordPress/WooCommerce end-to-end testing. Includes the schedule and decimal-price fixes from 2.0.9.
+
+= 2.0.9 =
+* Fixes editable pickup/delivery hours and decimal prices in the workspace, with additional safeguards against unintended settings and product changes.
+
+= 2.0.8 =
+* QR table cards now tag dine-in orders with their table. Download existing cards again to print the fixed QR code.
 
 = 2.0.7 =
 * Store pages: an ordering page limited to one category can run as its own store, with its own checkout, confirmation, name and colours.

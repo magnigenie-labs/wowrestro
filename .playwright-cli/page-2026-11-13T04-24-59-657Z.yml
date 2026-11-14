@@ -1,0 +1,215 @@
+- generic [ref=f2e2]:
+  - text:              
+  - generic [ref=f2e3]:
+    - generic [ref=f2e4]:
+      - navigation "Toolbar":
+        - menu:
+          - group [ref=f2e5]:
+            - menuitem "About WordPress" [ref=f2e6] [cursor=pointer]
+          - group [ref=f2e9]:
+            - menuitem "WowRestro Local QA" [ref=f2e10] [cursor=pointer]
+          - group [ref=f2e11]:
+            - menuitem "Live" [ref=f2e12] [cursor=pointer]
+          - group [ref=f2e13]:
+            - menuitem "⌘K Open command palette" [ref=f2e14] [cursor=pointer]:
+              - generic [ref=f2e16]:
+                - text: ⌘K
+                - generic [ref=f2e17]: Open command palette
+          - group [ref=f2e18]:
+            - menuitem "0 Comments in moderation" [ref=f2e19] [cursor=pointer]:
+              - generic [aria-hidden] [ref=f2e21]: "0"
+          - group [ref=f2e23]:
+            - menuitem "New" [ref=f2e24] [cursor=pointer]
+        - menu [ref=f2e27]:
+          - group [ref=f2e28]:
+            - menuitem "Howdy, qa-admin" [ref=f2e29] [cursor=pointer]
+    - main [ref=f2e30]:
+      - generic [ref=f2e35]:
+        - complementary [ref=f2e36]:
+          - generic "QA Kitchen" [ref=f2e38]:
+            - img "QA Kitchen" [ref=f2e39]
+          - navigation [ref=f2e40]:
+            - button " Dashboard" [ref=f2e41] [cursor=pointer]:
+              - generic [ref=f2e42]: 
+              - generic [ref=f2e43]: Dashboard
+            - button " Food Ordering" [ref=f2e44] [cursor=pointer]:
+              - generic [ref=f2e45]: 
+              - generic [ref=f2e46]: Food Ordering
+            - button " Reservations" [ref=f2e47] [cursor=pointer]:
+              - generic [ref=f2e48]: 
+              - generic [ref=f2e49]: Reservations
+            - button " Menu & Checkout" [ref=f2e50] [cursor=pointer]:
+              - generic [ref=f2e51]: 
+              - generic [ref=f2e52]: Menu & Checkout
+            - button " Service Options" [ref=f2e53] [cursor=pointer]:
+              - generic [ref=f2e54]: 
+              - generic [ref=f2e55]: Service Options
+            - button " People & Product Information" [ref=f2e56] [cursor=pointer]:
+              - generic [ref=f2e57]: 
+              - generic [ref=f2e58]: People & Product Information
+            - button " Alerts & Insights" [ref=f2e59] [cursor=pointer]:
+              - generic [ref=f2e60]: 
+              - generic [ref=f2e61]: Alerts & Insights
+            - button " Settings" [ref=f2e62] [cursor=pointer]:
+              - generic [ref=f2e63]: 
+              - generic [ref=f2e64]: Settings
+          - generic [ref=f2e65]:
+            - button "About WowRestro" [ref=f2e66] [cursor=pointer]:
+              - generic [ref=f2e67]: 
+            - link "" [ref=f2e68] [cursor=pointer]:
+              - /url: http://127.0.0.1:18889/wp-admin/
+        - complementary [ref=f2e70]:
+          - generic [ref=f2e71]: Settings
+          - navigation [ref=f2e72]:
+            - generic [ref=f2e73]:
+              - generic [ref=f2e74]: Configuration
+              - button " Setup Wizard" [ref=f2e75] [cursor=pointer]:
+                - generic [ref=f2e76]: 
+                - generic [ref=f2e77]: Setup Wizard
+            - generic [ref=f2e78]:
+              - generic [ref=f2e79]: General
+              - button " General" [ref=f2e80] [cursor=pointer]:
+                - generic [ref=f2e81]: 
+                - generic [ref=f2e82]: General
+            - generic [ref=f2e83]:
+              - generic [ref=f2e84]: Developer
+              - button " Diagnostics" [ref=f2e85] [cursor=pointer]:
+                - generic [ref=f2e86]: 
+                - generic [ref=f2e87]: Diagnostics
+        - main [ref=f2e88]:
+          - generic [ref=f2e90]:
+            - heading "Restaurant Schedule" [level=1] [ref=f2e92]
+            - button " Save Changes" [ref=f2e94] [cursor=pointer]:
+              - generic [ref=f2e95]: 
+              - text: Save Changes
+          - generic [ref=f2e97]:
+            - generic [ref=f2e98]:
+              - generic [ref=f2e100]:
+                - heading "Pickup Hours" [level=2] [ref=f2e101]
+                - generic [ref=f2e102]: Set opening hours in the WordPress timezone. Use 24-hour times; separate split shifts with a comma, for example 11:00-14:00,17:00-22:00.
+              - generic [ref=f2e105]:
+                - generic [ref=f2e106]:
+                  - switch "Open pickup on Monday" [checked] [ref=f2e107] [cursor=pointer]
+                  - generic [ref=f2e109]: Monday
+                  - generic [ref=f2e110]:
+                    - generic [ref=f2e111]: Pickup hours on Monday
+                    - textbox "Pickup hours on Monday" [ref=f2e112]:
+                      - /placeholder: 11:00-14:00,17:00-22:00
+                      - text: 00:00-23:59
+                - generic [ref=f2e113]:
+                  - switch "Open pickup on Tuesday" [checked] [ref=f2e114] [cursor=pointer]
+                  - generic [ref=f2e116]: Tuesday
+                  - generic [ref=f2e117]:
+                    - generic [ref=f2e118]: Pickup hours on Tuesday
+                    - textbox "Pickup hours on Tuesday" [ref=f2e119]:
+                      - /placeholder: 11:00-14:00,17:00-22:00
+                      - text: 00:00-23:59
+                - generic [ref=f2e120]:
+                  - switch "Open pickup on Wednesday" [checked] [ref=f2e121] [cursor=pointer]
+                  - generic [ref=f2e123]: Wednesday
+                  - generic [ref=f2e124]:
+                    - generic [ref=f2e125]: Pickup hours on Wednesday
+                    - textbox "Pickup hours on Wednesday" [ref=f2e126]:
+                      - /placeholder: 11:00-14:00,17:00-22:00
+                      - text: 00:00-23:59
+                - generic [ref=f2e127]:
+                  - switch "Open pickup on Thursday" [checked] [ref=f2e128] [cursor=pointer]
+                  - generic [ref=f2e130]: Thursday
+                  - generic [ref=f2e131]:
+                    - generic [ref=f2e132]: Pickup hours on Thursday
+                    - textbox "Pickup hours on Thursday" [ref=f2e133]:
+                      - /placeholder: 11:00-14:00,17:00-22:00
+                      - text: 00:00-23:59
+                - generic [ref=f2e134]:
+                  - switch "Open pickup on Friday" [checked] [ref=f2e135] [cursor=pointer]
+                  - generic [ref=f2e137]: Friday
+                  - generic [ref=f2e138]:
+                    - generic [ref=f2e139]: Pickup hours on Friday
+                    - textbox "Pickup hours on Friday" [ref=f2e140]:
+                      - /placeholder: 11:00-14:00,17:00-22:00
+                      - text: 00:00-23:59
+                - generic [ref=f2e141]:
+                  - switch "Open pickup on Saturday" [checked] [ref=f2e142] [cursor=pointer]
+                  - generic [ref=f2e144]: Saturday
+                  - generic [ref=f2e145]:
+                    - generic [ref=f2e146]: Pickup hours on Saturday
+                    - textbox "Pickup hours on Saturday" [ref=f2e147]:
+                      - /placeholder: 11:00-14:00,17:00-22:00
+                      - text: 00:00-23:59
+                - generic [ref=f2e148]:
+                  - switch "Open pickup on Sunday" [checked] [ref=f2e149] [cursor=pointer]
+                  - generic [ref=f2e151]: Sunday
+                  - generic [ref=f2e152]:
+                    - generic [ref=f2e153]: Pickup hours on Sunday
+                    - textbox "Pickup hours on Sunday" [ref=f2e154]:
+                      - /placeholder: 11:00-14:00,17:00-22:00
+                      - text: 00:00-23:59
+            - generic [ref=f2e155]:
+              - generic [ref=f2e157]:
+                - heading "Delivery Hours" [level=2] [ref=f2e158]
+                - generic [ref=f2e159]: Set delivery hours separately from pickup using the same format. Turning a day off keeps its hours for when you reopen it.
+              - generic [ref=f2e162]:
+                - generic [ref=f2e163]:
+                  - switch "Open delivery on Monday" [checked] [ref=f2e164] [cursor=pointer]
+                  - generic [ref=f2e166]: Monday
+                  - generic [ref=f2e167]:
+                    - generic [ref=f2e168]: Delivery hours on Monday
+                    - textbox "Delivery hours on Monday" [ref=f2e169]:
+                      - /placeholder: 11:00-14:00,17:00-22:00
+                      - text: 00:00-23:59
+                - generic [ref=f2e170]:
+                  - switch "Open delivery on Tuesday" [checked] [ref=f2e171] [cursor=pointer]
+                  - generic [ref=f2e173]: Tuesday
+                  - generic [ref=f2e174]:
+                    - generic [ref=f2e175]: Delivery hours on Tuesday
+                    - textbox "Delivery hours on Tuesday" [ref=f2e176]:
+                      - /placeholder: 11:00-14:00,17:00-22:00
+                      - text: 00:00-23:59
+                - generic [ref=f2e177]:
+                  - switch "Open delivery on Wednesday" [checked] [ref=f2e178] [cursor=pointer]
+                  - generic [ref=f2e180]: Wednesday
+                  - generic [ref=f2e181]:
+                    - generic [ref=f2e182]: Delivery hours on Wednesday
+                    - textbox "Delivery hours on Wednesday" [ref=f2e183]:
+                      - /placeholder: 11:00-14:00,17:00-22:00
+                      - text: 00:00-23:59
+                - generic [ref=f2e184]:
+                  - switch "Open delivery on Thursday" [checked] [ref=f2e185] [cursor=pointer]
+                  - generic [ref=f2e187]: Thursday
+                  - generic [ref=f2e188]:
+                    - generic [ref=f2e189]: Delivery hours on Thursday
+                    - textbox "Delivery hours on Thursday" [ref=f2e190]:
+                      - /placeholder: 11:00-14:00,17:00-22:00
+                      - text: 00:00-23:59
+                - generic [ref=f2e191]:
+                  - switch "Open delivery on Friday" [checked] [ref=f2e192] [cursor=pointer]
+                  - generic [ref=f2e194]: Friday
+                  - generic [ref=f2e195]:
+                    - generic [ref=f2e196]: Delivery hours on Friday
+                    - textbox "Delivery hours on Friday" [ref=f2e197]:
+                      - /placeholder: 11:00-14:00,17:00-22:00
+                      - text: 00:00-23:59
+                - generic [ref=f2e198]:
+                  - switch "Open delivery on Saturday" [checked] [ref=f2e199] [cursor=pointer]
+                  - generic [ref=f2e201]: Saturday
+                  - generic [ref=f2e202]:
+                    - generic [ref=f2e203]: Delivery hours on Saturday
+                    - textbox "Delivery hours on Saturday" [ref=f2e204]:
+                      - /placeholder: 11:00-14:00,17:00-22:00
+                      - text: 00:00-23:59
+                - generic [ref=f2e205]:
+                  - switch "Open delivery on Sunday" [checked] [ref=f2e206] [cursor=pointer]
+                  - generic [ref=f2e208]: Sunday
+                  - generic [ref=f2e209]:
+                    - generic [ref=f2e210]: Delivery hours on Sunday
+                    - textbox "Delivery hours on Sunday" [ref=f2e211]:
+                      - /placeholder: 11:00-14:00,17:00-22:00
+                      - text: 00:00-23:59
+            - generic [ref=f2e212]:
+              - generic [ref=f2e214]:
+                - heading "Date Overrides" [level=2] [ref=f2e215]
+                - generic [ref=f2e216]: One rule per line, for example 2026-12-25 | all | closed or 2026-12-31 | pickup | 11:00-15:00.
+              - generic [ref=f2e218]:
+                - generic [ref=f2e219]: Overrides and closures
+                - textbox "Overrides and closures" [ref=f2e220]:
+                  - /placeholder: ""

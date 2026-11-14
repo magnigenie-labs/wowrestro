@@ -16,9 +16,29 @@ $wowrestro_hooks    = $wowrestro_hooks ?? true;
 $wowrestro_delivery = 'delivery' === WowRestro_Storefront::order_mode( $order );
 $wowrestro_profile  = class_exists( 'WowRestro_Onboarding' ) ? WowRestro_Onboarding::profile() : array();
 $wowrestro_template = WowRestro_Storefront::template_number();
-$wowrestro_promise  = WowRestro_Storefront::promised_label( $order );
+$wowrestro_capacity_review = 'yes' === $order->get_meta( '_wowrestro_capacity_review' ) && ! $order->has_status( 'refunded' );
+$wowrestro_failed   = $order->has_status( 'failed' );
+$wowrestro_closed   = $order->has_status( array( 'cancelled', 'refunded' ) );
+$wowrestro_attention = $wowrestro_capacity_review || $wowrestro_failed || $wowrestro_closed;
+$wowrestro_promise  = $wowrestro_attention ? '' : WowRestro_Storefront::promised_label( $order );
 $wowrestro_first    = $order->get_billing_first_name();
 $wowrestro_extra    = '';
+$wowrestro_heading = $order->has_status( array( 'pending', 'on-hold' ) ) ? __( 'Order #%s placed - awaiting payment', 'wowrestro' ) : __( 'Order #%s confirmed', 'wowrestro' );
+$wowrestro_title = __( 'The kitchen has it.', 'wowrestro' );
+$wowrestro_message = '';
+if ( $wowrestro_capacity_review ) {
+	$wowrestro_heading = __( 'Order #%s requires review', 'wowrestro' );
+	$wowrestro_title = __( 'Please contact the restaurant.', 'wowrestro' );
+	$wowrestro_message = $order->get_date_paid() ? __( 'Your payment was received, but your fulfillment time could not be confirmed. Contact the restaurant to arrange fulfillment or discuss a refund.', 'wowrestro' ) : __( 'Your fulfillment time could not be confirmed. Contact the restaurant before trying to pay again.', 'wowrestro' );
+} elseif ( $wowrestro_failed ) {
+	$wowrestro_heading = __( 'Order #%s payment failed', 'wowrestro' );
+	$wowrestro_title = __( 'Payment was not completed.', 'wowrestro' );
+	$wowrestro_message = __( 'Your payment could not be completed. Retry payment or contact the restaurant for help.', 'wowrestro' );
+} elseif ( $wowrestro_closed ) {
+	$wowrestro_heading = $order->has_status( 'refunded' ) ? __( 'Order #%s refunded', 'wowrestro' ) : __( 'Order #%s cancelled', 'wowrestro' );
+	$wowrestro_title = __( 'This order is closed.', 'wowrestro' );
+	$wowrestro_message = __( 'Contact the restaurant if you have questions about this order or its payment.', 'wowrestro' );
+}
 
 if ( $wowrestro_hooks ) {
 	do_action( 'woocommerce_before_thankyou', $order->get_id() );
@@ -49,34 +69,44 @@ if ( $wowrestro_delivery ) {
 	$wowrestro_place_lines = WowRestro_Storefront::store_address();
 }
 $wowrestro_phone = (string) ( $wowrestro_profile['phone'] ?? '' );
+$wowrestro_contact = $wowrestro_delivery
+	? array( $order->get_billing_phone(), $order->get_billing_email() )
+	: array( $wowrestro_phone, $wowrestro_profile['email'] ?? '' );
 ?>
 <section class="wowrestro-menu wowrestro-receipt wr-template-<?php echo esc_attr( $wowrestro_template ); ?>" data-oe="1" data-oe-ready="1"<?php echo WowRestro_Storefront::root_attributes( $wowrestro_template, false ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped by root_attributes(). ?>>
 	<div class="oe-screen">
 		<div class="oe-shell oe-done">
 			<div class="oe-done__head">
-				<div class="oe-done__tick" aria-hidden="true">&#10003;</div>
+				<div class="oe-done__tick" aria-hidden="true"><?php echo $wowrestro_attention ? '!' : '&#10003;'; ?></div>
 				<div class="oe-done__kicker">
 					<?php
 					/* translators: %s: order number */
-					echo esc_html( sprintf( $order->has_status( array( 'pending', 'on-hold' ) ) ? __( 'Order #%s placed - awaiting payment', 'wowrestro' ) : __( 'Order #%s confirmed', 'wowrestro' ), $order->get_order_number() ) );
+					echo esc_html( sprintf( $wowrestro_heading, $order->get_order_number() ) );
 					?>
 				</div>
 				<h2 class="oe-done__title">
 					<?php echo esc_html( $wowrestro_first ? sprintf( __( 'Thank you, %s.', 'wowrestro' ), $wowrestro_first ) : __( 'Thank you.', 'wowrestro' ) ); ?><br>
-					<em><?php esc_html_e( 'The kitchen has it.', 'wowrestro' ); ?></em>
+					<em><?php echo esc_html( $wowrestro_title ); ?></em>
 				</h2>
 				<p class="oe-done__lede">
 					<?php
-					if ( $order->get_billing_email() ) {
-						echo esc_html( sprintf( __( 'We have sent your confirmation to %s.', 'wowrestro' ), $order->get_billing_email() ) ) . ' ';
+					if ( $wowrestro_attention ) {
+						echo esc_html( $wowrestro_message );
+					} else {
+						if ( $order->get_billing_email() ) {
+							echo esc_html( sprintf( __( 'We have sent your confirmation to %s.', 'wowrestro' ), $order->get_billing_email() ) ) . ' ';
+						}
+						echo esc_html(
+							$wowrestro_delivery
+								? sprintf( __( 'We will bring it to %s.', 'wowrestro' ), $order->get_shipping_address_1() ?: __( 'your address', 'wowrestro' ) )
+								: sprintf( __( 'Collect it from %s.', 'wowrestro' ), $wowrestro_place_lines ?: $wowrestro_place_name )
+						);
 					}
-					echo esc_html(
-						$wowrestro_delivery
-							? sprintf( __( 'We will bring it to %s.', 'wowrestro' ), $order->get_shipping_address_1() ?: __( 'your address', 'wowrestro' ) )
-							: sprintf( __( 'Collect it from %s.', 'wowrestro' ), $wowrestro_place_lines ?: $wowrestro_place_name )
-					);
 					?>
 				</p>
+				<?php if ( $wowrestro_failed && ! $wowrestro_capacity_review && $order->needs_payment() ) : ?>
+					<a class="oe-again" href="<?php echo esc_url( $order->get_checkout_payment_url() ); ?>"><?php esc_html_e( 'Retry payment', 'wowrestro' ); ?></a>
+				<?php endif; ?>
 			</div>
 
 			<dl class="oe-meta">
@@ -92,7 +122,9 @@ $wowrestro_phone = (string) ( $wowrestro_profile['phone'] ?? '' );
 			} else {
 				echo $wowrestro_extra; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Invisible hook output such as tracking scripts.
 			}
-			echo WowRestro_Storefront::tracker_html( $order ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped by tracker_html().
+			if ( ! $wowrestro_attention ) {
+				echo WowRestro_Storefront::tracker_html( $order ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped by tracker_html().
+			}
 			?>
 
 			<div class="oe-done__cols">
@@ -106,6 +138,9 @@ $wowrestro_phone = (string) ( $wowrestro_profile['phone'] ?? '' );
 							$wowrestro_options = array();
 							foreach ( $wowrestro_item->get_formatted_meta_data() as $wowrestro_meta ) {
 								$wowrestro_options[] = wp_strip_all_tags( $wowrestro_meta->display_value );
+							}
+							foreach ( WowRestro_Cart::order_item_display_data( $wowrestro_item ) as $wowrestro_option ) {
+								$wowrestro_options[] = $wowrestro_option['value'];
 							}
 							?>
 							<div class="oe-recap__line">
@@ -129,10 +164,10 @@ $wowrestro_phone = (string) ( $wowrestro_profile['phone'] ?? '' );
 				</div>
 				<div class="oe-side">
 					<div class="oe-addr">
-						<div class="oe-addr__label"><?php echo esc_html( $wowrestro_delivery ? __( 'Delivering to', 'wowrestro' ) : __( 'Collect from', 'wowrestro' ) ); ?></div>
+						<div class="oe-addr__label"><?php echo esc_html( $wowrestro_attention ? ( $wowrestro_delivery ? __( 'Order address', 'wowrestro' ) : __( 'Restaurant', 'wowrestro' ) ) : ( $wowrestro_delivery ? __( 'Delivering to', 'wowrestro' ) : __( 'Collect from', 'wowrestro' ) ) ); ?></div>
 						<div class="oe-addr__name"><?php echo esc_html( $wowrestro_place_name ); ?></div>
 						<div class="oe-addr__lines"><?php echo esc_html( $wowrestro_place_lines ); ?></div>
-						<div class="oe-addr__lines oe-addr__contact"><?php echo esc_html( implode( ' · ', array_filter( array( $order->get_billing_phone(), $order->get_billing_email() ) ) ) ); ?></div>
+						<div class="oe-addr__lines oe-addr__contact"><?php echo esc_html( implode( ' · ', array_filter( $wowrestro_contact ) ) ); ?></div>
 					</div>
 					<div class="oe-help">
 						<div class="oe-help__title"><?php esc_html_e( 'Something wrong?', 'wowrestro' ); ?></div>
@@ -152,7 +187,16 @@ $wowrestro_phone = (string) ( $wowrestro_profile['phone'] ?? '' );
 		</div>
 	</div>
 </section>
-<?php if ( $order->get_meta( '_wowrestro_tracking_token' ) ) : ?>
+<?php
+// Native card checkout bypasses the custom form's success callback. Clear its
+// browser draft only after acceptance, and never while another cart is active.
+$wowrestro_accepted = $order->has_status( array( 'processing', 'completed' ) )
+	|| ( $order->has_status( 'on-hold' ) && in_array( $order->get_payment_method(), array( 'bacs', 'cheque', 'cod' ), true ) );
+if ( $wowrestro_accepted && function_exists( 'WC' ) && WC()->cart && WC()->cart->is_empty() ) :
+?>
+<script>try { sessionStorage.removeItem('wowrestroCheckout'); } catch (e) {}</script>
+<?php endif; ?>
+<?php if ( ! $wowrestro_attention && $order->get_meta( '_wowrestro_tracking_token' ) ) : ?>
 <script>
 ( function () {
 	// The kitchen moves the order along; refresh the tracker while this page stays open.

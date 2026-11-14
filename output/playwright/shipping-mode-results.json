@@ -1,0 +1,19 @@
+{
+    "passed": 14,
+    "checks": [
+        "Physical QA product enters the WooCommerce cart",
+        "Unserved delivery does not return the previous pickup rate",
+        "Mode update clears stale plugin shipping-rate state",
+        "A valid WooCommerce pickup selection is present before final validation",
+        "Explicit delivery rejects automatic pickup fallback",
+        "Explicit native pickup remains authoritative",
+        "Actual Store API checkout rejects unavailable custom delivery with HTTP 409",
+        "Customer receives an actionable delivery error",
+        "Native Store API checkout still succeeds",
+        "Native order preserves the intentionally selected pickup mode",
+        "Matching delivery rate is selected when available",
+        "Explicit pickup cannot silently become delivery",
+        "Actual custom delivery checkout succeeds when the selected rate matches",
+        "Custom delivery order keeps the correct mode, shipping rate and total"
+    ]
+}

@@ -47,6 +47,47 @@ final class WowRestro_Settings {
 		return self::checkbox_enabled( $value ) ? 'yes' : 'no';
 	}
 
+	/** Reject invalid workspace hours before the sanitizer can replace them with defaults. */
+	public static function validate_service_hours( $hours ) {
+		$days  = array( 1 => __( 'Monday', 'wowrestro' ), __( 'Tuesday', 'wowrestro' ), __( 'Wednesday', 'wowrestro' ), __( 'Thursday', 'wowrestro' ), __( 'Friday', 'wowrestro' ), __( 'Saturday', 'wowrestro' ), __( 'Sunday', 'wowrestro' ) );
+		$modes = array( 'pickup' => __( 'Pickup', 'wowrestro' ), 'delivery' => __( 'Delivery', 'wowrestro' ) );
+		foreach ( $modes as $mode => $label ) {
+			foreach ( $days as $day => $day_label ) {
+				$row   = is_array( $hours ) && isset( $hours[ $mode ][ $day ] ) && is_array( $hours[ $mode ][ $day ] ) ? $hours[ $mode ][ $day ] : null;
+				$error = new WP_Error(
+					'wowrestro_invalid_service_hours',
+					sprintf( __( '%1$s on %2$s: enter non-overlapping hours in HH:MM-HH:MM format, with closing time after opening time.', 'wowrestro' ), $label, $day_label ),
+					array( 'status' => 400, 'mode' => $mode, 'day' => $day )
+				);
+				if ( null === $row || ( isset( $row['periods'] ) && ! is_string( $row['periods'] ) ) ) {
+					return $error;
+				}
+				if ( ! self::checkbox_enabled( $row['enabled'] ?? false ) ) {
+					continue;
+				}
+				if ( ! isset( $row['periods'] ) || ! is_string( $row['periods'] ) ) {
+					return $error;
+				}
+				$periods = array();
+				foreach ( explode( ',', $row['periods'] ) as $period ) {
+					if ( ! preg_match( '/^(\d{2}:\d{2})\s*-\s*(\d{2}:\d{2})$/', trim( $period ), $match ) || ! self::valid_time( $match[1] ) || ! self::valid_time( $match[2] ) || $match[2] <= $match[1] ) {
+						return $error;
+					}
+					$periods[] = array( $match[1], $match[2] );
+				}
+				usort( $periods, function ( $a, $b ) { return strcmp( $a[0], $b[0] ); } );
+				$end = '';
+				foreach ( $periods as $period ) {
+					if ( $end && $period[0] < $end ) {
+						return $error;
+					}
+					$end = $period[1];
+				}
+			}
+		}
+		return true;
+	}
+
 	/**
 	 * Sanitize the versioned settings shape without discarding extension keys.
 	 */

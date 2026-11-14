@@ -513,6 +513,16 @@ final class WowRestro_App {
 		}
 		$current = WowRestro_Fulfillment::settings();
 		$posted  = isset( $payload['settings'] ) && is_array( $payload['settings'] ) ? $payload['settings'] : array();
+		if ( array_key_exists( 'service_hours', $posted ) ) {
+			if ( is_array( $posted['service_hours'] ) ) {
+				// Partial updates must not close unrelated days or the other service.
+				$posted['service_hours'] = array_replace_recursive( $current['service_hours'], $posted['service_hours'] );
+			}
+			$valid_hours = WowRestro_Settings::validate_service_hours( $posted['service_hours'] );
+			if ( is_wp_error( $valid_hours ) ) {
+				return $valid_hours;
+			}
+		}
 		$allowed = array(
 			'pickup_enabled',
 			'delivery_enabled',
@@ -842,8 +852,16 @@ final class WowRestro_App {
 				$product->set_sale_price( $sale_price );
 				$product->set_price( '' !== $sale_price ? $sale_price : $regular_price );
 			}
-			$product->set_stock_status( 'Out of stock' === (string) ( $input['stock'] ?? '' ) ? 'outofstock' : 'instock' );
-			$product->set_status( 'Draft' === (string) ( $input['status'] ?? '' ) ? 'draft' : 'publish' );
+			$stock_status = sanitize_key( $input['stockStatus'] ?? '' );
+			if ( ! in_array( $stock_status, array( 'instock', 'outofstock', 'onbackorder' ), true ) ) {
+				$stock_status = in_array( (string) ( $input['stock'] ?? '' ), array( 'Out of stock', __( 'Out of stock', 'wowrestro' ) ), true ) ? 'outofstock' : 'instock';
+			}
+			$post_status = sanitize_key( $input['postStatus'] ?? '' );
+			if ( ! in_array( $post_status, array( 'publish', 'draft', 'pending', 'private', 'future' ), true ) ) {
+				$post_status = in_array( (string) ( $input['status'] ?? '' ), array( 'Draft', __( 'Draft', 'wowrestro' ) ), true ) ? 'draft' : 'publish';
+			}
+			$product->set_stock_status( $stock_status );
+			$product->set_status( $post_status );
 			$image_id = absint( $input['imageId'] ?? 0 );
 			if ( $image_id && ( ! current_user_can( 'upload_files' ) || ! wp_attachment_is_image( $image_id ) ) ) {
 				return new WP_Error( 'wowrestro_product_image', __( 'Choose a valid image from the Media Library.', 'wowrestro' ), array( 'status' => 400 ) );
@@ -1014,7 +1032,11 @@ final class WowRestro_App {
 					$variation->set_regular_price( $regular_price );
 					$variation->set_sale_price( $sale_price );
 					$variation->set_price( '' !== $sale_price ? $sale_price : $regular_price );
-					$variation->set_stock_status( 'Out of stock' === (string) ( $variation_input['stock'] ?? '' ) ? 'outofstock' : 'instock' );
+					$stock_status = sanitize_key( $variation_input['stockStatus'] ?? '' );
+					if ( ! in_array( $stock_status, array( 'instock', 'outofstock', 'onbackorder' ), true ) ) {
+						$stock_status = in_array( (string) ( $variation_input['stock'] ?? '' ), array( 'Out of stock', __( 'Out of stock', 'wowrestro' ) ), true ) ? 'outofstock' : 'instock';
+					}
+					$variation->set_stock_status( $stock_status );
 					$variation->save();
 				}
 				WC_Product_Variable::sync( $product->get_id() );
@@ -1438,6 +1460,7 @@ final class WowRestro_App {
 					'price' => (string) $variation->get_regular_price(),
 					'sale'  => (string) $variation->get_sale_price(),
 					'stock' => $variation->is_in_stock() ? __( 'In stock', 'wowrestro' ) : __( 'Out of stock', 'wowrestro' ),
+					'stockStatus' => $variation->get_stock_status( 'edit' ),
 				);
 			}
 		}
@@ -1449,11 +1472,16 @@ final class WowRestro_App {
 			'brand'          => is_wp_error( $brand_terms ) || ! $brand_terms ? '' : $brand_terms[0],
 			'price'          => (float) ( $is_variable ? $product->get_variation_regular_price( 'min' ) : $product->get_regular_price() ),
 			'sale'           => (float) ( $is_variable ? $product->get_variation_sale_price( 'min' ) : $product->get_sale_price() ),
+			// Keep editable prices lossless: an empty price and a zero price are different in WooCommerce.
+			'regularPrice'   => (string) $product->get_regular_price( 'edit' ),
+			'salePrice'      => (string) $product->get_sale_price( 'edit' ),
 			'sku'            => $product->get_sku(),
 			'stock'          => $product->is_in_stock() ? __( 'In stock', 'wowrestro' ) : __( 'Out of stock', 'wowrestro' ),
+			'stockStatus'    => $product->get_stock_status( 'edit' ),
 			'labels'         => $labels['dietary'],
 			'allergens'      => $labels['allergens'],
 			'status'         => 'publish' === $product->get_status() ? __( 'Published', 'wowrestro' ) : __( 'Draft', 'wowrestro' ),
+			'postStatus'     => $product->get_status( 'edit' ),
 			'sold'           => (int) $product->get_total_sales(),
 			'nutrition'      => ! empty( array_filter( $nutrition ) ) || ! empty( $labels['dietary'] ) || ! empty( $labels['allergens'] ),
 			'serving'        => sanitize_text_field( $nutrition['serving'] ?? '' ),

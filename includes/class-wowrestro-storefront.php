@@ -353,6 +353,11 @@ final class WowRestro_Storefront {
 	 * Links a gateway added its own parameters to stay as they are, so it can finish the payment.
 	 */
 	public static function clean_receipt_url() {
+		// WooCommerce posts email verification to the keyed URL. A redirect here
+		// would discard that form before WooCommerce checks its nonce and email.
+		if ( ! in_array( strtoupper( $_SERVER['REQUEST_METHOD'] ?? 'GET' ), array( 'GET', 'HEAD' ), true ) ) {
+			return;
+		}
 		$uri = isset( $_SERVER['REQUEST_URI'] ) ? (string) wp_unslash( $_SERVER['REQUEST_URI'] ) : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Only parsed and matched below.
 		if ( get_query_var( 'wowrestro_receipt' ) ) {
 			// No order in this browser: back to the page above, /demo/bakery/ for /demo/bakery/confirmation/.

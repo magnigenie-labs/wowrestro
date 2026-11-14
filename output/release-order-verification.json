@@ -1,0 +1,11 @@
+{
+    "order": 241,
+    "status": "processing",
+    "total": "13.75",
+    "mode": "pickup",
+    "metadata_rows": {
+        "_wowrestro_operational_history": 1,
+        "_wowrestro_operational_status": 1,
+        "_wowrestro_tracking_token": 1
+    }
+}

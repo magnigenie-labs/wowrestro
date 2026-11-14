@@ -1,0 +1,67 @@
+Card sandbox follow-up — deferred at user request
+Date: 2026-11-13
+
+The official WooCommerce Stripe gateway 11.2.0 is installed in test mode.
+No Stripe test publishable/secret credentials are configured. The real sandbox preflight stops before making an API request.
+No processor card payment, decline, 3-D Secure challenge or webhook has been certified.
+Latest fixed code packaged as 2.0.11 at the user's request, without Stripe sandbox certification. The earlier 2.0.10 ZIP is unchanged. See wowrestro-2.0.11-verification.txt for fresh package verification.
+
+IF STRIPE TESTING IS RESUMED
+Connect a Stripe test account at:
+http://127.0.0.1:18889/wp-admin/admin.php?page=wc-settings&tab=checkout&section=stripe
+Use Create or connect a test account.
+Local login/setup: /Users/rahulmishra/.cache/wowrestro-e2e-20261113/README.md
+
+STAGING URL INVESTIGATION (2026-11-13)
+User identified https://test.restropress.com as the connected site.
+Public pages currently serve RestroPress 3.5.0.1 and mark RestroPress test mode.
+https://test.restropress.com/wowrestro/ renders literal [wowrestro_menu].
+https://test.restropress.com/checkout-2/ renders literal [woocommerce_checkout].
+The REST index exposes no WooCommerce or WowRestro namespaces.
+Public installed-file readmes report WowRestro 2.0.9-qa.6 and WooCommerce 11.0.0; this does not establish activation.
+The remote WowRestro JavaScript lacks the checkout_handoff fix; it is not the current candidate.
+The official WooCommerce Stripe gateway readme URL returns 404; this alone does not prove absence.
+The browser connector reaches WordPress login, with no authenticated admin session.
+Desktop browser inventory has no authenticated tab; Chrome app access timed out twice.
+No remote settings, plugins, orders or payments were changed.
+Conclusion: the supplied site's public RestroPress test mode does not verify a WooCommerce Stripe connection.
+Pending: connect local WooCommerce Stripe, or supply authenticated staging admin access to prepare and verify this plugin there.
+
+COMPLETED FIXES
+Card handoff preserves customer details, notes, opt-in, schedule and payment selection in native Blocks and classic checkout.
+Synchronization failures stop redirect/payment submission and allow retry.
+Already captured late payments retain their transaction; unavailable fulfillment requires staff review.
+Duplicate/refunded callbacks do not retain locks. Expired bound slots cannot bypass time validation; review orders cannot reclaim allocations.
+Failed/cancelled/refunded receipts do not claim success. Failed payable orders offer native retry.
+Accepted receipts clear stale browser drafts only when no other cart is active. Failed/pending orders retain details.
+
+VERIFIED WITHOUT PROCESSOR SIMULATION
+41 real Woo payment/order/ledger checks on HPOS and 41 on CPT.
+45 core integration checks and 40 operations checks on each datastore.
+36 receipt checks; 10 handoff checks; 12 native defaults; 118 earlier standalone PHP checks.
+Both native browser handoffs preserve all fields and payment selection, remain checkout-draft, and send no payment POST.
+Three injected synchronization failure paths pass.
+Actual browser draft cleanup and server-rendered active-cart/retry preservation pass.
+Production PHP/JavaScript syntax and diff checks pass.
+Local no-payment handoff probe removed from active site; fixture retained under tests only.
+
+DEFERRED PROCESSOR VERIFICATION
+Run actual Stripe sandbox success, decline/retry, 3-D Secure success/cancellation, amount/currency/order reconciliation and webhook checks.
+The 2.0.11 code ZIP has passed local installation, regressions and offline checkout; actual processor verification remains separate and deferred.
+
+EVIDENCE
+tests/integration/payment-lifecycle.php
+tests/integration/card-handoff.php
+tests/integration/card-handoff-browser.js
+tests/integration/card-handoff-failure-browser.js
+tests/integration/stripe-sandbox-preflight.php
+output/payment-lifecycle.log and output/payment-lifecycle-cpt.log
+output/card-core-regression.log and output/card-core-regression-cpt.log
+output/card-operations-regression.log and output/card-operations-regression-cpt.log
+output/card-receipt-regression.log
+output/playwright/card-handoff-results.txt
+output/playwright/card-handoff-failure-results.txt
+
+Official testing documentation:
+https://woocommerce.com/document/stripe/customer-experience/testing/
+https://docs.stripe.com/testing

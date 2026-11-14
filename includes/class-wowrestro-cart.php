@@ -22,6 +22,9 @@ final class WowRestro_Cart {
 		add_action( 'woocommerce_check_cart_items', array( __CLASS__, 'validate_cart' ), 5 );
 		add_action( 'woocommerce_after_checkout_validation', array( __CLASS__, 'validate_checkout' ), 5, 2 );
 		add_action( 'woocommerce_checkout_create_order_line_item', array( __CLASS__, 'save_order_line_snapshot' ), 20, 4 );
+		add_filter( 'woocommerce_display_item_meta', array( __CLASS__, 'display_order_item_meta' ), 20, 3 );
+		add_action( 'woocommerce_after_order_itemmeta', array( __CLASS__, 'admin_order_item_meta' ), 20, 2 );
+		add_filter( 'woocommerce_hidden_order_itemmeta', array( __CLASS__, 'hidden_order_item_meta' ) );
 		add_action( 'woocommerce_cart_calculate_fees', array( __CLASS__, 'add_tip_fee' ), 30 );
 		add_action( 'woocommerce_blocks_loaded', array( __CLASS__, 'register_store_api_update' ) );
 		add_filter( 'woocommerce_store_api_add_to_cart_data', array( __CLASS__, 'store_api_add_to_cart_data' ), 20, 2 );
@@ -234,7 +237,7 @@ final class WowRestro_Cart {
 	 * @param array $cart_item Cart item.
 	 * @return array
 	 */
-	public static function cart_item_display_data( $item_data, $cart_item ) {
+	public static function cart_item_display_data( $item_data, $cart_item, $currency = '' ) {
 		foreach ( (array) ( $cart_item['wowrestro_modifier_snapshot'] ?? array() ) as $group ) {
 			$options = array();
 			foreach ( (array) ( $group['options'] ?? array() ) as $option ) {
@@ -247,7 +250,7 @@ final class WowRestro_Cart {
 					? sprintf(
 						'%1$s (+%2$s)',
 						$label,
-						html_entity_decode( wp_strip_all_tags( wc_price( $price ) ), ENT_QUOTES | ENT_HTML5, 'UTF-8' )
+						html_entity_decode( wp_strip_all_tags( wc_price( $price, array( 'currency' => $currency ) ) ), ENT_QUOTES | ENT_HTML5, 'UTF-8' )
 					)
 					: $label;
 			}
@@ -270,6 +273,45 @@ final class WowRestro_Cart {
 		}
 
 		return $item_data;
+	}
+
+	/** Read the immutable configuration saved on an order, including older orders. */
+	public static function order_item_display_data( $item ) {
+		if ( ! $item instanceof WC_Order_Item_Product ) {
+			return array();
+		}
+		$order = $item->get_order();
+		return self::cart_item_display_data(
+			array(),
+			array(
+				'wowrestro_modifier_snapshot' => $item->get_meta( '_wowrestro_modifier_snapshot', true ),
+				'wowrestro_item_note'         => $item->get_meta( '_wowrestro_special_note', true ),
+			),
+			$order ? $order->get_currency() : ''
+		);
+	}
+
+	/** Include private snapshots in customer order details and HTML/plain-text emails. */
+	public static function display_order_item_meta( $html, $item, $args ) {
+		$rows = array();
+		foreach ( self::order_item_display_data( $item ) as $row ) {
+			// Apostrophes are safe in text nodes; Woo's plain email decoder drops &#039;.
+			$label  = str_replace( '&#039;', "'", esc_html( $row['key'] ) );
+			$value  = str_replace( '&#039;', "'", esc_html( $row['value'] ) );
+			$rows[] = $args['label_before'] . $label . $args['label_after'] . $value;
+		}
+		return $rows ? $html . $args['before'] . implode( $args['separator'], $rows ) . $args['after'] : $html;
+	}
+
+	/** Structured snapshots are read-only; do not expose them as editable string metadata. */
+	public static function hidden_order_item_meta( $keys ) {
+		return array_merge( $keys, array( '_wowrestro_modifier_snapshot', '_wowrestro_special_note' ) );
+	}
+
+	/** Render the same saved choices below the native order item's metadata. */
+	public static function admin_order_item_meta( $item_id, $item ) {
+		unset( $item_id );
+		echo self::display_order_item_meta( '', $item, array( 'before' => '<div class="wowrestro-order-item-meta"><p>', 'after' => '</p></div>', 'separator' => '</p><p>', 'label_before' => '<strong>', 'label_after' => ':</strong> ' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Fixed markup and escaped values in display_order_item_meta().
 	}
 
 	/**

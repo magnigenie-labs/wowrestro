@@ -1,0 +1,237 @@
+- generic [ref=f5e1]:
+  - link "Skip to content" [ref=f5e2] [cursor=pointer]:
+    - /url: "#wp--skip-link--target"
+  - generic [ref=f5e3]:
+    - banner [ref=f5e4]:
+      - generic [ref=f5e7]:
+        - paragraph [ref=f5e8]:
+          - link "WowRestro Local QA" [ref=f5e9] [cursor=pointer]:
+            - /url: http://127.0.0.1:18889
+        - generic [ref=f5e10]:
+          - navigation [ref=f5e11]:
+            - list [ref=f5e16]:
+              - list [ref=f5e17]:
+                - listitem [ref=f5e18]:
+                  - link "Add-on catalog visibility QA" [ref=f5e19] [cursor=pointer]:
+                    - /url: http://127.0.0.1:18889/addon-pagination-catalog-qa/
+                - listitem [ref=f5e20]:
+                  - link "Add-on pagination QA" [ref=f5e21] [cursor=pointer]:
+                    - /url: http://127.0.0.1:18889/addon-pagination-qa/
+                - listitem [ref=f5e22]:
+                  - link "Cart" [ref=f5e23] [cursor=pointer]:
+                    - /url: http://127.0.0.1:18889/cart/
+                - listitem [ref=f5e24]:
+                  - link "Catalog pagination QA" [ref=f5e25] [cursor=pointer]:
+                    - /url: http://127.0.0.1:18889/catalog-pagination-qa/
+                - listitem [ref=f5e26]:
+                  - link "Checkout" [ref=f5e27] [cursor=pointer]:
+                    - /url: http://127.0.0.1:18889/checkout/
+                - listitem [ref=f5e28]:
+                  - link "My account" [ref=f5e29] [cursor=pointer]:
+                    - /url: http://127.0.0.1:18889/my-account/
+                - listitem [ref=f5e30]:
+                  - link "QA Menu" [ref=f5e31] [cursor=pointer]:
+                    - /url: http://127.0.0.1:18889/qa-menu/
+                - listitem [ref=f5e32]:
+                  - link "QA Native Classic Checkout" [ref=f5e33] [cursor=pointer]:
+                    - /url: http://127.0.0.1:18889/qa-native-classic/
+                - listitem [ref=f5e34]:
+                  - link "QA Reservations" [ref=f5e35] [cursor=pointer]:
+                    - /url: http://127.0.0.1:18889/qa-reservations/
+                - listitem [ref=f5e36]:
+                  - link "Sample Page" [ref=f5e37] [cursor=pointer]:
+                    - /url: http://127.0.0.1:18889/sample-page/
+                - listitem [ref=f5e38]:
+                  - link "Shop" [ref=f5e39] [cursor=pointer]:
+                    - /url: http://127.0.0.1:18889/shop/
+          - link "Login" [ref=f5e41] [cursor=pointer]:
+            - /url: http://127.0.0.1:18889/my-account/
+    - main [ref=f5e46]:
+      - generic [ref=f5e47]:
+        - heading "QA Native Classic Checkout" [level=1] [ref=f5e48]
+        - generic [ref=f5e50]:
+          - status [ref=f5e52]:
+            - generic [ref=f5e55]:
+              - text: Have a coupon?
+              - button "Enter your coupon code" [ref=f5e56] [cursor=pointer]: Click here to enter your code
+          - form "Checkout" [ref=f5e57]:
+            - generic [ref=f5e58]:
+              - generic [ref=f5e60]:
+                - heading "Billing details" [level=3] [ref=f5e61]
+                - generic [ref=f5e62]:
+                  - paragraph [ref=f5e63]:
+                    - generic [ref=f5e64]: First name *
+                    - textbox "First name" [ref=f5e66]:
+                      - /placeholder: ""
+                      - text: Native
+                  - paragraph [ref=f5e67]:
+                    - generic [ref=f5e68]: Last name *
+                    - textbox "Last name" [ref=f5e70]:
+                      - /placeholder: ""
+                      - text: Delivery QA
+                  - paragraph [ref=f5e71]:
+                    - generic [ref=f5e72]: Country / Region *
+                    - generic [ref=f5e73]:
+                      - combobox [aria-hidden] [ref=f5e74] [cursor=pointer]
+                      - combobox "Country / Region" [ref=f5e77] [cursor=pointer]:
+                        - textbox "United Kingdom (UK)" [ref=f5e78]
+                  - paragraph [ref=f5e79]:
+                    - generic [ref=f5e80]: Street address *
+                    - textbox "Street address" [ref=f5e82]:
+                      - /placeholder: House number and street name
+                      - text: 10 Test Street
+                  - paragraph [ref=f5e83]:
+                    - generic [ref=f5e84]: Apartment, suite, unit, etc. (optional)
+                    - textbox "Apartment, suite, unit, etc. (optional)" [ref=f5e86]
+                  - paragraph [ref=f5e87]:
+                    - generic [ref=f5e88]: Town / City *
+                    - textbox "Town / City" [ref=f5e90]:
+                      - /placeholder: ""
+                      - text: London
+                  - paragraph [ref=f5e91]:
+                    - generic [ref=f5e92]: County (optional)
+                    - textbox "County (optional)" [ref=f5e94]:
+                      - /placeholder: ""
+                  - paragraph [ref=f5e95]:
+                    - generic [ref=f5e96]: Postcode *
+                    - textbox "Postcode" [ref=f5e98]:
+                      - /placeholder: ""
+                      - text: SW1A 1AA
+                  - paragraph [ref=f5e99]:
+                    - generic [ref=f5e100]: Phone (optional)
+                    - textbox "Phone (optional)" [ref=f5e102]:
+                      - /placeholder: ""
+                      - text: "07700900123"
+                  - paragraph [ref=f5e103]:
+                    - generic [ref=f5e104]: Email address *
+                    - textbox "Email address" [ref=f5e106]:
+                      - /placeholder: ""
+                      - text: native-delivery@example.test
+              - generic [ref=f5e107]:
+                - heading [level=3] [ref=f5e109]:
+                  - generic [ref=f5e110]:
+                    - checkbox "Ship to a different address?" [ref=f5e111]
+                    - text: Ship to a different address?
+                - generic [ref=f5e112]:
+                  - heading "Additional information" [level=3] [ref=f5e113]
+                  - generic [ref=f5e114]:
+                    - paragraph [ref=f5e115]:
+                      - generic [ref=f5e116]: Order notes (optional)
+                      - textbox "Order notes (optional)" [ref=f5e118]:
+                        - /placeholder: Notes about your order, e.g. special notes for delivery.
+                    - paragraph [ref=f5e119]:
+                      - generic [ref=f5e120]: How would you like your order? *
+                      - combobox "How would you like your order?" [ref=f5e122] [cursor=pointer]:
+                        - option "Pickup"
+                        - option "Delivery" [selected]
+                    - paragraph [ref=f5e123]:
+                      - generic [ref=f5e124]: Requested time (optional)
+                      - textbox "Requested time (optional)" [ref=f5e126]:
+                        - /placeholder: ASAP
+                        - text: 2026-11-13T07:45:00Z
+                    - paragraph [ref=f5e127]:
+                      - generic [ref=f5e129]:
+                        - checkbox "Send me restaurant status updates by email (optional)" [ref=f5e130]
+                        - text: Send me restaurant status updates by email (optional)
+            - heading "Your order" [level=3] [ref=f5e131]
+            - generic [ref=f5e132]:
+              - table [ref=f5e133]:
+                - rowgroup [ref=f5e134]:
+                  - row [ref=f5e135]:
+                    - columnheader "Product" [ref=f5e136]
+                    - columnheader "Subtotal" [ref=f5e137]
+                - rowgroup [ref=f5e138]:
+                  - row [ref=f5e139]:
+                    - cell [ref=f5e140]:
+                      - text: QA Plain Soup
+                      - strong [ref=f5e141]: × 1
+                    - cell "£4.25" [ref=f5e142]
+                - rowgroup [ref=f5e145]:
+                  - row [ref=f5e146]:
+                    - rowheader "Subtotal" [ref=f5e147]
+                    - cell "£4.25" [ref=f5e148]
+                  - row [ref=f5e151]:
+                    - rowheader "Shipment" [ref=f5e152]
+                    - 'cell "Pickup at QA Kitchen QA Delivery: £3.50" [ref=f5e153]':
+                      - list [ref=f5e154]:
+                        - listitem [ref=f5e155]:
+                          - radio "Pickup at QA Kitchen" [ref=f5e156]
+                          - text: Pickup at QA Kitchen
+                        - listitem [ref=f5e157]:
+                          - 'radio "QA Delivery: £3.50" [checked] [ref=f5e158]'
+                          - generic [ref=f5e159]:
+                            - text: "QA Delivery:"
+                            - generic [ref=f5e160]: £3.50
+                  - row [ref=f5e162]:
+                    - rowheader "Tip" [ref=f5e163]
+                    - cell "No tip" [ref=f5e164]:
+                      - combobox [ref=f5e165]:
+                        - option "No tip" [selected]
+                        - option "10%"
+                        - option "15%"
+                        - option "20%"
+                      - spinbutton "Flat amount" [ref=f5e166]
+                  - row [ref=f5e167]:
+                    - rowheader "Total" [ref=f5e168]
+                    - cell "£7.75" [ref=f5e169]:
+                      - strong [ref=f5e170]:
+                        - generic [ref=f5e171]: £7.75
+              - generic [ref=f5e173]: Promised for November 13, 2026 1:15 pm
+              - generic [ref=f5e174]:
+                - list "Payment methods" [ref=f5e175]:
+                  - listitem [ref=f5e176]:
+                    - radio "Bank transfer" [ref=f5e177]
+                    - text: Bank transfer
+                  - listitem [ref=f5e180]:
+                    - radio "Cash on delivery" [checked] [active] [ref=f5e181]
+                    - text: Cash on delivery
+                    - paragraph [ref=f5e224]: Pay on collection or delivery.
+                - generic [ref=f5e182]:
+                  - paragraph [ref=f5e185]:
+                    - text: Your personal data will be used to process your order, support your experience throughout this website, and for other purposes described in our
+                    - link "privacy policy" [ref=f5e186] [cursor=pointer]:
+                      - /url: http://127.0.0.1:18889/?page_id=3
+                    - text: .
+                  - button "Place order" [ref=f5e187] [cursor=pointer]
+    - contentinfo [ref=f5e188]:
+      - generic [ref=f5e190]:
+        - generic [ref=f5e191]:
+          - heading [level=2] [ref=f5e194]:
+            - link "WowRestro Local QA" [ref=f5e195] [cursor=pointer]:
+              - /url: http://127.0.0.1:18889
+          - generic [ref=f5e196]:
+            - navigation "2" [ref=f5e197]:
+              - list [ref=f5e198]:
+                - listitem [ref=f5e199]:
+                  - link "Blog" [ref=f5e200] [cursor=pointer]:
+                    - /url: "#"
+                - listitem [ref=f5e201]:
+                  - link "About" [ref=f5e202] [cursor=pointer]:
+                    - /url: "#"
+                - listitem [ref=f5e203]:
+                  - link "FAQs" [ref=f5e204] [cursor=pointer]:
+                    - /url: "#"
+                - listitem [ref=f5e205]:
+                  - link "Authors" [ref=f5e206] [cursor=pointer]:
+                    - /url: "#"
+            - navigation "3" [ref=f5e207]:
+              - list [ref=f5e208]:
+                - listitem [ref=f5e209]:
+                  - link "Events" [ref=f5e210] [cursor=pointer]:
+                    - /url: "#"
+                - listitem [ref=f5e211]:
+                  - link "Shop" [ref=f5e212] [cursor=pointer]:
+                    - /url: "#"
+                - listitem [ref=f5e213]:
+                  - link "Patterns" [ref=f5e214] [cursor=pointer]:
+                    - /url: "#"
+                - listitem [ref=f5e215]:
+                  - link "Themes" [ref=f5e216] [cursor=pointer]:
+                    - /url: "#"
+        - generic [ref=f5e218]:
+          - paragraph [ref=f5e219]: Twenty Twenty-Five
+          - paragraph [ref=f5e220]:
+            - text: Designed with
+            - link "WordPress" [ref=f5e221] [cursor=pointer]:
+              - /url: https://wordpress.org
+  - status [ref=f5e222]

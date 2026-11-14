@@ -1,0 +1,178 @@
+- generic [active] [ref=f6e1]:
+  - link "Skip to content" [ref=f6e2] [cursor=pointer]:
+    - /url: "#wp--skip-link--target"
+  - generic [ref=f6e3]:
+    - banner [ref=f6e4]:
+      - generic [ref=f6e7]:
+        - paragraph [ref=f6e8]:
+          - link "WowRestro Local QA" [ref=f6e9] [cursor=pointer]:
+            - /url: http://127.0.0.1:18889
+        - generic [ref=f6e10]:
+          - navigation [ref=f6e11]:
+            - list [ref=f6e16]:
+              - list [ref=f6e17]:
+                - listitem [ref=f6e18]:
+                  - link "Add-on catalog visibility QA" [ref=f6e19] [cursor=pointer]:
+                    - /url: http://127.0.0.1:18889/addon-pagination-catalog-qa/
+                - listitem [ref=f6e20]:
+                  - link "Add-on pagination QA" [ref=f6e21] [cursor=pointer]:
+                    - /url: http://127.0.0.1:18889/addon-pagination-qa/
+                - listitem [ref=f6e22]:
+                  - link "Cart" [ref=f6e23] [cursor=pointer]:
+                    - /url: http://127.0.0.1:18889/cart/
+                - listitem [ref=f6e24]:
+                  - link "Catalog pagination QA" [ref=f6e25] [cursor=pointer]:
+                    - /url: http://127.0.0.1:18889/catalog-pagination-qa/
+                - listitem [ref=f6e26]:
+                  - link "Checkout" [ref=f6e27] [cursor=pointer]:
+                    - /url: http://127.0.0.1:18889/checkout/
+                - listitem [ref=f6e28]:
+                  - link "My account" [ref=f6e29] [cursor=pointer]:
+                    - /url: http://127.0.0.1:18889/my-account/
+                - listitem [ref=f6e30]:
+                  - link "QA Menu" [ref=f6e31] [cursor=pointer]:
+                    - /url: http://127.0.0.1:18889/qa-menu/
+                - listitem [ref=f6e32]:
+                  - link "QA Native Classic Checkout" [ref=f6e33] [cursor=pointer]:
+                    - /url: http://127.0.0.1:18889/qa-native-classic/
+                - listitem [ref=f6e34]:
+                  - link "QA Reservations" [ref=f6e35] [cursor=pointer]:
+                    - /url: http://127.0.0.1:18889/qa-reservations/
+                - listitem [ref=f6e36]:
+                  - link "Sample Page" [ref=f6e37] [cursor=pointer]:
+                    - /url: http://127.0.0.1:18889/sample-page/
+                - listitem [ref=f6e38]:
+                  - link "Shop" [ref=f6e39] [cursor=pointer]:
+                    - /url: http://127.0.0.1:18889/shop/
+          - link "Login" [ref=f6e41] [cursor=pointer]:
+            - /url: http://127.0.0.1:18889/my-account/
+    - main [ref=f6e46]:
+      - generic [ref=f6e51]:
+        - generic [ref=f6e52]:
+          - generic [aria-hidden] [ref=f6e53]: ✓
+          - generic [ref=f6e54]: "Order #200 confirmed"
+          - heading [level=2] [ref=f6e55]:
+            - text: Thank you, Native.
+            - emphasis [ref=f6e56]: The kitchen has it.
+          - paragraph [ref=f6e57]: We have sent your confirmation to native-delivery@example.test. We will bring it to 10 Test Street.
+        - generic [ref=f6e58]:
+          - generic [ref=f6e59]:
+            - term [ref=f6e60]: Order
+            - definition [ref=f6e61]: "#200"
+          - generic [ref=f6e62]:
+            - term [ref=f6e63]: Placed
+            - definition [ref=f6e64]: November 13, 2026
+          - generic [ref=f6e65]:
+            - term [ref=f6e66]: Total
+            - definition [ref=f6e67]:
+              - generic [ref=f6e68]: £7.75
+          - generic [ref=f6e69]:
+            - term [ref=f6e70]: Payment
+            - definition [ref=f6e71]: Cash on delivery
+        - paragraph [ref=f6e73]: Pay with cash upon delivery.
+        - generic [ref=f6e74]:
+          - generic [ref=f6e75]:
+            - generic [ref=f6e76]: Tracking your delivery
+            - generic [ref=f6e77]: Promised for November 13, 2026 1:15 pm
+          - list [ref=f6e78]:
+            - listitem [ref=f6e79]:
+              - generic [ref=f6e83]:
+                - generic [ref=f6e84]: Order received
+                - generic [ref=f6e85]: The kitchen has your order.
+            - listitem [ref=f6e86]:
+              - generic [ref=f6e90]:
+                - generic [ref=f6e91]: Accepted
+                - generic [ref=f6e92]: Waiting on the kitchen.
+            - listitem [ref=f6e93]:
+              - generic [ref=f6e97]:
+                - generic [ref=f6e98]: Preparing
+                - generic [ref=f6e99]: Not started yet.
+            - listitem [ref=f6e100]:
+              - generic [ref=f6e104]:
+                - generic [ref=f6e105]: Ready
+                - generic [ref=f6e106]: Not ready yet.
+            - listitem [ref=f6e107]:
+              - generic [ref=f6e111]:
+                - generic [ref=f6e112]: Out for delivery
+                - generic [ref=f6e113]: Not dispatched yet.
+            - listitem [ref=f6e114]:
+              - generic [ref=f6e117]:
+                - generic [ref=f6e118]: Delivered
+                - generic [ref=f6e119]: Not delivered yet.
+        - generic [ref=f6e120]:
+          - generic [ref=f6e121]:
+            - generic [ref=f6e122]: Order details
+            - generic [ref=f6e124]:
+              - generic [ref=f6e126]: 1 × QA Plain Soup
+              - generic [ref=f6e128]: £4.25
+            - generic [ref=f6e130]:
+              - generic [ref=f6e131]:
+                - generic [ref=f6e132]: Subtotal
+                - generic [ref=f6e133]: £4.25
+              - generic [ref=f6e135]:
+                - generic [ref=f6e136]: Shipping
+                - generic [ref=f6e137]:
+                  - generic [ref=f6e138]: £3.50
+                  - text: via QA Delivery
+              - generic [ref=f6e139]:
+                - generic [ref=f6e140]: Delivery time
+                - generic [ref=f6e141]: November 13, 2026 1:15 pm
+              - generic [ref=f6e142]:
+                - generic [ref=f6e143]: Total
+                - generic [ref=f6e144]: £7.75
+          - generic [ref=f6e146]:
+            - generic [ref=f6e147]:
+              - generic [ref=f6e148]: Delivering to
+              - generic [ref=f6e149]: Native Delivery QA
+              - generic [ref=f6e150]: 10 Test Street, London, SW1A 1AA
+              - generic [ref=f6e151]: 07700900123 · native-delivery@example.test
+            - generic [ref=f6e152]:
+              - generic [ref=f6e153]: Something wrong?
+              - generic [ref=f6e154]:
+                - text: "Contact the kitchen and quote order #200. Changes are possible until the ticket is on the pass."
+                - link "Call +442079460123" [ref=f6e155] [cursor=pointer]:
+                  - /url: tel:+442079460123
+              - link "Order again" [ref=f6e156] [cursor=pointer]:
+                - /url: http://127.0.0.1:18889/qa-menu/
+    - contentinfo [ref=f6e157]:
+      - generic [ref=f6e159]:
+        - generic [ref=f6e160]:
+          - heading [level=2] [ref=f6e163]:
+            - link "WowRestro Local QA" [ref=f6e164] [cursor=pointer]:
+              - /url: http://127.0.0.1:18889
+          - generic [ref=f6e165]:
+            - navigation "2" [ref=f6e166]:
+              - list [ref=f6e167]:
+                - listitem [ref=f6e168]:
+                  - link "Blog" [ref=f6e169] [cursor=pointer]:
+                    - /url: "#"
+                - listitem [ref=f6e170]:
+                  - link "About" [ref=f6e171] [cursor=pointer]:
+                    - /url: "#"
+                - listitem [ref=f6e172]:
+                  - link "FAQs" [ref=f6e173] [cursor=pointer]:
+                    - /url: "#"
+                - listitem [ref=f6e174]:
+                  - link "Authors" [ref=f6e175] [cursor=pointer]:
+                    - /url: "#"
+            - navigation "3" [ref=f6e176]:
+              - list [ref=f6e177]:
+                - listitem [ref=f6e178]:
+                  - link "Events" [ref=f6e179] [cursor=pointer]:
+                    - /url: "#"
+                - listitem [ref=f6e180]:
+                  - link "Shop" [ref=f6e181] [cursor=pointer]:
+                    - /url: "#"
+                - listitem [ref=f6e182]:
+                  - link "Patterns" [ref=f6e183] [cursor=pointer]:
+                    - /url: "#"
+                - listitem [ref=f6e184]:
+                  - link "Themes" [ref=f6e185] [cursor=pointer]:
+                    - /url: "#"
+        - generic [ref=f6e187]:
+          - paragraph [ref=f6e188]: Twenty Twenty-Five
+          - paragraph [ref=f6e189]:
+            - text: Designed with
+            - link "WordPress" [ref=f6e190] [cursor=pointer]:
+              - /url: https://wordpress.org
+  - status [ref=f6e191]

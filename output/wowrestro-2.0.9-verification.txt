@@ -1,0 +1,19 @@
+WowRestro 2.0.9 — local verification
+
+Fixed editable pickup/delivery hours and decimal money inputs, including decimal points lost during redraws. Preserves zero settings/prices and canonical product stock/publication status. Existing QR/table changes retained.
+
+Passed:
+- 46 schedule PHP checks: persistence, independent services, split shifts, invalid save rejection, timezone, slots, closures and overrides.
+- 15 add-on PHP checks: decimals, currency precision, saved options, cart totals and repeated calculation.
+- 57 product PHP checks: blank/zero prices, precision, translated workspaces, stock/status and variations.
+- 8 browser workflows: native keystrokes, save/reload, invalid inputs, schedule errors, product/variation/booking edits and integer fields.
+- 28 workspace route-render checks; no browser JavaScript errors.
+- Desktop and 390px mobile schedule layout inspected; no horizontal overflow.
+- Syntax: 36 PHP files, 13 JavaScript files.
+- git diff --check and ZIP CRC/content checks.
+
+Environment: PHP 8.5.6; Node 24.15.0; Chromium via Playwright.
+Limit: PHP tests use in-memory WordPress/WooCommerce adapters; browser tests use real UI and mocked REST/localStorage. No live WordPress database, checkout, payment gateway, third-party theme/plugin, or PHP 7.4 integration was exercised. Test on the client's staging site before deployment.
+
+ZIP contains only production plugin files (no tests, IDE files, screenshots or OS metadata).
+SHA-256: 1a6c21c5454226510c03b37ccb95e9743619014ba05fae3210a3df9a07298f52

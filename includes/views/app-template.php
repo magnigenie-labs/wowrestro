@@ -410,7 +410,7 @@ defined( 'ABSPATH' ) || exit;
 		                <label for="{{ f.id }}" style="display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:#292d3e;">{{ f.label }}<sc-if value="{{ f.isRequired }}"><span aria-hidden="true" style="color:#dc2626;">*</span></sc-if><sc-if value="{{ f.hasTooltip }}"><i class="ph ph-info" title="{{ f.tooltip }}" style="font-size:16px;color:#62697a;"></i></sc-if></label>
                         </sc-if>
                         <sc-if value="{{ f.isInput }}">
-		              <input id="{{ f.id }}" type="{{ f.inputType }}" value="{{ f.value }}" sc-camel-on-input="{{ f.onInput }}" placeholder="{{ f.placeholder }}" aria-invalid="{{ f.ariaInvalid }}" aria-required="{{ f.ariaRequired }}" aria-describedby="{{ f.describedBy }}" style="width:100%;height:44px;padding:0 12px;border:1px solid {{ f.border }};border-radius:6px;background:#fff;font-size:14px;outline:none;">
+		              <input id="{{ f.id }}" type="{{ f.inputType }}" step="{{ f.step }}" min="{{ f.min }}" inputmode="{{ f.inputMode }}" pattern="{{ f.pattern }}" value="{{ f.value }}" sc-camel-on-input="{{ f.onInput }}" placeholder="{{ f.placeholder }}" aria-invalid="{{ f.ariaInvalid }}" aria-required="{{ f.ariaRequired }}" aria-describedby="{{ f.describedBy }}" style="width:100%;height:44px;padding:0 12px;border:1px solid {{ f.border }};border-radius:6px;background:#fff;font-size:14px;outline:none;">
                         </sc-if>
                         <sc-if value="{{ f.hasError }}">
 		              <div id="{{ f.errorId }}" role="alert" style="display:flex;align-items:center;gap:6px;color:#dc2626;font-size:12px;line-height:1.4;"><i class="ph ph-warning-circle" aria-hidden="true"></i>{{ f.error }}</div>
@@ -425,7 +425,7 @@ defined( 'ABSPATH' ) || exit;
                         <sc-if value="{{ f.isCompound }}">
                           <div style="display:flex;width:100%;height:44px;border:1px solid #a5a9be;border-radius:8px;background:#fff;overflow:hidden;">
                             <sc-if value="{{ f.hasPrefix }}"><span style="min-width:44px;display:grid;place-items:center;padding:0 12px;border-right:1px solid #a5a9be;color:#6b7280;font-size:15px;">{{ f.prefix }}</span></sc-if>
-		                <input id="{{ f.id }}" type="{{ f.inputType }}" value="{{ f.value }}" sc-camel-on-input="{{ f.onInput }}" aria-describedby="{{ f.describedBy }}" style="min-width:0;flex:1;height:42px;padding:0 12px;border:0;background:#fff;font-size:14px;outline:none;box-shadow:none;">
+		                <input id="{{ f.id }}" type="{{ f.inputType }}" step="{{ f.step }}" min="{{ f.min }}" inputmode="{{ f.inputMode }}" pattern="{{ f.pattern }}" value="{{ f.value }}" sc-camel-on-input="{{ f.onInput }}" aria-describedby="{{ f.describedBy }}" style="min-width:0;flex:1;height:42px;padding:0 12px;border:0;background:#fff;font-size:14px;outline:none;box-shadow:none;">
                             <sc-if value="{{ f.hasSuffix }}"><span style="min-width:96px;display:grid;place-items:center;padding:0 14px;border-left:1px solid #a5a9be;color:#525866;font-size:14px;background:#fafafa;">{{ f.suffix }}</span></sc-if>
                           </div>
                         </sc-if>
@@ -444,11 +444,18 @@ defined( 'ABSPATH' ) || exit;
                           <div style="border:1px solid #e5e5e5;border-radius:8px;overflow:hidden;">
                             <sc-for list="{{ f.days }}" as="day">
                               <div style="display:flex;align-items:center;gap:16px;padding:12px 16px;border-bottom:1px solid #f1f1f4;flex-wrap:wrap;">
-		                  <button type="button" role="switch" aria-label="Open {{ day.label }}" aria-checked="{{ day.ariaChecked }}" sc-camel-on-click="{{ day.onToggle }}" style="position:relative;display:inline-block;width:40px;height:22px;padding:0;border-radius:999px;cursor:pointer;flex-shrink:0;background:{{ day.trackBg }};">
+		                  <button type="button" role="switch" aria-label="{{ day.toggleLabel }}" aria-checked="{{ day.ariaChecked }}" sc-camel-on-click="{{ day.onToggle }}" style="position:relative;display:inline-block;width:40px;height:24px;padding:0;border:0;border-radius:999px;cursor:pointer;flex-shrink:0;background:{{ day.trackBg }};">
                                   <span style="position:absolute;top:2px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.2);transition:left .2s;left:{{ day.knobLeft }};"></span>
 		                  </button>
                                 <span style="width:96px;font-size:14px;font-weight:500;color:#252525;">{{ day.label }}</span>
-                                <span style="font-size:14px;color:{{ day.timeColor }};">{{ day.hours }}</span>
+                                <sc-if value="{{ day.isOpen }}">
+                                  <div style="display:flex;flex-direction:column;gap:6px;flex:1;min-width:180px;font-size:12px;color:#525866;">
+                                    <label for="{{ day.id }}">{{ day.inputLabel }}</label>
+                                    <input id="{{ day.id }}" type="text" value="{{ day.hours }}" sc-camel-on-input="{{ day.onInput }}" aria-invalid="{{ day.ariaInvalid }}" aria-describedby="{{ day.describedBy }}" placeholder="11:00-14:00,17:00-22:00" style="box-sizing:border-box;width:100%;min-height:40px;padding:8px 10px;border:1px solid #a5a9be;border-radius:6px;background:#fff;font-size:14px;">
+                                    <sc-if value="{{ day.hasError }}"><span id="{{ day.errorId }}" role="alert" style="color:#dc2626;">{{ day.error }}</span></sc-if>
+                                  </div>
+                                </sc-if>
+                                <sc-if value="{{ day.isClosed }}"><span style="font-size:14px;color:#62697a;">Closed</span></sc-if>
                               </div>
                             </sc-for>
                           </div>
@@ -502,7 +509,7 @@ defined( 'ABSPATH' ) || exit;
                                 <sc-for list="{{ rr.cells }}" as="rc">
                                   <label style="display:flex;flex-direction:column;gap:6px;font-size:12px;font-weight:600;color:#525866;">{{ rc.label }}
                                     <sc-if value="{{ rc.isSelect }}"><sc-raw-select value="{{ rc.value }}" sc-camel-on-change="{{ rc.onInput }}" style="width:100%;height:40px;padding:0 10px;border:1px solid #a5a9be;border-radius:6px;background:#fff;font-size:14px;"><sc-for list="{{ rc.options }}" as="ro"><option value="{{ ro.value }}">{{ ro.label }}</option></sc-for></sc-raw-select></sc-if>
-                                    <sc-if value="{{ rc.isInput }}"><input type="{{ rc.inputType }}" value="{{ rc.value }}" sc-camel-on-input="{{ rc.onInput }}" placeholder="{{ rc.placeholder }}" style="width:100%;height:40px;padding:0 10px;border:1px solid #a5a9be;border-radius:6px;background:#fff;font-size:14px;"></sc-if>
+                                    <sc-if value="{{ rc.isInput }}"><input type="{{ rc.inputType }}" step="{{ rc.step }}" min="{{ rc.min }}" inputmode="{{ rc.inputMode }}" pattern="{{ rc.pattern }}" value="{{ rc.value }}" sc-camel-on-input="{{ rc.onInput }}" placeholder="{{ rc.placeholder }}" style="width:100%;height:40px;padding:0 10px;border:1px solid #a5a9be;border-radius:6px;background:#fff;font-size:14px;"></sc-if>
                                   </label>
                                 </sc-for>
                                 <sc-if value="{{ rr.canRemove }}"><button type="button" sc-camel-on-click="{{ rr.onRemove }}" aria-label="Remove custom field" style="width:40px;height:40px;display:grid;place-items:center;border:1px solid #d1d5db;border-radius:6px;background:#fff;color:#6b7280;cursor:pointer;"><i class="ph ph-trash" aria-hidden="true"></i></button></sc-if>
@@ -838,7 +845,7 @@ defined( 'ABSPATH' ) || exit;
 		          <label for="{{ ff.id }}" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;">{{ ff.label }}</label>
                         </sc-if>
                         <sc-if value="{{ ff.isInput }}">
-		          <input id="{{ ff.id }}" type="{{ ff.inputType }}" value="{{ ff.value }}" sc-camel-on-input="{{ ff.onInput }}" placeholder="{{ ff.placeholder }}" aria-describedby="{{ ff.describedBy }}" style="width:100%;height:44px;padding:0 12px;border:1px solid #a5a9be;border-radius:6px;background:#fff;font-size:14px;outline:none;">
+		          <input id="{{ ff.id }}" type="{{ ff.inputType }}" step="{{ ff.step }}" min="{{ ff.min }}" inputmode="{{ ff.inputMode }}" pattern="{{ ff.pattern }}" value="{{ ff.value }}" sc-camel-on-input="{{ ff.onInput }}" placeholder="{{ ff.placeholder }}" aria-describedby="{{ ff.describedBy }}" style="width:100%;height:44px;padding:0 12px;border:1px solid #a5a9be;border-radius:6px;background:#fff;font-size:14px;outline:none;">
                         </sc-if>
                         <sc-if value="{{ ff.isSelect }}">
 		          <sc-raw-select id="{{ ff.id }}" value="{{ ff.value }}" sc-camel-on-change="{{ ff.onInput }}" aria-describedby="{{ ff.describedBy }}" style="width:100%;height:44px;padding:0 12px;border:1px solid #a5a9be;border-radius:6px;background:#fff;font-size:14px;outline:none;">
@@ -858,7 +865,7 @@ defined( 'ABSPATH' ) || exit;
                                   <label style="display:flex;flex-direction:column;gap:6px;font-size:12px;font-weight:500;color:#414454;">
                                     {{ rc.label }}
 	                                    <sc-if value="{{ rc.isSelect }}"><sc-raw-select value="{{ rc.value }}" sc-camel-on-change="{{ rc.onInput }}" style="width:100%;height:40px;padding:0 10px;border:1px solid #a5a9be;border-radius:6px;background:#fff;font-size:14px;outline:none;"><sc-for list="{{ rc.options }}" as="ro"><option value="{{ ro.value }}">{{ ro.label }}</option></sc-for></sc-raw-select></sc-if>
-	                                    <sc-if value="{{ rc.isInput }}"><input type="{{ rc.inputType }}" value="{{ rc.value }}" sc-camel-on-input="{{ rc.onInput }}" placeholder="{{ rc.placeholder }}" style="width:100%;height:40px;padding:0 10px;border:1px solid #a5a9be;border-radius:6px;background:#fff;font-size:14px;outline:none;"></sc-if>
+	                                    <sc-if value="{{ rc.isInput }}"><input type="{{ rc.inputType }}" step="{{ rc.step }}" min="{{ rc.min }}" inputmode="{{ rc.inputMode }}" pattern="{{ rc.pattern }}" value="{{ rc.value }}" sc-camel-on-input="{{ rc.onInput }}" placeholder="{{ rc.placeholder }}" style="width:100%;height:40px;padding:0 10px;border:1px solid #a5a9be;border-radius:6px;background:#fff;font-size:14px;outline:none;"></sc-if>
                                   </label>
                                 </sc-for>
                                 <sc-if value="{{ rr.canRemove }}">

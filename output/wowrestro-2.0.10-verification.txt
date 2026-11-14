@@ -1,0 +1,67 @@
+WowRestro 2.0.10 — final verification
+Date: 2026-11-13
+
+DELIVERABLE
+wowrestro-2.0.10.zip
+80 production files; 1,936,885 bytes.
+SHA-256: 2228284189a83a8ad385f0c02847578170ebb176dca172c4bd6a83f186c1a56c
+All ZIP contents match the workspace and installed local release byte for byte.
+ZIP excludes tests, logs, fixtures, development files and local credentials.
+
+REAL LOCAL ENVIRONMENT
+WordPress 7.1.4 / WooCommerce 11.3.0 / PHP 8.5.6 / MySQL 26.7.0.
+Menu: http://127.0.0.1:18889/qa-menu/
+Admin: http://127.0.0.1:18889/wp-admin/
+Setup, credentials and start/stop instructions:
+/Users/rahulmishra/.cache/wowrestro-e2e-20261113/README.md
+The installed plugin is extracted from this final ZIP, not linked to source.
+
+REPORTED DEFECTS
+PASS: Admin edits and reloads split pickup/delivery hours; overlapping periods are rejected without changing saved hours.
+PASS: Typing 1.25 character by character remains 1.25, saves through real REST and reloads correctly.
+Product/settings regressions preserve zero and blank prices, stock/publication state, and zero-valued settings.
+
+ACTUAL BROWSER CHECKOUTS AND DATABASE VERIFICATION
+Order 93: guest pickup, simple pizza plus GBP 1.25 extra, total GBP 13.75, COD.
+Order 199: large variation plus extra, GBP 3.50 delivery, total GBP 19.00, BACS; scheduled November 14 at 12:30 pm restaurant time.
+Order 198: native Checkout Blocks pickup, BACS, total GBP 4.25, scheduled 12:45 pm.
+Order 200: native classic delivery, COD, total GBP 7.75, scheduled 1:15 pm.
+Order 201: QR table QA-12 retained as dine-in metadata, total GBP 4.25.
+Order 204: two configured items GBP 27.50, 10% coupon GBP 2.75, shipping GBP 3.50, VAT GBP 5.65; final total GBP 33.90 confirmed in database and receipt.
+Order 241: final ZIP installed and activated, fresh guest pickup checkout GBP 13.75, required add-on validation, persisted receipt, cleared cart, exactly one workflow status/history/tracking-token row.
+Order 93 completed through real admin buttons; public tracking followed accepted, preparing, ready and completed. Finished order left the active board.
+Guest receipt email verification: wrong email denied; correct email displays the receipt without losing POST data.
+
+ADDITIONAL VERIFIED FIXES
+- Products and required add-ons beyond initial API limits; all 102 products in a category render and the last product can be ordered.
+- Plain and pretty REST routing; hidden products/categories excluded.
+- Delayed cart response preserves edited/cleared checkout contact fields.
+- Unavailable delivery rejected with HTTP 409 instead of silently becoming pickup; native checkout retains its selected shipping rate.
+- Saved extras on kitchen tickets, receipts, native order views and HTML/plain emails; pickup restaurant contact; readable addresses and apostrophes.
+- Duplicate workflow metadata prevention and repair; unrelated pending metadata preserved.
+- Legacy discovery uses one metadata join on HPOS/CPT; existing-data lookup approximately 10 ms.
+- Activation, next request and simulated upgrade no longer trigger early translation notices.
+
+AUTOMATED CHECKS: 383 PASS
+118 standalone PHP assertions (46 schedule, 15 add-on pricing, 57 product roundtrip).
+45 real integration assertions on HPOS plus 45 on legacy CPT storage.
+40 operations assertions on HPOS plus 40 on legacy CPT storage.
+17 receipt/email assertions.
+12 native checkout default assertions.
+52 legacy-order discovery assertions across both stores.
+14 shipping-mode/real Store API checkout assertions.
+CPT tests use process-local filters; the shared site remains on HPOS.
+All 28 admin route render checks pass. Final admin load and checks completed in 948 ms.
+Production PHP/JavaScript syntax checks and git diff --check pass.
+Final packaged activation and checkout produced no new PHP debug entries.
+
+EVIDENCE
+Integration scripts: tests/integration/
+Test logs and order verification JSON: output/
+Browser results/screenshots: output/playwright/
+Manifest: output/wowrestro-2.0.10-manifest.json
+
+TEST BOUNDARIES
+COD and bank transfer were exercised; no live card gateway or real funds were involved.
+Outbound email was blocked locally; actual WooCommerce email templates and plain-text conversion were tested.
+Tests cover the listed versions and flows, not every theme, gateway, extension or server configuration.

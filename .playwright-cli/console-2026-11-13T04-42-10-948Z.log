@@ -1,0 +1,4 @@
+[  156589ms] [LOG] JQMIGRATE: Migrate is installed, version 3.4.1 @ http://127.0.0.1:18889/wp-admin/load-scripts.php?c=1&load%5Bchunk_0%5D=jquery-core,jquery-migrate,utils,moxiejs,plupload&ver=7.1.4:5
+[  397852ms] [INFO] Autofocus processing was blocked because a document already has a focused element. @ http://127.0.0.1:18889/wp-admin/admin.php?page=wowrestro-app&route=%2Flive-orders:1
+[  397887ms] [LOG] JQMIGRATE: Migrate is installed, version 3.4.1 @ http://127.0.0.1:18889/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1:2
+[ 5243405ms] [ERROR] Blocked attempt to show a 'beforeunload' confirmation panel for a frame that never had a user gesture since its load. https://www.chromestatus.com/feature/5082396709879808 @ http://127.0.0.1:18889/wp-admin/admin.php?page=wowrestro-app&route=%2Flive-orders:1

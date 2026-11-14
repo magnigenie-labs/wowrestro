@@ -1,0 +1,125 @@
+- generic [active] [ref=e1]:
+  - link "Skip to content" [ref=e2] [cursor=pointer]:
+    - /url: "#wp--skip-link--target"
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e7]:
+        - paragraph [ref=e8]:
+          - link "WowRestro Local QA" [ref=e9] [cursor=pointer]:
+            - /url: http://127.0.0.1:18889
+        - navigation [ref=e11]:
+          - list [ref=e16]:
+            - list [ref=e17]:
+              - listitem [ref=e18]:
+                - link "Add-on pagination QA" [ref=e19] [cursor=pointer]:
+                  - /url: http://127.0.0.1:18889/addon-pagination-qa/
+              - listitem [ref=e20]:
+                - link "Cart" [ref=e21] [cursor=pointer]:
+                  - /url: http://127.0.0.1:18889/cart/
+              - listitem [ref=e22]:
+                - link "Checkout" [ref=e23] [cursor=pointer]:
+                  - /url: http://127.0.0.1:18889/checkout/
+              - listitem [ref=e24]:
+                - link "My account" [ref=e25] [cursor=pointer]:
+                  - /url: http://127.0.0.1:18889/my-account/
+              - listitem [ref=e26]:
+                - link "QA Menu" [ref=e27] [cursor=pointer]:
+                  - /url: http://127.0.0.1:18889/qa-menu/
+              - listitem [ref=e28]:
+                - link "QA Reservations" [ref=e29] [cursor=pointer]:
+                  - /url: http://127.0.0.1:18889/qa-reservations/
+              - listitem [ref=e30]:
+                - link "Sample Page" [ref=e31] [cursor=pointer]:
+                  - /url: http://127.0.0.1:18889/sample-page/
+              - listitem [ref=e32]:
+                - link "Shop" [ref=e33] [cursor=pointer]:
+                  - /url: http://127.0.0.1:18889/shop/
+    - main [ref=e34]:
+      - generic [ref=e35]:
+        - heading "QA Menu" [level=1] [ref=e36]
+        - generic [ref=e39]:
+          - generic [ref=e41]:
+            - generic [ref=e42]: WowRestro Local QA
+            - heading [level=2] [ref=e44]:
+              - text: Order direct
+              - emphasis [ref=e45]: from our kitchen
+            - generic [ref=e46]:
+              - group "Delivery or pickup" [ref=e47]:
+                - button "Delivery" [pressed] [ref=e48] [cursor=pointer]
+                - button "Pickup" [ref=e49] [cursor=pointer]
+              - generic [ref=e50]: Delivering from 10 Test Street, London, SW1A 1AA
+          - generic [ref=e52]:
+            - generic [ref=e53]:
+              - generic [ref=e54]:
+                - generic [ref=e55]:
+                  - generic [ref=e56]: The menu
+                  - heading "Everything we make" [level=2] [ref=e57]
+                - textbox "Search the menu" [ref=e58]
+              - generic [ref=e59]:
+                - button "All 0" [ref=e60] [cursor=pointer]:
+                  - generic [ref=e61]: All
+                  - generic [ref=e62]: "0"
+                - button "Pagination QA padding 64" [ref=e63] [cursor=pointer]:
+                  - generic [ref=e64]: Pagination QA padding
+                  - generic [ref=e65]: "64"
+                - button "Pagination QA target 1" [ref=e66] [cursor=pointer]:
+                  - generic [ref=e67]: Pagination QA target
+                  - generic [ref=e68]: "1"
+                - button "QA Browser 3" [ref=e69] [cursor=pointer]:
+                  - generic [ref=e70]: QA Browser
+                  - generic [ref=e71]: "3"
+              - generic [ref=e72]:
+                - generic [ref=e73]: Nothing on the menu matches that.
+                - button "Show the full menu" [ref=e74] [cursor=pointer]
+              - generic [ref=e75]:
+                - generic [ref=e76]: Allergen and dietary information is available on request - ask the kitchen before ordering.
+                - generic [ref=e77]: Powered by WowRestro
+            - complementary [ref=e78]:
+              - generic [ref=e79]:
+                - generic [ref=e80]: Your order
+                - generic [ref=e81]: Delivery
+              - generic [ref=e82]:
+                - generic [ref=e89]: Your order is empty
+                - generic [ref=e90]: Pick something from the menu and it'll appear here.
+    - contentinfo [ref=e91]:
+      - generic [ref=e93]:
+        - generic [ref=e94]:
+          - heading [level=2] [ref=e97]:
+            - link "WowRestro Local QA" [ref=e98] [cursor=pointer]:
+              - /url: http://127.0.0.1:18889
+          - generic [ref=e99]:
+            - navigation "2" [ref=e100]:
+              - list [ref=e101]:
+                - listitem [ref=e102]:
+                  - link "Blog" [ref=e103] [cursor=pointer]:
+                    - /url: "#"
+                - listitem [ref=e104]:
+                  - link "About" [ref=e105] [cursor=pointer]:
+                    - /url: "#"
+                - listitem [ref=e106]:
+                  - link "FAQs" [ref=e107] [cursor=pointer]:
+                    - /url: "#"
+                - listitem [ref=e108]:
+                  - link "Authors" [ref=e109] [cursor=pointer]:
+                    - /url: "#"
+            - navigation "3" [ref=e110]:
+              - list [ref=e111]:
+                - listitem [ref=e112]:
+                  - link "Events" [ref=e113] [cursor=pointer]:
+                    - /url: "#"
+                - listitem [ref=e114]:
+                  - link "Shop" [ref=e115] [cursor=pointer]:
+                    - /url: "#"
+                - listitem [ref=e116]:
+                  - link "Patterns" [ref=e117] [cursor=pointer]:
+                    - /url: "#"
+                - listitem [ref=e118]:
+                  - link "Themes" [ref=e119] [cursor=pointer]:
+                    - /url: "#"
+        - generic [ref=e121]:
+          - paragraph [ref=e122]: Twenty Twenty-Five
+          - paragraph [ref=e123]:
+            - text: Designed with
+            - link "WordPress" [ref=e124] [cursor=pointer]:
+              - /url: https://wordpress.org
+  - status [ref=e125]

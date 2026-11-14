@@ -1,0 +1,170 @@
+{
+    "passed": 41,
+    "failed": 0,
+    "checks": [
+        {
+            "pass": true,
+            "check": "Pending payment owns its future kitchen slot"
+        },
+        {
+            "pass": true,
+            "check": "Authentication-pending order remains unpaid with one allocation"
+        },
+        {
+            "pass": true,
+            "check": "Failed payment releases kitchen capacity"
+        },
+        {
+            "pass": true,
+            "check": "Failed payment closes restaurant workflow"
+        },
+        {
+            "pass": true,
+            "check": "Retry reacquires exactly one available allocation before submission"
+        },
+        {
+            "pass": true,
+            "check": "WooCommerce records successful retry completion"
+        },
+        {
+            "pass": true,
+            "check": "Successful retry persists paid status and transaction"
+        },
+        {
+            "pass": true,
+            "check": "Successful retry reopens fulfillment with one allocation"
+        },
+        {
+            "pass": true,
+            "check": "Retry preserves tracking identity"
+        },
+        {
+            "pass": true,
+            "check": "Duplicate completion is accepted idempotently"
+        },
+        {
+            "pass": true,
+            "check": "Duplicate completion preserves transaction, history and capacity"
+        },
+        {
+            "pass": true,
+            "check": "Duplicate completion leaves no cross-request order lock"
+        },
+        {
+            "pass": true,
+            "check": "Refunded payment releases allocation and closes fulfillment"
+        },
+        {
+            "pass": true,
+            "check": "Completion replay after refund is harmless"
+        },
+        {
+            "pass": true,
+            "check": "Replay cannot reverse a refund or replace its original transaction"
+        },
+        {
+            "pass": true,
+            "check": "Refunded-order replay leaves no order lock"
+        },
+        {
+            "pass": true,
+            "check": "Expired capacity blocks a new payment attempt before gateway submission"
+        },
+        {
+            "pass": true,
+            "check": "Late successful callback still records already captured payment"
+        },
+        {
+            "pass": true,
+            "check": "Late callback retains authoritative transaction and paid date"
+        },
+        {
+            "pass": true,
+            "check": "Late payment is flagged for staff without promising unavailable fulfillment"
+        },
+        {
+            "pass": true,
+            "check": "Late payment does not create expired or oversold capacity"
+        },
+        {
+            "pass": true,
+            "check": "Duplicate late callback does not reopen review orders or replace their transaction"
+        },
+        {
+            "pass": true,
+            "check": "Delayed authentication fixture retains its original bound ledger row"
+        },
+        {
+            "pass": true,
+            "check": "An owned bound row cannot make an expired promise payable"
+        },
+        {
+            "pass": true,
+            "check": "Late authentication completion records the captured transaction"
+        },
+        {
+            "pass": true,
+            "check": "A late authenticated order with a past bound slot requires staff review"
+        },
+        {
+            "pass": true,
+            "check": "Original order reserves the single-capacity slot"
+        },
+        {
+            "pass": true,
+            "check": "Another customer may reserve released capacity"
+        },
+        {
+            "pass": true,
+            "check": "Unavailable capacity blocks a new pay-for-order attempt"
+        },
+        {
+            "pass": true,
+            "check": "Late capture is recorded even after released capacity was reallocated"
+        },
+        {
+            "pass": true,
+            "check": "Reallocated-slot callback requires staff review without reopening kitchen work"
+        },
+        {
+            "pass": true,
+            "check": "Late callback preserves the other customer allocation"
+        },
+        {
+            "pass": true,
+            "check": "A cancelled-order late capture remains financially visible"
+        },
+        {
+            "pass": true,
+            "check": "Cancelled-order payment does not silently restore fulfillment"
+        },
+        {
+            "pass": true,
+            "check": "Cancelled-order late capture has a staff-review audit marker"
+        },
+        {
+            "pass": true,
+            "check": "An unrelated staff lock does not erase successful gateway payment"
+        },
+        {
+            "pass": true,
+            "check": "Concurrent payment preserves financial state and flags deferred review"
+        },
+        {
+            "pass": true,
+            "check": "Gateway callback does not release another request lock"
+        },
+        {
+            "pass": true,
+            "check": "Capacity-review callback releases its allocation immediately while workflow closure waits"
+        },
+        {
+            "pass": true,
+            "check": "Direct reconciliation cannot recreate allocation for a capacity-review order"
+        },
+        {
+            "pass": true,
+            "check": "Deferred reconciliation closes unconfirmed fulfillment after lock release"
+        }
+    ]
+}

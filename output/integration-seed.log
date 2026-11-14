@@ -1,0 +1,17 @@
+{
+    "products": {
+        "QA Decimal Pizza": 86,
+        "QA Plain Soup": 87,
+        "QA Variable Pizza": 88,
+        "QA Small": 89,
+        "QA Large": 90
+    },
+    "group": 85,
+    "pages": {
+        "qa-menu": 83,
+        "qa-reservations": 84
+    },
+    "pickup": "local_pickup:1",
+    "delivery": "flat_rate:2",
+    "checkout": "http:\/\/127.0.0.1:18889\/?page_id=7"
+}

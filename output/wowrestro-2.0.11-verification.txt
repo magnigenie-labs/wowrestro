@@ -1,0 +1,40 @@
+WowRestro 2.0.11 — latest fixed build
+Date: 2026-11-13 (Asia/Calcutta)
+
+The user requested the latest fixed code with Stripe sandbox testing set aside.
+This package includes all 2.0.9/2.0.10 schedule, decimal pricing, menu, order and checkout fixes, plus native payment handoff, payment lifecycle and receipt follow-up fixes documented in readme.txt.
+
+PACKAGE
+File: wowrestro-2.0.11.zip
+Production files: 80
+Bytes: 1938932
+SHA256: 1a50cf4c5f0e0fc2ded95f26d4f7ae7fc6b312fe3b24d6e32a50a41578324825
+All 80 ZIP entries match source, and all 80 installed files match the ZIP manifest.
+Excluded: tests, output artifacts, local runtime/configuration/credentials, IDE files and hidden files.
+
+VERIFIED ON THIS BUILD
+32 PHP files and 10 JavaScript entry files pass syntax checks; git diff --check passes.
+118 standalone checks: schedule 46, add-on pricing 15, product roundtrip 57.
+140 real WordPress/WooCommerce checks against the installed ZIP: payment lifecycle 41 HPOS + 41 legacy CPT, handoff session 10, receipt 36, native checkout defaults 12.
+Fresh browser checkout passed: required add-on validation, pizza 12.50 GBP + cheese 1.25 GBP, cash on delivery, order #376, total 13.75 GBP, status processing.
+Receipt preserves add-on and restaurant contact, survives reload, and cart is empty after checkout.
+The browser console contains no warning/error entries during this smoke test.
+Runtime: WordPress 7.1.4, WooCommerce 11.3.0, PHP 8.5.6.
+
+LIMITS
+Stripe processor success, declines, retries, 3-D Secure and webhooks remain unverified. Local Stripe test credentials are not configured; the supplied staging site serves a different ordering system and no authenticated admin session was available. No processor test was represented as passed.
+Payment lifecycle checks use real WooCommerce order APIs and reservation storage; they do not send Stripe payments.
+Outgoing email is blocked in the local QA environment. Email/template coverage does not establish actual email delivery.
+Earlier 2.0.10 local browser coverage includes pickup, scheduled delivery, native Blocks/classic checkout, QR table orders, coupons and tax; those complete scenarios were not all repeated for this package.
+Testing does not guarantee absence of all bugs or compatibility with every theme/extension.
+
+EVIDENCE
+wowrestro-2.0.11-manifest.json
+2.0.11-standalone.log
+2.0.11-payment-lifecycle.log
+2.0.11-payment-lifecycle-cpt.log
+2.0.11-card-handoff.log
+2.0.11-receipt.log
+2.0.11-checkout-defaults.log
+playwright/2.0.11-release-checkout-results.txt
+playwright/2.0.11-release-checkout-confirmation.png

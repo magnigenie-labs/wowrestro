@@ -1,0 +1,84 @@
+- generic [active] [ref=e1]:
+  - link "Skip to content" [ref=e2] [cursor=pointer]:
+    - /url: "#wp--skip-link--target"
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e7]:
+        - paragraph [ref=e8]:
+          - link "WowRestro Local QA" [ref=e9] [cursor=pointer]:
+            - /url: http://127.0.0.1:18889
+        - navigation [ref=e11]:
+          - list [ref=e16]:
+            - list [ref=e17]:
+              - listitem [ref=e18]:
+                - link "Add-on pagination QA" [ref=e19] [cursor=pointer]:
+                  - /url: http://127.0.0.1:18889/?page_id=82
+              - listitem [ref=e20]:
+                - link "Cart" [ref=e21] [cursor=pointer]:
+                  - /url: http://127.0.0.1:18889/?page_id=6
+              - listitem [ref=e22]:
+                - link "Checkout" [ref=e23] [cursor=pointer]:
+                  - /url: http://127.0.0.1:18889/?page_id=7
+              - listitem [ref=e24]:
+                - link "My account" [ref=e25] [cursor=pointer]:
+                  - /url: http://127.0.0.1:18889/?page_id=8
+              - listitem [ref=e26]:
+                - link "Sample Page" [ref=e27] [cursor=pointer]:
+                  - /url: http://127.0.0.1:18889/?page_id=2
+              - listitem [ref=e28]:
+                - link "Shop" [ref=e29] [cursor=pointer]:
+                  - /url: http://127.0.0.1:18889/?page_id=5
+    - main [ref=e30]:
+      - heading "Blog" [level=1] [ref=e31]
+      - list [ref=e33]:
+        - listitem [ref=e34]:
+          - generic [ref=e35]:
+            - heading [level=2] [ref=e36]:
+              - link "Hello world!" [ref=e37] [cursor=pointer]:
+                - /url: http://127.0.0.1:18889/?p=1
+            - paragraph [ref=e39]: Welcome to WordPress. This is your first post. Edit or delete it, then start writing!
+            - link [ref=e41] [cursor=pointer]:
+              - /url: http://127.0.0.1:18889/?p=1
+              - time [ref=e42]: November 13, 2026
+    - contentinfo [ref=e44]:
+      - generic [ref=e46]:
+        - generic [ref=e47]:
+          - heading [level=2] [ref=e50]:
+            - link "WowRestro Local QA" [ref=e51] [cursor=pointer]:
+              - /url: http://127.0.0.1:18889
+          - generic [ref=e52]:
+            - navigation "2" [ref=e53]:
+              - list [ref=e54]:
+                - listitem [ref=e55]:
+                  - link "Blog" [ref=e56] [cursor=pointer]:
+                    - /url: "#"
+                - listitem [ref=e57]:
+                  - link "About" [ref=e58] [cursor=pointer]:
+                    - /url: "#"
+                - listitem [ref=e59]:
+                  - link "FAQs" [ref=e60] [cursor=pointer]:
+                    - /url: "#"
+                - listitem [ref=e61]:
+                  - link "Authors" [ref=e62] [cursor=pointer]:
+                    - /url: "#"
+            - navigation "3" [ref=e63]:
+              - list [ref=e64]:
+                - listitem [ref=e65]:
+                  - link "Events" [ref=e66] [cursor=pointer]:
+                    - /url: "#"
+                - listitem [ref=e67]:
+                  - link "Shop" [ref=e68] [cursor=pointer]:
+                    - /url: "#"
+                - listitem [ref=e69]:
+                  - link "Patterns" [ref=e70] [cursor=pointer]:
+                    - /url: "#"
+                - listitem [ref=e71]:
+                  - link "Themes" [ref=e72] [cursor=pointer]:
+                    - /url: "#"
+        - generic [ref=e74]:
+          - paragraph [ref=e75]: Twenty Twenty-Five
+          - paragraph [ref=e76]:
+            - text: Designed with
+            - link "WordPress" [ref=e77] [cursor=pointer]:
+              - /url: https://wordpress.org
+  - status [ref=e78]

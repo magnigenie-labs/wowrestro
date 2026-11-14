@@ -1,0 +1,35 @@
+[    1257ms] [LOG] JQMIGRATE: Migrate is installed, version 3.4.1 @ http://127.0.0.1:18889/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1:2
+[   33522ms] [LOG] JQMIGRATE: Migrate is installed, version 3.4.1 @ http://127.0.0.1:18889/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1:2
+[  117574ms] [INFO] [WooCommerce] Dependency detection enabled. Warnings will be shown for scripts that access wc.* globals without proper dependencies. @ http://127.0.0.1:18889/checkout/:7
+[  117615ms] [LOG] JQMIGRATE: Migrate is installed, version 3.4.1 @ http://127.0.0.1:18889/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1:2
+[  463726ms] [INFO] [WooCommerce] Dependency detection enabled. Warnings will be shown for scripts that access wc.* globals without proper dependencies. @ http://127.0.0.1:18889/confirmation/:7
+[  463775ms] [LOG] JQMIGRATE: Migrate is installed, version 3.4.1 @ http://127.0.0.1:18889/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1:2
+[  590311ms] [LOG] JQMIGRATE: Migrate is installed, version 3.4.1 @ http://127.0.0.1:18889/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1:2
+[  684823ms] [INFO] [WooCommerce] Dependency detection enabled. Warnings will be shown for scripts that access wc.* globals without proper dependencies. @ http://127.0.0.1:18889/checkout/:7
+[  684853ms] [LOG] JQMIGRATE: Migrate is installed, version 3.4.1 @ http://127.0.0.1:18889/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1:2
+[  875187ms] [INFO] [WooCommerce] Dependency detection enabled. Warnings will be shown for scripts that access wc.* globals without proper dependencies. @ http://127.0.0.1:18889/confirmation/:7
+[  875239ms] [LOG] JQMIGRATE: Migrate is installed, version 3.4.1 @ http://127.0.0.1:18889/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1:2
+[  921202ms] [LOG] JQMIGRATE: Migrate is installed, version 3.4.1 @ http://127.0.0.1:18889/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1:2
+[  943504ms] [INFO] [WooCommerce] Dependency detection enabled. Warnings will be shown for scripts that access wc.* globals without proper dependencies. @ http://127.0.0.1:18889/checkout/:7
+[  943543ms] [LOG] JQMIGRATE: Migrate is installed, version 3.4.1 @ http://127.0.0.1:18889/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1:2
+[ 1029936ms] [INFO] [WooCommerce] Dependency detection enabled. Warnings will be shown for scripts that access wc.* globals without proper dependencies. @ http://127.0.0.1:18889/confirmation/:7
+[ 1029987ms] [LOG] JQMIGRATE: Migrate is installed, version 3.4.1 @ http://127.0.0.1:18889/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1:2
+[ 1069733ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_RESET @ http://127.0.0.1:18889/wp-json/wowrestro/v1/tracking/201?key=wc_order_O4oWB4EUgT7ch:1
+[ 1070028ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:18889/wp-json/wowrestro/v1/tracking/201?key=wc_order_O4oWB4EUgT7ch:1
+[ 1112554ms] [LOG] JQMIGRATE: Migrate is installed, version 3.4.1 @ http://127.0.0.1:18889/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1:2
+[ 1143490ms] [LOG] JQMIGRATE: Migrate is installed, version 3.4.1 @ http://127.0.0.1:18889/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1:2
+[ 1145738ms] [INFO] [WooCommerce] Dependency detection enabled. Warnings will be shown for scripts that access wc.* globals without proper dependencies. @ http://127.0.0.1:18889/checkout/:7
+[ 1145785ms] [LOG] JQMIGRATE: Migrate is installed, version 3.4.1 @ http://127.0.0.1:18889/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1:2
+[ 1147272ms] [INFO] [WooCommerce] Dependency detection enabled. Warnings will be shown for scripts that access wc.* globals without proper dependencies. @ http://127.0.0.1:18889/confirmation/:7
+[ 1147292ms] [LOG] JQMIGRATE: Migrate is installed, version 3.4.1 @ http://127.0.0.1:18889/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1:2
+[ 1527388ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://127.0.0.1:18889/wp-json/wowrestro/v1/tracking/204?key=wc_order_NYPNGplROe5pN:1
+[ 1833363ms] [LOG] JQMIGRATE: Migrate is installed, version 3.4.1 @ http://127.0.0.1:18889/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1:2
+[ 1835323ms] [INFO] [WooCommerce] Dependency detection enabled. Warnings will be shown for scripts that access wc.* globals without proper dependencies. @ http://127.0.0.1:18889/checkout/:7
+[ 1835337ms] [LOG] JQMIGRATE: Migrate is installed, version 3.4.1 @ http://127.0.0.1:18889/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1:2
+[ 1836027ms] [INFO] [WooCommerce] Dependency detection enabled. Warnings will be shown for scripts that access wc.* globals without proper dependencies. @ http://127.0.0.1:18889/confirmation/:7
+[ 1836039ms] [LOG] JQMIGRATE: Migrate is installed, version 3.4.1 @ http://127.0.0.1:18889/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1:2
+[ 1836305ms] [INFO] [WooCommerce] Dependency detection enabled. Warnings will be shown for scripts that access wc.* globals without proper dependencies. @ http://127.0.0.1:18889/confirmation/:7
+[ 1836312ms] [LOG] JQMIGRATE: Migrate is installed, version 3.4.1 @ http://127.0.0.1:18889/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1:2
+[ 6219205ms] [INFO] [WooCommerce] Dependency detection enabled. Warnings will be shown for scripts that access wc.* globals without proper dependencies. @ http://127.0.0.1:18889/confirmation/:7
+[ 6219230ms] [LOG] JQMIGRATE: Migrate is installed, version 3.4.1 @ http://127.0.0.1:18889/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1:2
+[ 6359674ms] [LOG] JQMIGRATE: Migrate is installed, version 3.4.1 @ http://127.0.0.1:18889/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1:2

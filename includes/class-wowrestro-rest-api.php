@@ -725,8 +725,8 @@ final class WowRestro_REST_API {
 			$data['has_shipping']        = (float) $order->get_shipping_total() > 0;
 			$data['has_discount']        = (float) $order->get_discount_total() > 0;
 			$data['email']               = $order->get_billing_email();
-			$data['billing_address']     = wp_strip_all_tags( $order->get_formatted_billing_address() );
-			$data['shipping_address']    = wp_strip_all_tags( $order->get_formatted_shipping_address() );
+			$data['billing_address']     = wp_strip_all_tags( preg_replace( '/<br\s*\/?\s*>/i', ', ', $order->get_formatted_billing_address() ) );
+			$data['shipping_address']    = wp_strip_all_tags( preg_replace( '/<br\s*\/?\s*>/i', ', ', $order->get_formatted_shipping_address() ) );
 			$data['shipping_rate_id']    = $order->get_meta( '_wowrestro_shipping_rate_id' );
 			$data['payment_flow']        = $order->get_meta( '_wowrestro_payment_flow' );
 

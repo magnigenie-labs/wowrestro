@@ -1,0 +1,195 @@
+### Result
+{"passed":["Independent split schedules, closure/reopen, reload, blank profile and zero timers","Injected schedule failure preserves persisted hours and focuses inline error","Add-on decimal keystrokes, comma/leading-dot/zero, invalid input blocking, save/reload","Create a free add-on","Product regular price, zero sale and canonical stock/status survive edit","Variation decimal typing, stock status and save/reload","Decimal booking amount typing and save/reload","Integer count and duration controls retain step 1"],"routesChecked":28,"browserErrors":[],"limitation":"Real UI; mocked REST/localStorage. PHP validation and WooCommerce integration are separate checks."}
+### Ran Playwright code
+```js
+await (async (page) => {
+	// Pass this expression to Playwright CLI run-code. Uses the real UI with mock REST.
+	const base = 'http://127.0.0.1:8765/tests/browser/';
+	const results = [];
+	const errors = [];
+	const acceptDialog = dialog => dialog.accept();
+	const recordError = error => errors.push(error.message);
+	page.on('dialog', acceptDialog);
+	page.on('pageerror', recordError);
+	const assert = (condition, message) => { if (!condition) throw new Error(message); };
+	const settled = async () => {
+		await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+	};
+	const goto = async route => {
+		await page.goto(base + '?route=' + encodeURIComponent(route));
+		await page.waitForFunction(() => Boolean(window.wowRestroAppInstance));
+		await settled();
+	};
+	const fill = async (locator, value) => { await locator.fill(value); await settled(); };
+	const click = async locator => { await settled(); await locator.click(); await settled(); };
+	const typeSlow = async (locator, value) => {
+		await fill(locator, '');
+		let expected = '';
+		for (const key of value) {
+			await locator.press(key);
+			await page.waitForTimeout(120); // Deliberately expose rerenders between individual keystrokes.
+			expected += key === ',' ? '.' : key;
+			assert(await locator.inputValue() === expected, 'Keystroke lost while typing ' + JSON.stringify(value) + ': expected ' + expected);
+		}
+		await settled();
+	};
+	const requests = async path => page.evaluate(path => window.wowRestroFixture.requests.filter(request => request.path.endsWith(path)), path);
+	const saved = () => page.evaluate(() => window.wowRestroFixture.read());
+	const saveSettings = async () => {
+		const count = (await requests('/workspace/settings')).length;
+		await click(page.getByRole('button', { name: /Save Changes/ }));
+		await page.waitForFunction(count => window.wowRestroFixture.requests.filter(request => request.path.endsWith('/workspace/settings')).length > count, count);
+		await settled();
+	};
+	const reload = async () => { await page.reload(); await page.waitForFunction(() => Boolean(window.wowRestroAppInstance)); await settled(); };
+	const invalidBlocked = async (locator, value, button, endpoint) => {
+		await fill(locator, value);
+		assert(!await locator.evaluate(element => element.checkValidity()), 'Invalid value accepted: ' + value);
+		const count = (await requests(endpoint)).length;
+		await click(button);
+		assert((await requests(endpoint)).length === count, 'Invalid value reached REST: ' + value);
+	};
+	try {
+		await page.goto(base + '?reset=1');
+		await page.waitForFunction(() => Boolean(window.wowRestroAppInstance));
+		await settled();
+
+		// Separate schedules, closures, blank profile and zero timing values survive a save.
+		const pickup = page.getByLabel('Pickup hours on Monday', { exact: true });
+		const delivery = page.getByLabel('Delivery hours on Monday', { exact: true });
+		assert(await pickup.inputValue() === '11:00-14:00,17:00-22:00', 'Pickup split shifts missing');
+		assert(await delivery.inputValue() === '12:00-15:00,18:00-21:00', 'Distinct delivery shifts missing');
+		const pickupHours = '10:00-13:00,16:00-20:00';
+		const deliveryHours = '12:30-15:30,18:30-21:30';
+		await fill(pickup, pickupHours);
+		await fill(delivery, deliveryHours);
+		const toggle = page.getByRole('switch', { name: 'Open pickup on Monday', exact: true });
+		await click(toggle);
+		assert(await toggle.getAttribute('aria-checked') === 'false', 'Pickup closure toggle failed');
+		await saveSettings();
+		let state = await saved();
+		assert(state.config.settings.service_hours.pickup[1].periods === pickupHours, 'Closing pickup erased hours');
+		assert(state.config.settings.service_hours.pickup[1].enabled === 'no', 'Closed pickup day not saved');
+		assert(state.config.settings.service_hours.delivery[1].periods === deliveryHours, 'Saving pickup overwrote delivery');
+		const payload = (await requests('/workspace/settings')).at(-1).body;
+		assert(!Object.prototype.hasOwnProperty.call(payload, 'profile'), 'Unchanged blank profile was submitted');
+		for (const key of ['preorder_days', 'delivery_lead_minutes', 'late_grace_minutes']) {
+			assert(Number(payload.settings[key]) === 0, 'Zero timing setting overwritten: ' + key);
+		}
+		assert(Number(payload.reservations.advance_minutes) === 0, 'Zero reservation advance time overwritten');
+		await reload();
+		assert(await toggle.getAttribute('aria-checked') === 'false', 'Closed pickup day lost on reload');
+		await click(toggle);
+		assert(await pickup.inputValue() === pickupHours, 'Reopening pickup lost saved periods');
+		assert(await delivery.inputValue() === deliveryHours, 'Delivery periods lost after reload');
+		await saveSettings();
+		results.push('Independent split schedules, closure/reopen, reload, blank profile and zero timers');
+
+		// Inject one server-shaped error; this checks UI handling, not PHP validation.
+		await fill(pickup, '99:00-12:00');
+		await page.evaluate(() => { window.wowRestroFixture.failNext = { status: 400, message: 'Fixture: invalid pickup hours', data: { mode: 'pickup', day: 1 } }; });
+		await saveSettings();
+		assert(await pickup.getAttribute('aria-invalid') === 'true', 'Schedule server error did not mark its field');
+		assert(await pickup.evaluate(element => document.activeElement === element), 'Schedule server error did not focus its field');
+		assert((await saved()).config.settings.service_hours.pickup[1].periods === pickupHours, 'Failed save changed persisted hours');
+		await fill(pickup, pickupHours);
+		assert(await pickup.getAttribute('aria-invalid') === 'false', 'Editing schedule did not clear its field error');
+		await saveSettings();
+		results.push('Injected schedule failure preserves persisted hours and focuses inline error');
+
+		// Native input events must preserve an intermediate trailing decimal point.
+		await goto('/food-menu/addons/update/100');
+		const price = page.getByLabel('Additional price', { exact: true });
+		const addonSave = page.getByRole('button', { name: 'Update Add-on', exact: true });
+		assert(await price.inputValue() === '1.25', 'Existing decimal add-on did not load');
+		for (const value of ['1.25', '0', '1,25', '.5']) {
+			await typeSlow(price, value);
+			assert(await price.evaluate(element => element.checkValidity()), 'Valid price rejected: ' + value);
+		}
+		await invalidBlocked(price, '-1.25', addonSave, '/workspace/modifier');
+		await invalidBlocked(price, 'abc', addonSave, '/workspace/modifier');
+		await typeSlow(price, '2.75');
+		await click(addonSave);
+		await page.waitForFunction(() => window.wowRestroAppInstance.state.route === '/food-menu/addons');
+		assert((await saved()).modifiers[0].optionRows[0].price === '2.75', 'Edited decimal not saved');
+		await goto('/food-menu/addons/update/100');
+		assert(await price.inputValue() === '2.75', 'Edited decimal did not reload');
+		assert((await saved()).modifiers[0].optionRows[0].id === 'cheese', 'Editing changed stable option ID');
+		results.push('Add-on decimal keystrokes, comma/leading-dot/zero, invalid input blocking, save/reload');
+
+		await goto('/food-menu/addons/create');
+		await fill(page.getByLabel('Add-on name', { exact: true }).first(), 'Free extras');
+		await fill(page.getByLabel('Add-on name', { exact: true }).nth(1), 'Free sauce');
+		await typeSlow(page.getByLabel('Additional price', { exact: true }), '0');
+		await click(page.getByRole('button', { name: 'Add Add-on', exact: true }));
+		await page.waitForFunction(() => window.wowRestroAppInstance.state.route === '/food-menu/addons');
+		assert((await saved()).modifiers.some(group => group.name === 'Free extras' && group.optionRows[0].price === '0'), 'Free add-on creation failed');
+		results.push('Create a free add-on');
+
+		// A no-op edit must not erase a zero sale, regular-price precision, or raw status.
+		await goto('/food-menu/items/update/7');
+		assert(await page.getByLabel('Regular price', { exact: true }).inputValue() === '12.50', 'Regular price precision lost in editor');
+		assert(await page.getByLabel('Sale price', { exact: true }).inputValue() === '0', 'Zero sale price lost in editor');
+		assert(await page.getByLabel('Stock status', { exact: true }).inputValue() === 'outofstock', 'Out-of-stock status not selected');
+		assert(await page.getByLabel('Status', { exact: true }).inputValue() === 'publish', 'Canonical publish status not selected');
+		await click(page.getByRole('button', { name: 'Update Item', exact: true }));
+		await page.waitForFunction(() => window.wowRestroAppInstance.state.route === '/food-menu/items');
+		const productPayload = (await requests('/workspace/product')).at(-1).body;
+		assert(productPayload.price === '12.50' && productPayload.sale === '0', 'No-op save changed product prices');
+		assert(productPayload.stockStatus === 'outofstock' && productPayload.postStatus === 'publish', 'No-op save changed canonical statuses');
+		await goto('/food-menu/items/update/7');
+		assert(await page.getByLabel('Sale price', { exact: true }).inputValue() === '0', 'Zero sale lost after save/reload');
+		results.push('Product regular price, zero sale and canonical stock/status survive edit');
+
+		await goto('/food-menu/items/update/8');
+		const variationPrice = page.locator('input[id$="-v_price_80"]');
+		const variationSale = page.locator('input[id$="-v_sale_80"]');
+		assert(await variationSale.inputValue() === '0', 'Variation zero sale missing');
+		await typeSlow(variationPrice, '14.25');
+		await typeSlow(variationSale, '9.75');
+		await click(page.getByRole('button', { name: 'Update Item', exact: true }));
+		await page.waitForFunction(() => window.wowRestroAppInstance.state.route === '/food-menu/items');
+		const variationPayload = (await requests('/workspace/product')).at(-1).body.variations[0];
+		assert(variationPayload.price === '14.25' && variationPayload.sale === '9.75', 'Variation decimal prices changed during save');
+		assert(variationPayload.stockStatus === 'outofstock', 'Variation stock status changed during save');
+		await goto('/food-menu/items/update/8');
+		assert(await variationPrice.inputValue() === '14.25' && await variationSale.inputValue() === '9.75', 'Variation decimals did not reload');
+		results.push('Variation decimal typing, stock status and save/reload');
+
+		await goto('/settings?tab=reservation-rules');
+		const booking = page.locator('input[id$="-res_booking_amount"]');
+		await typeSlow(booking, '3.25');
+		await saveSettings();
+		assert((await saved()).config.reservations.booking_amount === '3.25', 'Decimal booking amount not saved');
+		await reload();
+		assert(await booking.inputValue() === '3.25', 'Decimal booking amount did not reload');
+		results.push('Decimal booking amount typing and save/reload');
+
+		await goto('/settings?tab=pickup');
+		for (const label of ['Time slot interval (minutes)', 'Shared orders per slot', 'Checkout hold (minutes)', 'Preorder window (days)']) {
+			const input = page.getByLabel(label, { exact: true });
+			assert(await input.getAttribute('type') === 'number', 'Integer control changed type: ' + label);
+			assert((await input.getAttribute('step') || '1') === '1', 'Integer control accepts decimal steps: ' + label);
+			const initial = await input.inputValue();
+			await fill(input, '1.5');
+			assert(await input.evaluate(element => element.validity.stepMismatch), 'Fractional count/time accepted: ' + label);
+			await fill(input, initial);
+		}
+		results.push('Integer count and duration controls retain step 1');
+
+		const selftest = await page.evaluate(() => window.wowRestroSelfTest());
+		assert(selftest.failures.length === 0, 'Route render failures: ' + selftest.failures.join('; '));
+		assert(errors.length === 0, 'Browser errors: ' + errors.join('; '));
+		return { passed: results, routesChecked: selftest.routes, browserErrors: errors, limitation: 'Real UI; mocked REST/localStorage. PHP validation and WooCommerce integration are separate checks.' };
+	} finally {
+		page.off('dialog', acceptDialog);
+		page.off('pageerror', recordError);
+	}
+}
+)(page);
+```
+### Page
+- Page URL: http://127.0.0.1:8765/tests/browser/?route=%2Fsettings%3Ftab%3Dpickup
+- Page Title: WowRestro local browser fixture
+### Events
+- New console entries: .playwright-cli/console-2026-11-13T04-02-00-553Z.log#L2

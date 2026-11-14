@@ -1,0 +1,189 @@
+{
+    "passed": 37,
+    "failed": 4,
+    "checks": [
+        {
+            "pass": true,
+            "check": "Pending payment owns its future kitchen slot"
+        },
+        {
+            "pass": true,
+            "check": "Authentication-pending order remains unpaid with one allocation"
+        },
+        {
+            "pass": true,
+            "check": "Failed payment releases kitchen capacity"
+        },
+        {
+            "pass": true,
+            "check": "Failed payment closes restaurant workflow"
+        },
+        {
+            "pass": true,
+            "check": "Retry reacquires exactly one available allocation before submission"
+        },
+        {
+            "pass": true,
+            "check": "WooCommerce records successful retry completion"
+        },
+        {
+            "pass": true,
+            "check": "Successful retry persists paid status and transaction"
+        },
+        {
+            "pass": true,
+            "check": "Successful retry reopens fulfillment with one allocation"
+        },
+        {
+            "pass": true,
+            "check": "Retry preserves tracking identity"
+        },
+        {
+            "pass": true,
+            "check": "Duplicate completion is accepted idempotently"
+        },
+        {
+            "pass": true,
+            "check": "Duplicate completion preserves transaction, history and capacity"
+        },
+        {
+            "pass": true,
+            "check": "Duplicate completion leaves no cross-request order lock"
+        },
+        {
+            "pass": true,
+            "check": "Refunded payment releases allocation and closes fulfillment"
+        },
+        {
+            "pass": true,
+            "check": "Completion replay after refund is harmless"
+        },
+        {
+            "pass": true,
+            "check": "Replay cannot reverse a refund or replace its original transaction"
+        },
+        {
+            "pass": true,
+            "check": "Refunded-order replay leaves no order lock"
+        },
+        {
+            "pass": true,
+            "check": "Expired capacity blocks a new payment attempt before gateway submission"
+        },
+        {
+            "pass": true,
+            "check": "Late successful callback still records already captured payment"
+        },
+        {
+            "pass": true,
+            "check": "Late callback retains authoritative transaction and paid date"
+        },
+        {
+            "pass": true,
+            "check": "Late payment is flagged for staff without promising unavailable fulfillment"
+        },
+        {
+            "pass": true,
+            "check": "Late payment does not create expired or oversold capacity"
+        },
+        {
+            "pass": true,
+            "check": "Duplicate late callback does not reopen review orders or replace their transaction"
+        },
+        {
+            "pass": true,
+            "check": "Delayed authentication fixture retains its original bound ledger row"
+        },
+        {
+            "pass": false,
+            "check": "An owned bound row cannot make an expired promise payable"
+        },
+        {
+            "pass": true,
+            "check": "Late authentication completion records the captured transaction"
+        },
+        {
+            "pass": false,
+            "check": "A late authenticated order with a past bound slot requires staff review"
+        },
+        {
+            "pass": true,
+            "check": "Original order reserves the single-capacity slot"
+        },
+        {
+            "pass": true,
+            "check": "Another customer may reserve released capacity"
+        },
+        {
+            "pass": true,
+            "check": "Unavailable capacity blocks a new pay-for-order attempt"
+        },
+        {
+            "pass": true,
+            "check": "Late capture is recorded even after released capacity was reallocated"
+        },
+        {
+            "pass": true,
+            "check": "Reallocated-slot callback requires staff review without reopening kitchen work"
+        },
+        {
+            "pass": true,
+            "check": "Late callback preserves the other customer allocation"
+        },
+        {
+            "pass": true,
+            "check": "A cancelled-order late capture remains financially visible"
+        },
+        {
+            "pass": true,
+            "check": "Cancelled-order payment does not silently restore fulfillment"
+        },
+        {
+            "pass": true,
+            "check": "Cancelled-order late capture has a staff-review audit marker"
+        },
+        {
+            "pass": true,
+            "check": "An unrelated staff lock does not erase successful gateway payment"
+        },
+        {
+            "pass": true,
+            "check": "Concurrent payment preserves financial state and flags deferred review"
+        },
+        {
+            "pass": true,
+            "check": "Gateway callback does not release another request lock"
+        },
+        {
+            "pass": false,
+            "check": "Capacity-review callback releases its allocation immediately while workflow closure waits"
+        },
+        {
+            "pass": false,
+            "check": "Direct reconciliation cannot recreate allocation for a capacity-review order"
+        },
+        {
+            "pass": true,
+            "check": "Deferred reconciliation closes unconfirmed fulfillment after lock release"
+        }
+    ]
+}
+Fatal error: Uncaught RuntimeException: Payment lifecycle regression failed. in phar:///Users/rahulmishra/.cache/wowrestro-e2e-20261113/wp-cli.phar/vendor/wp-cli/eval-command/src/EvalFile_Command.php(85) : eval()'d code:138
+Stack trace:
+#0 phar:///Users/rahulmishra/.cache/wowrestro-e2e-20261113/wp-cli.phar/vendor/wp-cli/eval-command/src/EvalFile_Command.php(85): eval()
+#1 phar:///Users/rahulmishra/.cache/wowrestro-e2e-20261113/wp-cli.phar/vendor/wp-cli/eval-command/src/EvalFile_Command.php(59): EvalFile_Command::execute_eval('tests/integrati...', Array, false)
+#2 [internal function]: EvalFile_Command->__invoke(Array, Array)
+#3 phar:///Users/rahulmishra/.cache/wowrestro-e2e-20261113/wp-cli.phar/vendor/wp-cli/wp-cli/php/WP_CLI/Dispatcher/CommandFactory.php(100): call_user_func(Array, Array, Array)
+#4 [internal function]: WP_CLI\Dispatcher\CommandFactory::{closure:WP_CLI\Dispatcher\CommandFactory::create_subcommand():97}(Array, Array)
+#5 phar:///Users/rahulmishra/.cache/wowrestro-e2e-20261113/wp-cli.phar/vendor/wp-cli/wp-cli/php/WP_CLI/Dispatcher/Subcommand.php(497): call_user_func(Object(Closure), Array, Array)
+#6 phar:///Users/rahulmishra/.cache/wowrestro-e2e-20261113/wp-cli.phar/vendor/wp-cli/wp-cli/php/WP_CLI/Runner.php(470): WP_CLI\Dispatcher\Subcommand->invoke(Array, Array, Array)
+#7 phar:///Users/rahulmishra/.cache/wowrestro-e2e-20261113/wp-cli.phar/vendor/wp-cli/wp-cli/php/WP_CLI/Runner.php(493): WP_CLI\Runner->run_command(Array, Array)
+#8 phar:///Users/rahulmishra/.cache/wowrestro-e2e-20261113/wp-cli.phar/vendor/wp-cli/wp-cli/php/WP_CLI/Runner.php(136): WP_CLI\Runner->run_command_and_exit()
+#9 phar:///Users/rahulmishra/.cache/wowrestro-e2e-20261113/wp-cli.phar/vendor/wp-cli/wp-cli/php/WP_CLI/Runner.php(1228): WP_CLI\Runner->do_early_invoke('before_wp_load')
+#10 phar:///Users/rahulmishra/.cache/wowrestro-e2e-20261113/wp-cli.phar/vendor/wp-cli/wp-cli/php/WP_CLI/Bootstrap/LaunchRunner.php(28): WP_CLI\Runner->start()
+#11 phar:///Users/rahulmishra/.cache/wowrestro-e2e-20261113/wp-cli.phar/vendor/wp-cli/wp-cli/php/bootstrap.php(84): WP_CLI\Bootstrap\LaunchRunner->process(Object(WP_CLI\Bootstrap\BootstrapState))
+#12 phar:///Users/rahulmishra/.cache/wowrestro-e2e-20261113/wp-cli.phar/vendor/wp-cli/wp-cli/php/wp-cli.php(35): WP_CLI\bootstrap()
+#13 phar:///Users/rahulmishra/.cache/wowrestro-e2e-20261113/wp-cli.phar/php/boot-phar.php(20): include('phar:///Users/r...')
+#14 /Users/rahulmishra/.cache/wowrestro-e2e-20261113/wp-cli.phar(4): include('phar:///Users/r...')
+#15 {main}
+  thrown in phar:///Users/rahulmishra/.cache/wowrestro-e2e-20261113/wp-cli.phar/vendor/wp-cli/eval-command/src/EvalFile_Command.php(85) : eval()'d code on line 138

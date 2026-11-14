@@ -1,0 +1,47 @@
+### Result
+{"order":"204","totals":{"total_items":"2750","total_items_tax":"550","total_fees":"0","total_fees_tax":"0","total_discount":"275","total_discount_tax":"55","total_shipping":"350","total_shipping_tax":"70","total_price":"3390","total_tax":"565","tax_lines":[{"name":"QA VAT","price":"565","rate":"20%"}],"currency_code":"GBP","currency_symbol":"£","currency_minor_unit":2,"currency_decimal_separator":".","currency_thousand_separator":",","currency_prefix":"£","currency_suffix":""},"receipt":"✓\nORDER #204 CONFIRMED\nThank you, QA.\nThe kitchen has it.\n\nWe have sent your confirmation to qa-tax@example.test. We will bring it to 30 Test Street.\n\nORDER\n#204\nPLACED\nNovember 13, 2026\nTOTAL\n£33.90\nPAYMENT\nCash on delivery\n\nPay with cash upon delivery.\n\nTracking your delivery\nPromised for November 13, 2026 10:30 am\nOrder received\nThe kitchen has your order.\nAccepted\nWaiting on the kitchen.\nPreparing\nNot started yet.\nReady\nNot ready yet.\nOut for delivery\nNot dispatched yet.\nDelivered\nNot delivered yet.\nOrder details\n2 × QA Decimal Pizza\nExtra cheese (+£1.25)\n£27.50\nSubtotal\n£27.50\nDiscount\n–£2.75\nShipping\n£3.50 via QA Delivery\nQA VAT\n£5.65\nDelivery time\nNovember 13, 2026 10:30 am\nTotal\n£33.90\nDELIVERING TO\nQA Tax\n30 Test Street, London, SW1A 1AA\n+442079460123 · qa-tax@example.test\nSomething wrong?\nContact the kitchen and quote order #204. Changes are possible until the ticket is on the pass. Call +442079460123\nOrder again"}
+### Ran Playwright code
+```js
+await (// Run via playwright-cli run-code on the local site after seed-browser.php and tax-fixture.php.
+async (page) => {
+  const base = 'http://127.0.0.1:18889';
+  const assert = (ok, message) => { if (!ok) throw new Error(message); };
+  await page.context().clearCookies();
+  await page.goto(base + '/qa-menu/', { waitUntil: 'domcontentloaded' });
+  await page.evaluate(() => sessionStorage.clear());
+  await page.getByRole('button', { name: 'Delivery', exact: true }).click();
+  await page.getByRole('button', { name: 'Customise QA Decimal Pizza', exact: true }).click();
+  const dialog = page.getByRole('dialog');
+  await dialog.getByRole('radio', { name: /Extra cheese/ }).check();
+  await dialog.getByRole('button', { name: '+', exact: true }).click();
+  await dialog.getByRole('button', { name: 'Add · £27.50', exact: true }).click();
+  await page.getByRole('button', { name: /Checkout ·/ }).click();
+  for (const [name, value] of Object.entries({ 'Email address': 'qa-tax@example.test', 'Full name': 'QA Tax', Phone: '+442079460123', 'Street address': '30 Test Street', City: 'London', Postcode: 'SW1A 1AA' })) {
+    await page.getByRole('textbox', { name, exact: true }).fill(value);
+  }
+  await page.getByRole('textbox', { name: 'Coupon code', exact: true }).fill('qa-ten-percent');
+  const applied = page.waitForResponse(r => r.url().includes('/cart/apply-coupon') && r.request().method() === 'POST');
+  await page.getByRole('button', { name: 'Apply', exact: true }).click();
+  const response = await applied;
+  const cart = await response.json();
+  assert(response.status() === 200, 'Coupon rejected.');
+  assert(cart.totals.total_items === '2750', 'Add-on quantity subtotal is incorrect.');
+  assert(cart.totals.total_discount === '275', '10% coupon does not include the add-on price.');
+  assert(cart.totals.total_shipping === '350', 'Delivery fee is incorrect.');
+  assert(cart.totals.total_tax === '565', '20% tax on discounted items and shipping is incorrect.');
+  assert(cart.totals.total_price === '3390', 'Final total must be £33.90.');
+  await page.getByRole('button', { name: 'Place order · £33.90', exact: true }).waitFor();
+  await page.getByRole('button', { name: 'Cash on delivery Pay on collection or delivery.' }).click();
+  const placed = page.waitForResponse(r => r.url().includes('/wc/store/v1/checkout') && r.request().method() === 'POST');
+  await page.getByRole('button', { name: 'Place order · £33.90', exact: true }).click();
+  assert((await placed).status() === 200, 'Checkout failed.');
+  await page.waitForURL(/confirmation|order-received/);
+  const receipt = await page.locator('main').innerText();
+  assert(receipt.includes('£33.90') && receipt.includes('Extra cheese') && receipt.includes('£5.65'), 'Receipt differs from checkout.');
+  await page.screenshot({ path: 'output/playwright/live-tax-coupon-confirmation.png', fullPage: true });
+  return { order: receipt.match(/ORDER #(\d+)/)?.[1], totals: cart.totals, receipt };
+}
+)(page);
+```
+### Events
+- New console entries: .playwright-cli/console-2026-11-13T04-23-24-076Z.log#L17-L24

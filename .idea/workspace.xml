@@ -5,19 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b7918692-19d9-477d-bd87-4375c4f365bf" name="Changes" comment="Rebrand plugin from WOWRestro to WooRestro.&#10;&#10;- Updated plugin name, description, and documentation references in `wowrestro.php` and `readme.txt`.&#10;- Replaced WOWRestro references with WooRestro across admin menus, product metaboxes, and setting screens.&#10;- Updated user-facing notices, settings descriptions, and plugin action links.&#10;- Refreshed translation source strings in `languages/wowrestro.pot`.&#10;- Cleaned up device streaming configurations in IDE project settings (`.idea/misc.xml`).">
-      <change beforePath="$PROJECT_DIR$/assets/css/wowrestro-design.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/wowrestro-design.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/css/wowrestro-templates.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/wowrestro-templates.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/images/qr-table-card-food-v1.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/assets/images/qr-table-card-food-v1.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/storefront.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/storefront.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/wowrestro-design.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/wowrestro-design.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/class-wowrestro-checkout.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/class-wowrestro-checkout.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/class-wowrestro-former-name.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/class-wowrestro-former-name.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/class-wowrestro-legacy-migration.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/class-wowrestro-legacy-migration.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/class-wowrestro-notifications.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/class-wowrestro-notifications.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/class-wowrestro-plugin.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/class-wowrestro-plugin.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/class-wowrestro-rest-api.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/class-wowrestro-rest-api.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/class-wowrestro-slot-reservations.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/class-wowrestro-slot-reservations.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/includes/class-wowrestro-storefront.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/class-wowrestro-storefront.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/wowrestro-app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/wowrestro-app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/includes/class-wowrestro-dining.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/class-wowrestro-dining.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/readme.txt" beforeDir="false" afterPath="$PROJECT_DIR$/readme.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wowrestro.php" beforeDir="false" afterPath="$PROJECT_DIR$/wowrestro.php" afterDir="false" />
     </list>

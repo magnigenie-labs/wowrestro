@@ -1169,13 +1169,15 @@ final class WowRestro_Legacy_Migration {
 		if ( ! $wowrestro_only ) {
 			$keys = array_merge( array( '_wowrestro_mode', '_wowrestro_promised_at' ), $keys );
 		}
-		$meta_query = array( 'relation' => 'OR' );
-		foreach ( $keys as $key ) {
-			$meta_query[] = array(
-				'key'     => $key,
-				'compare' => 'EXISTS',
-			);
-		}
+		// One key comparison avoids multiplying every order's meta rows across
+		// separate OR/EXISTS joins, which can stall even a small HPOS store.
+		$meta_query = array(
+			array(
+				'key'         => $keys,
+				'compare_key' => 'IN',
+				'compare'     => 'EXISTS',
+			),
+		);
 		try {
 			$order_ids = WowRestro_Order_Statuses::query_orders(
 				array(

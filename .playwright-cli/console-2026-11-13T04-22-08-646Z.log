@@ -1,0 +1,9 @@
+[     916ms] [LOG] JQMIGRATE: Migrate is installed, version 3.4.1 @ http://127.0.0.1:18889/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1:2
+[    1288ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://127.0.0.1:18889/index.php?rest_route=/wowrestro/v1/menu?per_page=60:1
+[   15685ms] [ERROR] Failed to load resource: the server responded with a status of 400 (Bad Request) @ http://127.0.0.1:18889/index.php?rest_route=/wc/store/v1/cart/add-item:1
+[   69498ms] [LOG] JQMIGRATE: Migrate is installed, version 3.4.1 @ http://127.0.0.1:18889/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1:2
+[  185280ms] [LOG] JQMIGRATE: Migrate is installed, version 3.4.1 @ http://127.0.0.1:18889/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1:2
+[  231574ms] [LOG] JQMIGRATE: Migrate is installed, version 3.4.1 @ http://127.0.0.1:18889/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1:2
+[  341274ms] [LOG] JQMIGRATE: Migrate is installed, version 3.4.1 @ http://127.0.0.1:18889/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1:2
+[  360404ms] [LOG] JQMIGRATE: Migrate is installed, version 3.4.1 @ http://127.0.0.1:18889/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1:2
+[  382780ms] [LOG] JQMIGRATE: Migrate is installed, version 3.4.1 @ http://127.0.0.1:18889/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1:2

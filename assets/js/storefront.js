@@ -66,19 +66,33 @@
 	let cartProductIds = [];
 	let cartStateLoaded = false;
 
+	function restUrl( base, path, query ) {
+		const url = base.replace( /\/$/, '' ) + '/' + path;
+		return query ? url + ( url.indexOf( '?' ) === -1 ? '?' : '&' ) + query : url;
+	}
+
 	function loadProducts() {
 		if ( menuPromise ) return menuPromise;
 		const config = window.WOWRESTRO || {};
 		if ( ! config.pluginApi ) return Promise.resolve( products );
-		menuPromise = originalFetch( config.pluginApi.replace( /\/$/, '' ) + '/menu?per_page=60', { credentials: 'same-origin' } )
-			.then( function ( response ) {
-				if ( ! response.ok ) throw new Error( 'Unable to load WowRestro menu data.' );
-				return response.json();
-			} )
-			.then( function ( data ) {
-				products = new Map( ( data.products || [] ).map( function ( product ) { return [ Number( product.id ), product ]; } ) );
-				return products;
-			} )
+		const loaded = new Map();
+		function loadPage( page ) {
+			return originalFetch( restUrl( config.pluginApi, 'menu', 'per_page=60&page=' + page ), { credentials: 'same-origin' } )
+				.then( function ( response ) {
+					if ( ! response.ok ) throw new Error( 'Unable to load WowRestro menu data.' );
+					return response.json();
+				} )
+				.then( function ( data ) {
+					( data.products || [] ).forEach( function ( product ) { loaded.set( Number( product.id ), product ); } );
+					return page < Number( data.total_pages || 1 ) ? loadPage( page + 1 ) : loaded;
+				} );
+		}
+		// The displayed WooCommerce collection and the add-on catalogue have
+		// different ordering and page sizes; every displayed dish needs its rules.
+		menuPromise = loadPage( 1 ).then( function ( loadedProducts ) {
+			products = loadedProducts;
+			return products;
+		} )
 			.catch( function () {
 				menuPromise = null;
 				return products;
@@ -114,7 +128,7 @@
 	window.fetch = function ( input, options ) {
 		const url = typeof input === 'string' ? input : ( input && input.url ) || '';
 		const product = products.get( productId );
-		if ( /\/wc\/store\/v1\/cart\/add-item(?:\?|$)/.test( url ) && product && product.modifiers.length && document.querySelector( '.oe-modal__box' ) ) {
+		if ( /\/wc\/store\/v1\/cart\/add-item(?:[?&]|$)/.test( url ) && product && product.modifiers.length && document.querySelector( '.oe-modal__box' ) ) {
 			try {
 				const next = Object.assign( {}, options || {} );
 				const body = JSON.parse( next.body || '{}' );
@@ -126,10 +140,10 @@
 			}
 		}
 		const request = originalFetch( input, options );
-		if ( /\/wc\/store\/v1\/products(?:\?|$)/.test( url ) ) {
+		if ( /\/wc\/store\/v1\/products(?:[?&]|$)/.test( url ) ) {
 			return request.then( exposeModifierOptions );
 		}
-		if ( /\/wc\/store\/v1\/cart(?:\/|\?|$)/.test( url ) ) {
+		if ( /\/wc\/store\/v1\/cart(?:\/|[?&]|$)/.test( url ) ) {
 			request.then( trackCartResponse ).catch( function () {} );
 		}
 		return request;
@@ -155,9 +169,10 @@
 	}
 
 	function loadCartState() {
-		const root = ( window.WOWRESTRO && window.WOWRESTRO.pluginApi ) || '';
+		const config = window.WOWRESTRO || {};
+		const root = config.pluginApi || '';
 		const match = root.match( /^(.*\/wp-json)\// );
-		const url = ( match ? match[ 1 ] : window.location.origin + '/wp-json' ) + '/wc/store/v1/cart';
+		const url = config.storeApi ? restUrl( config.storeApi, 'cart' ) : ( match ? match[ 1 ] : window.location.origin + '/wp-json' ) + '/wc/store/v1/cart';
 		return originalFetch( url, { credentials: 'same-origin' } )
 			.then( function ( response ) {
 				if ( ! response.ok ) throw new Error( 'Unable to load cart.' );
@@ -532,7 +547,12 @@
 			.catch( function () {} );
 
 		const root = document.querySelector( '[data-wowrestro-menu]' ) || document.body;
-		new MutationObserver( scheduleRender ).observe( root, { childList: true, subtree: true, characterData: true } );
+		const observer = new MutationObserver( scheduleRender );
+		const options = { childList: true, subtree: true, characterData: true };
+		observer.observe( root, options );
+		// The current order flow mounts its dialog on body, outside the menu.
+		// Watch it too so asynchronous option/price updates retain the add-ons.
+		document.querySelectorAll( '.oe-modalroot' ).forEach( function ( modal ) { observer.observe( modal, options ); } );
 	}
 
 	if ( document.readyState === 'loading' ) document.addEventListener( 'DOMContentLoaded', start );

@@ -29,10 +29,10 @@ final class WowRestro_Order_Statuses {
 		add_action( 'woocommerce_store_api_checkout_order_processed', array( __CLASS__, 'ensure_order' ), 30 );
 		add_action( 'woocommerce_checkout_order_created', array( __CLASS__, 'mark_new' ), 50 );
 		add_action( 'woocommerce_store_api_checkout_order_processed', array( __CLASS__, 'mark_new' ), 50 );
-		add_action( 'woocommerce_order_status_pending', array( __CLASS__, 'mark_new' ), 20 );
+		add_action( 'woocommerce_order_status_pending', array( __CLASS__, 'mark_financially_open' ), 20, 2 );
 		add_action( 'woocommerce_payment_complete', array( __CLASS__, 'mark_new' ), 20 );
-		add_action( 'woocommerce_order_status_processing', array( __CLASS__, 'mark_new' ), 20 );
-		add_action( 'woocommerce_order_status_on-hold', array( __CLASS__, 'mark_new' ), 20 );
+		add_action( 'woocommerce_order_status_processing', array( __CLASS__, 'mark_financially_open' ), 20, 2 );
+		add_action( 'woocommerce_order_status_on-hold', array( __CLASS__, 'mark_financially_open' ), 20, 2 );
 		add_action( 'woocommerce_order_status_cancelled', array( __CLASS__, 'mark_financially_closed' ), 20, 2 );
 		add_action( 'woocommerce_order_status_failed', array( __CLASS__, 'mark_financially_closed' ), 20, 2 );
 		add_action( 'woocommerce_order_status_refunded', array( __CLASS__, 'mark_financially_closed' ), 20, 2 );
@@ -199,12 +199,14 @@ final class WowRestro_Order_Statuses {
 		if ( ! $order->get_meta( '_wowrestro_source' ) ) {
 			$order->update_meta_data( '_wowrestro_source', 'woocommerce' );
 		}
-		if ( ! $order->get_meta( '_wowrestro_tracking_token' ) ) {
-			$order->update_meta_data( '_wowrestro_tracking_token', self::tracking_token() );
-		}
+		$order->update_meta_data( '_wowrestro_tracking_token', $order->get_meta( '_wowrestro_tracking_token' ) ?: self::tracking_token() );
 		$current = self::normalize( $order->get_meta( self::META_STATUS ) );
 		if ( $current ) {
 			$order->update_meta_data( self::META_STATUS, $current );
+		}
+		$history = $order->get_meta( self::META_HISTORY );
+		if ( is_array( $history ) ) {
+			$order->update_meta_data( self::META_HISTORY, $history );
 		}
 		$order->save();
 		return $order;
@@ -249,17 +251,35 @@ final class WowRestro_Order_Statuses {
 		return 'pickup';
 	}
 
-	/**
-	 * Put a paid or explicitly accepted unpaid order into the live queue.
-	 *
-	 * @param WC_Order|int $order Order or ID.
-	 */
+	/** Preserve the same order object that WooCommerce will continue saving. */
+	public static function mark_financially_open( $order_id, $order = null ) {
+		return self::mark_new( $order instanceof WC_Order ? $order : $order_id );
+	}
+
+	/** Put a paid or explicitly accepted unpaid order into the live queue. */
 	public static function mark_new( $order, $attempt = 0 ) {
 		$order = self::ensure_order( $order );
 		if ( ! $order ) {
 			return false;
 		}
 		$current = self::current( $order );
+		// A pre-payment callback may have saved this flag on a separate order
+		// object; read it afresh before checkout can reopen restaurant work.
+		$paid_order = $order->is_paid() ? wc_get_order( $order->get_id() ) : null;
+		if ( $paid_order && 'yes' === $paid_order->get_meta( '_wowrestro_capacity_review' ) ) {
+			if ( ! in_array( $current, array( 'cancelled', 'completed' ), true ) ) {
+				$result = self::set_status( $order, 'cancelled', __( 'Payment received without confirmed restaurant capacity. Staff review is required.', 'wowrestro' ), true );
+				if ( is_wp_error( $result ) ) {
+					self::schedule_operational_reconciliation( $order->get_id(), 'closed', $attempt, $result );
+					return $result;
+				}
+			}
+			$order->delete_meta_data( '_wowrestro_payment_retry_reserved' );
+			$order->update_meta_data( '_wowrestro_terminal_payment_reviewed', 'yes' );
+			$order->save_meta_data();
+			WowRestro_Slot_Reservations::release_order( $order );
+			return true;
+		}
 		if ( in_array( $current, array( 'cancelled', 'completed' ), true ) && $order->is_paid() && 'pending' === $order->get_meta( '_wowrestro_terminal_payment_review' ) ) {
 			$order->delete_meta_data( '_wowrestro_payment_retry_reserved' );
 			$order->delete_meta_data( '_wowrestro_terminal_payment_review' );
@@ -409,9 +429,21 @@ final class WowRestro_Order_Statuses {
 			return $result;
 		}
 		if ( $original_order instanceof WC_Order && $original_order !== $order ) {
-			$original_order->update_meta_data( '_wowrestro_order', 'yes' );
-			$original_order->update_meta_data( self::META_STATUS, self::current( $order ) );
-			$original_order->update_meta_data( self::META_HISTORY, $order->get_meta( self::META_HISTORY ) );
+			// Keep persisted metadata IDs when checkout saves the same object again.
+			// Preserve unrelated pending metadata owned by other checkout integrations.
+			foreach ( $order->get_meta_data() as $saved_meta ) {
+				if ( ! in_array( $saved_meta->key, array( '_wowrestro_order', '_wowrestro_tracking_token', self::META_STATUS, self::META_HISTORY ), true ) ) {
+					continue;
+				}
+				$original_order->update_meta_data( $saved_meta->key, $saved_meta->value );
+				foreach ( $original_order->get_meta_data() as $original_meta ) {
+					if ( $saved_meta->key === $original_meta->key ) {
+						$original_meta->id = $saved_meta->id;
+						$original_meta->apply_changes();
+						break;
+					}
+				}
+			}
 		}
 		if ( $changed ) {
 			do_action( 'wowrestro_order_transitioned', $order, $from, $status );
@@ -530,11 +562,14 @@ final class WowRestro_Order_Statuses {
 	 */
 	public static function query_orders( $args ) {
 		$meta = isset( $args['meta_query'] ) && is_array( $args['meta_query'] ) ? $args['meta_query'] : array();
-		if ( ! $meta ) {
+		if ( ! $meta || ( class_exists( '\\Automattic\\WooCommerce\\Utilities\\OrderUtil' ) && \Automattic\WooCommerce\Utilities\OrderUtil::custom_orders_table_usage_is_enabled() ) ) {
 			return wc_get_orders( $args );
 		}
+		// CPT rejects the HPOS-only argument before its WP_Query bridge runs.
+		unset( $args['meta_query'] );
+		$args['wowrestro_meta_query'] = $meta;
 		$bridge = static function ( $wp_args, $query_vars ) use ( $meta ) {
-			if ( ! isset( $query_vars['meta_query'] ) || $query_vars['meta_query'] !== $meta ) {
+			if ( ! isset( $query_vars['wowrestro_meta_query'] ) || $query_vars['wowrestro_meta_query'] !== $meta ) {
 				return $wp_args;
 			}
 			$existing              = isset( $wp_args['meta_query'] ) && is_array( $wp_args['meta_query'] ) ? $wp_args['meta_query'] : array();

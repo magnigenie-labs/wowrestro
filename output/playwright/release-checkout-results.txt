@@ -1,0 +1,39 @@
+### Result
+{"order":"241","cart_empty":true,"receipt":"✓\nORDER #241 CONFIRMED\nThank you, QA.\nThe kitchen has it.\n\nWe have sent your confirmation to qa-release@example.test. Collect it from 10 Test Street, London, SW1A 1AA.\n\nORDER\n#241\nPLACED\nNovember 13, 2026\nTOTAL\n£13.75\nPAYMENT\nCash on delivery\n\nPay with cash upon delivery.\n\nYour collection\nPromised for November 13, 2026 10:30 am\nOrder received\nThe kitchen has your order.\nAccepted\nWaiting on the kitchen.\nPreparing\nNot started yet.\nReady for collection\nNot ready yet.\nCollected\nNot collected yet.\nOrder details\n1 × QA Decimal Pizza\nExtra cheese (+£1.25)\n£13.75\nSubtotal\n£13.75\nShipping\nPickup at QA Kitchen\nPickup time\nNovember 13, 2026 10:30 am\nTotal\n£13.75\nCOLLECT FROM\nQA Kitchen\n10 Test Street, London, SW1A 1AA\n+442079460123 · kitchen@example.test\nSomething wrong?\nContact the kitchen and quote order #241. Changes are possible until the ticket is on the pass. Call +442079460123\nOrder again"}
+### Ran Playwright code
+```js
+await (// Final packaged-plugin smoke test on the disposable site seeded by seed-browser.php.
+async (page) => {
+  const assert = (ok, message) => { if (!ok) throw new Error(message); };
+  await page.context().clearCookies();
+  await page.goto('http://127.0.0.1:18889/qa-menu/', { waitUntil: 'domcontentloaded' });
+  await page.evaluate(() => sessionStorage.clear());
+  await page.getByRole('button', { name: 'Pickup', exact: true }).click();
+  await page.getByRole('button', { name: 'Customise QA Decimal Pizza', exact: true }).click();
+  const dialog = page.getByRole('dialog');
+  await dialog.getByRole('button', { name: /^Add ·/ }).click();
+  await dialog.getByRole('alert').getByText('Choose one option to add this item.').waitFor();
+  await dialog.getByRole('radio', { name: /Extra cheese/ }).check();
+  await dialog.getByRole('button', { name: 'Add · £13.75', exact: true }).click();
+  await page.getByRole('button', { name: 'Checkout · £13.75', exact: true }).click();
+  for (const [name, value] of Object.entries({ 'Email address': 'qa-release@example.test', 'Full name': 'QA Release', Phone: '+442079460123' })) {
+    await page.getByRole('textbox', { name, exact: true }).fill(value);
+  }
+  await page.getByRole('button', { name: 'Cash on delivery Pay on collection or delivery.' }).click();
+  const placed = page.waitForResponse(r => r.url().includes('/wc/store/v1/checkout') && r.request().method() === 'POST');
+  await page.getByRole('button', { name: 'Place order · £13.75', exact: true }).click();
+  assert((await placed).status() === 200, 'Packaged plugin checkout failed.');
+  await page.waitForURL(/confirmation|order-received/);
+  const receipt = await page.locator('main').innerText();
+  assert(receipt.includes('£13.75') && receipt.includes('Extra cheese (+£1.25)') && receipt.includes('kitchen@example.test'), 'Receipt lost totals, add-on or restaurant contact.');
+  const cart = await page.evaluate(async () => (await fetch('/wp-json/wc/store/v1/cart')).json());
+  assert(cart.items.length === 0, 'Paid checkout did not clear the cart.');
+  await page.reload({ waitUntil: 'domcontentloaded' });
+  assert((await page.locator('main').innerText()).includes('Extra cheese (+£1.25)'), 'Receipt does not survive reload.');
+  await page.screenshot({ path: 'output/playwright/release-checkout-confirmation.png', fullPage: true });
+  return { order: receipt.match(/ORDER #(\d+)/)?.[1], cart_empty: true, receipt };
+}
+)(page);
+```
+### Events
+- New console entries: .playwright-cli/console-2026-11-13T04-23-24-076Z.log#L25-L32

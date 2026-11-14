@@ -1,0 +1,20 @@
+Success: Receipt integration checks passed: 17
+[
+    "Existing order retains its original private add-on snapshot",
+    "Custom pickup receipt displays the saved add-on exactly once",
+    "Restaurant contact email is configured for the pickup test",
+    "Pickup address card displays the restaurant email",
+    "Pickup address card does not substitute the customer email",
+    "Delivery address card retains the customer contact",
+    "Native customer order details display the saved add-on once",
+    "Actual WooCommerce HTML email items display the saved add-on once",
+    "Actual WooCommerce plain-text email items display the saved add-on once",
+    "Native admin order details display the saved add-on once",
+    "Private structured metadata is not exposed as editable string fields",
+    "Private item instructions are displayed with saved choices",
+    "Item instructions do not emit executable markup",
+    "Final WooCommerce plain email preserves apostrophes in add-on names and choices",
+    "Final WooCommerce plain email preserves apostrophes in item instructions",
+    "Receipt rendering does not change the saved order total",
+    "Receipt tests do not modify the saved fulfillment mode"
+]

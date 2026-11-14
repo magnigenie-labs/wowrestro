@@ -15,6 +15,10 @@ final class WowRestro_Checkout {
 		add_action( 'woocommerce_init', array( __CLASS__, 'register_block_fields' ) );
 		add_action( 'woocommerce_blocks_loaded', array( __CLASS__, 'register_store_api_update' ) );
 		add_filter( 'woocommerce_checkout_fields', array( __CLASS__, 'classic_fields' ) );
+		add_filter( 'woocommerce_checkout_get_value', array( __CLASS__, 'classic_handoff_value' ), 10, 2 );
+		add_action( 'woocommerce_cart_emptied', array( __CLASS__, 'clear_handoff' ) );
+		add_filter( 'woocommerce_get_default_value_for_wowrestro/fulfillment-mode', array( __CLASS__, 'block_mode_default' ), 10, 3 );
+		add_filter( 'woocommerce_get_default_value_for_wowrestro/requested-time', array( __CLASS__, 'block_time_default' ), 10, 3 );
 		add_action( 'woocommerce_checkout_create_order', array( __CLASS__, 'save_classic_fields' ), 10, 2 );
 		add_action( 'woocommerce_checkout_update_order_review', array( __CLASS__, 'capture_classic_mode' ) );
 		add_action( 'woocommerce_after_checkout_validation', array( __CLASS__, 'validate_classic_checkout' ), 999, 2 );
@@ -57,12 +61,27 @@ final class WowRestro_Checkout {
 		woocommerce_register_additional_checkout_field(
 			array(
 				'id'       => 'wowrestro/requested-time',
-				'label'    => __( 'Requested time (optional)', 'wowrestro' ),
+				'label'    => __( 'Requested time', 'wowrestro' ),
 				'location' => 'order',
 				'type'     => 'text',
 				'required' => false,
 			)
 		);
+	}
+
+	/** Use the menu selection when WooCommerce initializes a new checkout. */
+	public static function block_mode_default( $value, $group, $object ) {
+		if ( 'other' !== $group || ( $object instanceof WC_Order && ! $object->has_status( 'checkout-draft' ) ) ) {
+			return $value;
+		}
+		return self::session_get( 'wowrestro_fulfillment', $value );
+	}
+
+	public static function block_time_default( $value, $group, $object ) {
+		if ( 'other' !== $group || ( $object instanceof WC_Order && ! $object->has_status( 'checkout-draft' ) ) ) {
+			return $value;
+		}
+		return self::session_get( 'wowrestro_requested_at', $value );
 	}
 
 	/** Register the formal namespaced Store API cart-update callback. */
@@ -76,6 +95,23 @@ final class WowRestro_Checkout {
 				'callback'  => array( __CLASS__, 'store_api_update' ),
 			)
 		);
+		if ( function_exists( 'woocommerce_store_api_register_endpoint_data' ) ) {
+			woocommerce_store_api_register_endpoint_data(
+				array(
+					'endpoint'        => 'checkout',
+					'namespace'       => 'wowrestro',
+					'schema_callback' => static function () {
+						return array( 'fulfillment_mode' => array(
+							'description' => __( 'Fulfillment explicitly chosen in the WowRestro checkout.', 'wowrestro' ),
+							'type'        => array( 'string', 'null' ),
+							'enum'        => array( 'pickup', 'delivery', null ),
+							'default'     => null,
+						) );
+					},
+					'schema_type'     => ARRAY_A,
+				)
+			);
+		}
 		self::$store_update_registered = true;
 	}
 
@@ -99,7 +135,7 @@ final class WowRestro_Checkout {
 		// A mode without a rate, as the Olive & Ember order flow sends, moves the cart onto a rate that serves it.
 		if ( ( isset( $data['fulfillment'] ) || isset( $data['mode'] ) ) && empty( $data['shipping_rate_id'] ) && class_exists( 'WowRestro_Shipping' ) ) {
 			$chosen  = WowRestro_Shipping::choose_rate_for_mode( WowRestro_Fulfillment::normalize_mode( $mode ) );
-			$rate_id = $chosen ? $chosen : $rate_id;
+			$rate_id = $chosen;
 		}
 		self::set_session_state( $mode, $requested, $rate_id );
 		// The Olive & Ember order flow sends the typed postcode so the classic checkout's promise preview matches it.
@@ -117,6 +153,28 @@ final class WowRestro_Checkout {
 				self::throw_store_error( 'wowrestro_tip', $tip->get_error_message(), 400 );
 			}
 		}
+		if ( isset( $data['checkout_handoff'] ) && is_array( $data['checkout_handoff'] ) ) {
+			$note = $data['checkout_handoff']['note'] ?? '';
+			WC()->session->set( 'wowrestro_checkout_handoff', array(
+				'note'           => is_scalar( $note ) ? sanitize_textarea_field( (string) $note ) : '',
+				'status_updates' => true === ( $data['checkout_handoff']['status_updates'] ?? false ),
+			) );
+		}
+	}
+
+	/** Classic checkout has different field names from the Store API draft. */
+	public static function classic_handoff_value( $value, $input ) {
+		$handoff = self::session_get( 'wowrestro_checkout_handoff', array() );
+		if ( null !== $value || ! is_array( $handoff ) ) { return $value; }
+		if ( 'order_comments' === $input && array_key_exists( 'note', $handoff ) ) { return $handoff['note']; }
+		if ( 'wowrestro_status_updates' === $input && array_key_exists( 'status_updates', $handoff ) ) { return $handoff['status_updates']; }
+		return $value;
+	}
+
+	public static function clear_handoff() {
+		if ( function_exists( 'WC' ) && WC()->session ) {
+			WC()->session->__unset( 'wowrestro_checkout_handoff' );
+		}
 	}
 
 	public static function classic_fields( $fields ) {
@@ -125,12 +183,14 @@ final class WowRestro_Checkout {
 			'label'    => __( 'How would you like your order?', 'wowrestro' ),
 			'required' => true,
 			'options'  => self::mode_options( false ),
+			'default'  => self::session_get( 'wowrestro_fulfillment', 'pickup' ),
 			'priority' => 5,
 		);
 		$fields['order']['wowrestro_requested_time'] = array(
 			'type'        => 'text',
 			'label'       => __( 'Requested time', 'wowrestro' ),
 			'placeholder' => __( 'ASAP', 'wowrestro' ),
+			'default'     => self::session_get( 'wowrestro_requested_at', '' ),
 			'required'    => false,
 			'priority'    => 6,
 		);
@@ -191,6 +251,17 @@ final class WowRestro_Checkout {
 			'billing_postcode'           => $order->get_billing_postcode(),
 		);
 		$rate_id = class_exists( 'WowRestro_Shipping' ) ? WowRestro_Shipping::order_rate_id( $order ) : '';
+		$extensions = $request->get_param( 'extensions' );
+		$required_mode = is_array( $extensions ) ? ( $extensions['wowrestro']['fulfillment_mode'] ?? '' ) : '';
+		if ( in_array( $required_mode, array( 'pickup', 'delivery' ), true ) && class_exists( 'WowRestro_Shipping' ) ) {
+			// Woo may automatically select pickup when an updated address has no delivery rate.
+			// Only the custom checkout asserts a mode; native checkout rates remain authoritative.
+			$shipping = WowRestro_Shipping::checkout_context( $rate_id, $required_mode );
+			if ( is_wp_error( $shipping ) ) {
+				self::release_session_reservation();
+				self::throw_store_error( $shipping->get_error_code(), $shipping->get_error_message(), 409 );
+			}
+		}
 		if ( $rate_id ) {
 			$data['shipping_method'] = array( $rate_id );
 		}
@@ -208,11 +279,11 @@ final class WowRestro_Checkout {
 		}
 		parse_str( $posted_data, $data );
 		$rate_id = self::posted_rate_id( $data );
-		$mode    = sanitize_key( $data['wowrestro_fulfillment_mode'] ?? 'pickup' );
+		$mode    = sanitize_key( $data['wowrestro_fulfillment_mode'] ?? self::session_get( 'wowrestro_fulfillment', 'pickup' ) );
 		if ( $rate_id && class_exists( 'WowRestro_Shipping' ) ) {
 			$mode = WowRestro_Shipping::mode_for_rate( $rate_id );
 		}
-		self::set_session_state( $mode, sanitize_text_field( $data['wowrestro_requested_time'] ?? '' ), $rate_id );
+		self::set_session_state( $mode, sanitize_text_field( $data['wowrestro_requested_time'] ?? self::session_get( 'wowrestro_requested_at', '' ) ), $rate_id );
 		$postcode = self::postcode_from_posted_data( $data );
 		if ( $postcode ) {
 			WC()->session->set( 'wowrestro_postcode', $postcode );

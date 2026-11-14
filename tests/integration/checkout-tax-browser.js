@@ -1,0 +1,39 @@
+// Run via playwright-cli run-code on the local site after seed-browser.php and tax-fixture.php.
+async (page) => {
+  const base = 'http://127.0.0.1:18889';
+  const assert = (ok, message) => { if (!ok) throw new Error(message); };
+  await page.context().clearCookies();
+  await page.goto(base + '/qa-menu/', { waitUntil: 'domcontentloaded' });
+  await page.evaluate(() => sessionStorage.clear());
+  await page.getByRole('button', { name: 'Delivery', exact: true }).click();
+  await page.getByRole('button', { name: 'Customise QA Decimal Pizza', exact: true }).click();
+  const dialog = page.getByRole('dialog');
+  await dialog.getByRole('radio', { name: /Extra cheese/ }).check();
+  await dialog.getByRole('button', { name: '+', exact: true }).click();
+  await dialog.getByRole('button', { name: 'Add · £27.50', exact: true }).click();
+  await page.getByRole('button', { name: /Checkout ·/ }).click();
+  for (const [name, value] of Object.entries({ 'Email address': 'qa-tax@example.test', 'Full name': 'QA Tax', Phone: '+442079460123', 'Street address': '30 Test Street', City: 'London', Postcode: 'SW1A 1AA' })) {
+    await page.getByRole('textbox', { name, exact: true }).fill(value);
+  }
+  await page.getByRole('textbox', { name: 'Coupon code', exact: true }).fill('qa-ten-percent');
+  const applied = page.waitForResponse(r => r.url().includes('/cart/apply-coupon') && r.request().method() === 'POST');
+  await page.getByRole('button', { name: 'Apply', exact: true }).click();
+  const response = await applied;
+  const cart = await response.json();
+  assert(response.status() === 200, 'Coupon rejected.');
+  assert(cart.totals.total_items === '2750', 'Add-on quantity subtotal is incorrect.');
+  assert(cart.totals.total_discount === '275', '10% coupon does not include the add-on price.');
+  assert(cart.totals.total_shipping === '350', 'Delivery fee is incorrect.');
+  assert(cart.totals.total_tax === '565', '20% tax on discounted items and shipping is incorrect.');
+  assert(cart.totals.total_price === '3390', 'Final total must be £33.90.');
+  await page.getByRole('button', { name: 'Place order · £33.90', exact: true }).waitFor();
+  await page.getByRole('button', { name: 'Cash on delivery Pay on collection or delivery.' }).click();
+  const placed = page.waitForResponse(r => r.url().includes('/wc/store/v1/checkout') && r.request().method() === 'POST');
+  await page.getByRole('button', { name: 'Place order · £33.90', exact: true }).click();
+  assert((await placed).status() === 200, 'Checkout failed.');
+  await page.waitForURL(/confirmation|order-received/);
+  const receipt = await page.locator('main').innerText();
+  assert(receipt.includes('£33.90') && receipt.includes('Extra cheese') && receipt.includes('£5.65'), 'Receipt differs from checkout.');
+  await page.screenshot({ path: 'output/playwright/live-tax-coupon-confirmation.png', fullPage: true });
+  return { order: receipt.match(/ORDER #(\d+)/)?.[1], totals: cart.totals, receipt };
+}

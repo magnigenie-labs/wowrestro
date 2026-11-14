@@ -381,6 +381,19 @@
 		filterBar.replaceChildren( fragment );
 	}
 
+	function itemDetails( item ) {
+		const extras = Object.values( item.modifiers || {} ).map( function ( group ) {
+			if ( ! group || typeof group !== 'object' ) return String( group || '' );
+			if ( Array.isArray( group.options ) ) {
+				const choices = group.options.map( function ( option ) { return option.label || option.name || ''; } ).filter( Boolean ).join( ', ' );
+				return choices ? ( group.name ? group.name + ': ' : '' ) + choices : '';
+			}
+			return group.label || group.name || '';
+		} );
+		if ( item.note ) extras.push( item.note );
+		return extras.filter( Boolean ).join( ' · ' );
+	}
+
 	function ticket( order ) {
 		const state = statusClass( order.status );
 		const card = element( 'article', 'wra-ticket wra-state-' + state + ( order.is_late ? ' is-late' : '' ) );
@@ -427,15 +440,7 @@
 			line.append( element( 'span', 'wra-qty', String( item.quantity ) ) );
 			const text = element( 'span' );
 			text.append( document.createTextNode( item.name ) );
-			const extras = [];
-			if ( item.modifiers ) {
-				Object.keys( item.modifiers ).forEach( function ( key ) {
-					const value = item.modifiers[ key ];
-					extras.push( typeof value === 'object' && value !== null ? ( value.label || value.name || '' ) : String( value ) );
-				} );
-			}
-			if ( item.note ) extras.push( item.note );
-			const detail = extras.filter( Boolean ).join( ' · ' );
+			const detail = itemDetails( item );
 			if ( detail ) text.append( element( 'small', 'wra-linemods', detail ) );
 			line.append( text );
 			items.append( line );
@@ -587,15 +592,7 @@
 			line.append( element( 'span', 'wra-line__qty', String( item.quantity ) ) );
 			const name = element( 'span', 'wra-line__name' );
 			name.append( document.createTextNode( item.name ) );
-			const extras = [];
-			if ( item.modifiers ) {
-				Object.keys( item.modifiers ).forEach( function ( key ) {
-					const value = item.modifiers[ key ];
-					extras.push( typeof value === 'object' && value !== null ? ( value.label || value.name || '' ) : String( value ) );
-				} );
-			}
-			if ( item.note ) extras.push( item.note );
-			const detailText = extras.filter( Boolean ).join( ' · ' );
+			const detailText = itemDetails( item );
 			if ( detailText ) name.append( element( 'small', 'wra-linemods', detailText ) );
 			line.append( name, element( 'span', 'wra-line__price', item.total ) );
 			lines.append( line );

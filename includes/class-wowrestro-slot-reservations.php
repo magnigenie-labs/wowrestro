@@ -29,6 +29,11 @@ final class WowRestro_Slot_Reservations {
 		add_action( 'woocommerce_order_status_refunded', array( __CLASS__, 'release_order' ), 10, 2 );
 		add_action( 'woocommerce_order_fully_refunded', array( __CLASS__, 'release_order' ), 10, 2 );
 		add_action( self::CLEANUP_HOOK, array( __CLASS__, 'cleanup_expired' ) );
+		add_action( 'init', array( __CLASS__, 'schedule_cleanup' ) );
+	}
+
+	/** Cron schedule labels may use translations, so wait until init. */
+	public static function schedule_cleanup() {
 		if ( ! wp_next_scheduled( self::CLEANUP_HOOK ) ) {
 			wp_schedule_event( time() + HOUR_IN_SECONDS, 'hourly', self::CLEANUP_HOOK );
 		}
@@ -310,7 +315,7 @@ final class WowRestro_Slot_Reservations {
 			return false;
 		}
 		$operational = class_exists( 'WowRestro_Order_Statuses' ) ? WowRestro_Order_Statuses::current( $order ) : '';
-		if ( in_array( $operational, array( 'cancelled', 'completed' ), true ) || in_array( $order->get_meta( '_wowrestro_terminal_payment_review' ), array( 'pending', 'reviewed' ), true ) || 'yes' === $order->get_meta( '_wowrestro_terminal_payment_reviewed' ) ) {
+		if ( 'yes' === $order->get_meta( '_wowrestro_capacity_review' ) || in_array( $operational, array( 'cancelled', 'completed' ), true ) || in_array( $order->get_meta( '_wowrestro_terminal_payment_review' ), array( 'pending', 'reviewed' ), true ) || 'yes' === $order->get_meta( '_wowrestro_terminal_payment_reviewed' ) ) {
 			self::release_order( $order );
 			return true;
 		}
@@ -335,11 +340,10 @@ final class WowRestro_Slot_Reservations {
 	}
 
 	/**
-	 * Fail closed before WooCommerce records payment from any gateway/webhook path.
+	 * Reconcile fulfillment without suppressing an already captured gateway payment.
 	 *
 	 * @param int    $order_id Order ID.
 	 * @param string $transaction_id Transaction identifier.
-	 * @throws Exception When capacity cannot be restored.
 	 */
 	public static function reconcile_before_payment( $order_id, $transaction_id = '' ) {
 		unset( $transaction_id );
@@ -347,9 +351,16 @@ final class WowRestro_Slot_Reservations {
 		if ( ! $order instanceof WC_Order || ! class_exists( 'WowRestro_Order_Statuses' ) || ! WowRestro_Order_Statuses::is_restaurant_order( $order ) ) {
 			return;
 		}
+		// Woo sends repeated callbacks through a different completion hook. There
+		// is nothing to reserve or lock again once its financial state is paid.
+		$payable_statuses = apply_filters( 'woocommerce_valid_order_statuses_for_payment_complete', array( 'on-hold', 'pending', 'failed', 'cancelled' ), $order );
+		if ( $order->is_paid() || ! $order->has_status( $payable_statuses ) ) {
+			return;
+		}
 		$locked = WowRestro_Order_Statuses::acquire_order_lock( $order_id );
 		if ( is_wp_error( $locked ) ) {
-			throw new Exception( esc_html( $locked->get_error_message() ) );
+			self::flag_captured_payment_for_review( $order, $locked );
+			return;
 		}
 		self::$payment_locks[ absint( $order_id ) ] = isset( self::$payment_locks[ absint( $order_id ) ] ) ? self::$payment_locks[ absint( $order_id ) ] + 1 : 1;
 		if ( 1 === array_sum( self::$payment_locks ) ) {
@@ -358,12 +369,24 @@ final class WowRestro_Slot_Reservations {
 		try {
 			$result = self::ensure_payment_capacity( $order );
 		} catch ( Throwable $exception ) {
-			self::release_payment_lock( $order_id );
-			throw new Exception( esc_html( $exception->getMessage() ) );
+			$result = new WP_Error( 'wowrestro_payment_capacity', $exception->getMessage() );
 		}
 		if ( is_wp_error( $result ) ) {
-			self::release_payment_lock( $order_id );
-			throw new Exception( esc_html( $result->get_error_message() ) );
+			// The gateway has already captured payment by this hook. Preserve its
+			// transaction; pre-submit retry validation still refuses unavailable slots.
+			self::flag_captured_payment_for_review( $order, $result );
+		}
+	}
+
+	/** Record the exceptional fulfillment state without changing payment or refunding. */
+	private static function flag_captured_payment_for_review( $order, $error ) {
+		$already_flagged = 'yes' === $order->get_meta( '_wowrestro_capacity_review' );
+		$order->update_meta_data( '_wowrestro_capacity_review', 'yes' );
+		$order->update_meta_data( '_wowrestro_payment_capacity_error', sanitize_key( $error->get_error_code() ) );
+		$order->delete_meta_data( '_wowrestro_payment_retry_reserved' );
+		$order->save_meta_data();
+		if ( ! $already_flagged ) {
+			$order->add_order_note( sprintf( __( 'The gateway reported successful payment, but restaurant capacity could not be confirmed: %s Payment is retained for staff review; contact the customer to arrange fulfillment or a refund.', 'wowrestro' ), $error->get_error_message() ) );
 		}
 	}
 
@@ -412,15 +435,15 @@ final class WowRestro_Slot_Reservations {
 			$order->save_meta_data();
 			return true;
 		}
+		$slot = self::normalize_gmt( $order->get_meta( '_wowrestro_kitchen_slot_gmt' ) );
+		if ( ! $slot || strtotime( $slot . ' UTC' ) <= time() ) {
+			return new WP_Error( 'wowrestro_payment_slot_expired', __( 'This order’s promised time has expired. Contact the restaurant to reschedule before paying.', 'wowrestro' ) );
+		}
 		$token = sanitize_text_field( (string) $order->get_meta( '_wowrestro_reservation_token' ) );
 		$row   = $token ? self::get( $token ) : null;
 		if ( $row && absint( $row->order_id ) === $order->get_id() ) {
 			self::mark_payment_retry( $order );
 			return true;
-		}
-		$slot = self::normalize_gmt( $order->get_meta( '_wowrestro_kitchen_slot_gmt' ) );
-		if ( ! $slot || strtotime( $slot . ' UTC' ) <= time() ) {
-			return new WP_Error( 'wowrestro_payment_slot_expired', __( 'This order’s promised time has expired. Contact the restaurant to reschedule before paying.', 'wowrestro' ) );
 		}
 		$result = self::backfill_order( $order, true );
 		if ( is_wp_error( $result ) ) {
@@ -454,7 +477,7 @@ final class WowRestro_Slot_Reservations {
 		}
 		$operational = class_exists( 'WowRestro_Order_Statuses' ) ? WowRestro_Order_Statuses::current( $order ) : '';
 		$failed_retry = $allow_failed && 'failed' === $order->get_status();
-		if ( ! $failed_retry && ( in_array( $operational, array( 'cancelled', 'completed' ), true ) || in_array( $order->get_meta( '_wowrestro_terminal_payment_review' ), array( 'pending', 'reviewed' ), true ) || 'yes' === $order->get_meta( '_wowrestro_terminal_payment_reviewed' ) ) ) {
+		if ( 'yes' === $order->get_meta( '_wowrestro_capacity_review' ) || ( ! $failed_retry && ( in_array( $operational, array( 'cancelled', 'completed' ), true ) || in_array( $order->get_meta( '_wowrestro_terminal_payment_review' ), array( 'pending', 'reviewed' ), true ) || 'yes' === $order->get_meta( '_wowrestro_terminal_payment_reviewed' ) ) ) ) {
 			self::release_order( $order );
 			return true;
 		}

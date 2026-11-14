@@ -30,8 +30,8 @@ final class WowRestro_Dining {
 					'singular_name' => __( 'Table session', 'wowrestro' ),
 				),
 				'public'       => false,
-				'show_ui'      => true,
-				'show_in_menu' => 'wowrestro-app',
+				// Internal record linking dine-in orders to a table; admins see the table on the order itself.
+				'show_ui'      => false,
 				'supports'     => array( 'title' ),
 				'capabilities' => array(
 					'edit_post'          => 'wowrestro_manage_operations',

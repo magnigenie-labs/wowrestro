@@ -52,6 +52,8 @@ final class WowRestro_Shipping {
 			if ( isset( $rates[ $current ] ) && self::mode_for_rate( $current, $rates[ $current ] ) === $mode ) {
 				continue;
 			}
+			// Do not keep a pickup rate when no delivery rate serves the address (or vice versa).
+			$chosen[ $index ] = '';
 			foreach ( $rates as $rate_id => $rate ) {
 				if ( self::mode_for_rate( $rate_id, $rate ) === $mode ) {
 					$chosen[ $index ] = $rate_id;
@@ -113,9 +115,10 @@ final class WowRestro_Shipping {
 	 * Validate the one-package beta boundary and selected method.
 	 *
 	 * @param string $posted_rate Optional posted rate ID.
+	 * @param string $required_mode Explicit custom-checkout mode; native checkouts leave this empty.
 	 * @return array|WP_Error
 	 */
-	public static function checkout_context( $posted_rate = '' ) {
+	public static function checkout_context( $posted_rate = '', $required_mode = '' ) {
 		$packages = array();
 		if ( function_exists( 'WC' ) && WC()->shipping() ) {
 			$packages = WC()->shipping()->get_packages();
@@ -138,9 +141,17 @@ final class WowRestro_Shipping {
 			$rate = $rates[ $rate_id ];
 		}
 
+		$mode = $rate_id ? self::mode_for_rate( $rate_id, $rate ) : WowRestro_Fulfillment::MODE_PICKUP;
+		if ( $rate_id && in_array( $required_mode, array( 'pickup', 'delivery' ), true ) && $mode !== $required_mode ) {
+			$message = 'delivery' === $required_mode
+				? __( 'Delivery is not available for this address. Choose pickup or another address.', 'wowrestro' )
+				: __( 'Pickup is not available. Choose delivery or contact the restaurant.', 'wowrestro' );
+			return new WP_Error( 'wowrestro_shipping_unavailable', $message );
+		}
+
 		return array(
 			'shipping_rate_id' => $rate_id,
-			'mode'             => $rate_id ? self::mode_for_rate( $rate_id, $rate ) : WowRestro_Fulfillment::MODE_PICKUP,
+			'mode'             => $mode,
 			'minimum_order'    => $rate_id ? self::minimum_for_rate( $rate_id ) : 0.0,
 		);
 	}

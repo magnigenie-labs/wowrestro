@@ -1,0 +1,551 @@
+- generic [ref=f7e1]:
+  - generic [ref=f7e2]:
+    - text:              
+    - generic [ref=f7e3]:
+      - generic [ref=f7e4]:
+        - navigation "Toolbar":
+          - menu:
+            - group [ref=f7e5]:
+              - menuitem "About WordPress" [ref=f7e6] [cursor=pointer]
+            - group [ref=f7e9]:
+              - menuitem "WowRestro Local QA" [ref=f7e10] [cursor=pointer]
+            - group [ref=f7e11]:
+              - menuitem "Live" [ref=f7e12] [cursor=pointer]
+            - group [ref=f7e13]:
+              - menuitem "⌘K Open command palette" [ref=f7e14] [cursor=pointer]:
+                - generic [ref=f7e16]:
+                  - text: ⌘K
+                  - generic [ref=f7e17]: Open command palette
+            - group [ref=f7e18]:
+              - menuitem "0 Comments in moderation" [ref=f7e19] [cursor=pointer]:
+                - generic [aria-hidden] [ref=f7e21]: "0"
+            - group [ref=f7e23]:
+              - menuitem "New" [ref=f7e24] [cursor=pointer]
+          - menu [ref=f7e27]:
+            - group [ref=f7e28]:
+              - menuitem "Howdy, qa-admin" [ref=f7e29] [cursor=pointer]
+      - main [ref=f7e30]:
+        - generic [ref=f7e35]:
+          - complementary [ref=f7e36]:
+            - generic "QA Kitchen" [ref=f7e38]:
+              - img "QA Kitchen" [ref=f7e39]
+            - navigation [ref=f7e40]:
+              - button " Dashboard" [ref=f7e41] [cursor=pointer]:
+                - generic [ref=f7e42]: 
+                - generic [ref=f7e43]: Dashboard
+              - button " Food Ordering" [ref=f7e44] [cursor=pointer]:
+                - generic [ref=f7e45]: 
+                - generic [ref=f7e46]: Food Ordering
+              - button " Reservations" [ref=f7e47] [cursor=pointer]:
+                - generic [ref=f7e48]: 
+                - generic [ref=f7e49]: Reservations
+              - button " Menu & Checkout" [ref=f7e50] [cursor=pointer]:
+                - generic [ref=f7e51]: 
+                - generic [ref=f7e52]: Menu & Checkout
+              - button " Service Options" [ref=f7e53] [cursor=pointer]:
+                - generic [ref=f7e54]: 
+                - generic [ref=f7e55]: Service Options
+              - button " People & Product Information" [ref=f7e56] [cursor=pointer]:
+                - generic [ref=f7e57]: 
+                - generic [ref=f7e58]: People & Product Information
+              - button " Alerts & Insights" [ref=f7e59] [cursor=pointer]:
+                - generic [ref=f7e60]: 
+                - generic [ref=f7e61]: Alerts & Insights
+              - button " Settings" [ref=f7e62] [cursor=pointer]:
+                - generic [ref=f7e63]: 
+                - generic [ref=f7e64]: Settings
+            - generic [ref=f7e65]:
+              - button "About WowRestro" [ref=f7e66] [cursor=pointer]:
+                - generic [ref=f7e67]: 
+              - link "" [ref=f7e68] [cursor=pointer]:
+                - /url: http://127.0.0.1:18889/wp-admin/
+          - complementary [ref=f7e70]:
+            - generic [ref=f7e71]: Food Ordering
+            - navigation [ref=f7e72]:
+              - generic [ref=f7e73]:
+                - generic [ref=f7e74]: Daily Ops
+                - button " Food Menu " [ref=f7e75] [cursor=pointer]:
+                  - generic [ref=f7e76]: 
+                  - generic [ref=f7e77]: Food Menu
+                  - generic [ref=f7e78]: 
+              - button " Live Orders" [ref=f7e80] [cursor=pointer]:
+                - generic [ref=f7e81]: 
+                - generic [ref=f7e82]: Live Orders
+              - generic [ref=f7e84]:
+                - generic [ref=f7e85]: Ordering Tools
+                - button " QR Codes" [ref=f7e86] [cursor=pointer]:
+                  - generic [ref=f7e87]: 
+                  - generic [ref=f7e88]: QR Codes
+          - main [ref=f7e89]:
+            - generic [ref=f7e90]:
+              - generic [ref=f7e91]:
+                - generic [ref=f7e92]:
+                  - heading "Live Orders" [level=1] [ref=f7e93]
+                  - paragraph [ref=f7e94]: Live · updated just now
+                - generic [ref=f7e95]:
+                  - button "Pause ordering" [ref=f7e96] [cursor=pointer]:
+                    - generic [aria-hidden] [ref=f7e97]: 
+                    - text: Pause ordering
+                  - button "Refresh orders" [ref=f7e98] [cursor=pointer]:
+                    - generic [aria-hidden] [ref=f7e99]: 
+                    - text: Refresh orders
+                  - button "Enable sound alerts" [ref=f7e100] [cursor=pointer]:
+                    - generic [aria-hidden] [ref=f7e101]: 
+                    - text: Enable sound alerts
+                  - button "Print board" [ref=f7e102] [cursor=pointer]:
+                    - generic [aria-hidden] [ref=f7e103]: 
+                    - text: Print board
+              - generic [ref=f7e104]:
+                - generic [ref=f7e105]:
+                  - button "All 6" [ref=f7e106] [cursor=pointer]:
+                    - text: All
+                    - generic [ref=f7e107]: "6"
+                  - button "New 6" [ref=f7e108] [cursor=pointer]:
+                    - text: New
+                    - generic [ref=f7e109]: "6"
+                  - button "Accepted 0" [ref=f7e110] [cursor=pointer]:
+                    - text: Accepted
+                    - generic [ref=f7e111]: "0"
+                  - button "Preparing 0" [ref=f7e112] [cursor=pointer]:
+                    - text: Preparing
+                    - generic [ref=f7e113]: "0"
+                  - button "Ready 0" [ref=f7e114] [cursor=pointer]:
+                    - text: Ready
+                    - generic [ref=f7e115]: "0"
+                  - button "Out for delivery 0" [ref=f7e116] [cursor=pointer]:
+                    - text: Out for delivery
+                    - generic [ref=f7e117]: "0"
+                - generic [ref=f7e119]:
+                  - generic [aria-hidden] [ref=f7e120]: 
+                  - searchbox "Search orders" [ref=f7e121]
+              - group [ref=f7e122]:
+                - generic "Add phone order" [ref=f7e123] [cursor=pointer]:
+                  - generic [aria-hidden] [ref=f7e124]: 
+                  - text: Add phone order
+                - option "Pickup" [selected]
+                - option "Delivery"
+                - option "Dine-in"
+                - option "Pay later" [selected]
+                - option "Send payment link"
+                - option "Choose an item" [selected]
+                - option "A Pagination QA padding 01 · £1.00"
+                - option "A Pagination QA padding 02 · £1.00"
+                - option "A Pagination QA padding 03 · £1.00"
+                - option "A Pagination QA padding 04 · £1.00"
+                - option "A Pagination QA padding 05 · £1.00"
+                - option "A Pagination QA padding 06 · £1.00"
+                - option "A Pagination QA padding 07 · £1.00"
+                - option "A Pagination QA padding 08 · £1.00"
+                - option "A Pagination QA padding 09 · £1.00"
+                - option "A Pagination QA padding 10 · £1.00"
+                - option "A Pagination QA padding 11 · £1.00"
+                - option "A Pagination QA padding 12 · £1.00"
+                - option "A Pagination QA padding 13 · £1.00"
+                - option "A Pagination QA padding 14 · £1.00"
+                - option "A Pagination QA padding 15 · £1.00"
+                - option "A Pagination QA padding 16 · £1.00"
+                - option "A Pagination QA padding 17 · £1.00"
+                - option "A Pagination QA padding 18 · £1.00"
+                - option "A Pagination QA padding 19 · £1.00"
+                - option "A Pagination QA padding 20 · £1.00"
+                - option "A Pagination QA padding 21 · £1.00"
+                - option "A Pagination QA padding 22 · £1.00"
+                - option "A Pagination QA padding 23 · £1.00"
+                - option "A Pagination QA padding 24 · £1.00"
+                - option "A Pagination QA padding 25 · £1.00"
+                - option "A Pagination QA padding 26 · £1.00"
+                - option "A Pagination QA padding 27 · £1.00"
+                - option "A Pagination QA padding 28 · £1.00"
+                - option "A Pagination QA padding 29 · £1.00"
+                - option "A Pagination QA padding 30 · £1.00"
+                - option "A Pagination QA padding 31 · £1.00"
+                - option "A Pagination QA padding 32 · £1.00"
+                - option "A Pagination QA padding 33 · £1.00"
+                - option "A Pagination QA padding 34 · £1.00"
+                - option "A Pagination QA padding 35 · £1.00"
+                - option "A Pagination QA padding 36 · £1.00"
+                - option "A Pagination QA padding 37 · £1.00"
+                - option "A Pagination QA padding 38 · £1.00"
+                - option "A Pagination QA padding 39 · £1.00"
+                - option "A Pagination QA padding 40 · £1.00"
+                - option "A Pagination QA padding 41 · £1.00"
+                - option "A Pagination QA padding 42 · £1.00"
+                - option "A Pagination QA padding 43 · £1.00"
+                - option "A Pagination QA padding 44 · £1.00"
+                - option "A Pagination QA padding 45 · £1.00"
+                - option "A Pagination QA padding 46 · £1.00"
+                - option "A Pagination QA padding 47 · £1.00"
+                - option "A Pagination QA padding 48 · £1.00"
+                - option "A Pagination QA padding 49 · £1.00"
+                - option "A Pagination QA padding 50 · £1.00"
+                - option "A Pagination QA padding 51 · £1.00"
+                - option "A Pagination QA padding 52 · £1.00"
+                - option "A Pagination QA padding 53 · £1.00"
+                - option "A Pagination QA padding 54 · £1.00"
+                - option "A Pagination QA padding 55 · £1.00"
+                - option "A Pagination QA padding 56 · £1.00"
+                - option "A Pagination QA padding 57 · £1.00"
+                - option "A Pagination QA padding 58 · £1.00"
+                - option "A Pagination QA padding 59 · £1.00"
+                - option "A Pagination QA padding 60 · £1.00"
+                - option "A Pagination QA padding 61 · £1.00"
+                - option "A Pagination QA padding 62 · £1.00"
+                - option "A Pagination QA padding 63 · £1.00"
+                - option "A Pagination QA padding 64 · £1.00"
+                - option "Catalog pagination QA dish 001 · £2.75"
+                - option "Catalog pagination QA dish 002 · £2.75"
+                - option "Catalog pagination QA dish 003 · £2.75"
+                - option "Catalog pagination QA dish 004 · £2.75"
+                - option "Catalog pagination QA dish 005 · £2.75"
+                - option "Catalog pagination QA dish 006 · £2.75"
+                - option "Catalog pagination QA dish 007 · £2.75"
+                - option "Catalog pagination QA dish 008 · £2.75"
+                - option "Catalog pagination QA dish 009 · £2.75"
+                - option "Catalog pagination QA dish 010 · £2.75"
+                - option "Catalog pagination QA dish 011 · £2.75"
+                - option "Catalog pagination QA dish 012 · £2.75"
+                - option "Catalog pagination QA dish 013 · £2.75"
+                - option "Catalog pagination QA dish 014 · £2.75"
+                - option "Catalog pagination QA dish 015 · £2.75"
+                - option "Catalog pagination QA dish 016 · £2.75"
+                - option "Catalog pagination QA dish 017 · £2.75"
+                - option "Catalog pagination QA dish 018 · £2.75"
+                - option "Catalog pagination QA dish 019 · £2.75"
+                - option "Catalog pagination QA dish 020 · £2.75"
+                - option "Catalog pagination QA dish 021 · £2.75"
+                - option "Catalog pagination QA dish 022 · £2.75"
+                - option "Catalog pagination QA dish 023 · £2.75"
+                - option "Catalog pagination QA dish 024 · £2.75"
+                - option "Catalog pagination QA dish 025 · £2.75"
+                - option "Catalog pagination QA dish 026 · £2.75"
+                - option "Catalog pagination QA dish 027 · £2.75"
+                - option "Catalog pagination QA dish 028 · £2.75"
+                - option "Catalog pagination QA dish 029 · £2.75"
+                - option "Catalog pagination QA dish 030 · £2.75"
+                - option "Catalog pagination QA dish 031 · £2.75"
+                - option "Catalog pagination QA dish 032 · £2.75"
+                - option "Catalog pagination QA dish 033 · £2.75"
+                - option "Catalog pagination QA dish 034 · £2.75"
+                - option "Catalog pagination QA dish 035 · £2.75"
+                - option "Catalog pagination QA dish 036 · £2.75"
+                - option "Catalog pagination QA dish 037 · £2.75"
+                - option "Catalog pagination QA dish 038 · £2.75"
+                - option "Catalog pagination QA dish 039 · £2.75"
+                - option "Catalog pagination QA dish 040 · £2.75"
+                - option "Catalog pagination QA dish 041 · £2.75"
+                - option "Catalog pagination QA dish 042 · £2.75"
+                - option "Catalog pagination QA dish 043 · £2.75"
+                - option "Catalog pagination QA dish 044 · £2.75"
+                - option "Catalog pagination QA dish 045 · £2.75"
+                - option "Catalog pagination QA dish 046 · £2.75"
+                - option "Catalog pagination QA dish 047 · £2.75"
+                - option "Catalog pagination QA dish 048 · £2.75"
+                - option "Catalog pagination QA dish 049 · £2.75"
+                - option "Catalog pagination QA dish 050 · £2.75"
+                - option "Catalog pagination QA dish 051 · £2.75"
+                - option "Catalog pagination QA dish 052 · £2.75"
+                - option "Catalog pagination QA dish 053 · £2.75"
+                - option "Catalog pagination QA dish 054 · £2.75"
+                - option "Catalog pagination QA dish 055 · £2.75"
+                - option "Catalog pagination QA dish 056 · £2.75"
+                - option "Catalog pagination QA dish 057 · £2.75"
+                - option "Catalog pagination QA dish 058 · £2.75"
+                - option "Catalog pagination QA dish 059 · £2.75"
+                - option "Catalog pagination QA dish 060 · £2.75"
+                - option "Catalog pagination QA dish 061 · £2.75"
+                - option "Catalog pagination QA dish 062 · £2.75"
+                - option "Catalog pagination QA dish 063 · £2.75"
+                - option "Catalog pagination QA dish 064 · £2.75"
+                - option "Catalog pagination QA dish 065 · £2.75"
+                - option "Catalog pagination QA dish 066 · £2.75"
+                - option "Catalog pagination QA dish 067 · £2.75"
+                - option "Catalog pagination QA dish 068 · £2.75"
+                - option "Catalog pagination QA dish 069 · £2.75"
+                - option "Catalog pagination QA dish 070 · £2.75"
+                - option "Catalog pagination QA dish 071 · £2.75"
+                - option "Catalog pagination QA dish 072 · £2.75"
+                - option "Catalog pagination QA dish 073 · £2.75"
+                - option "Catalog pagination QA dish 074 · £2.75"
+                - option "Catalog pagination QA dish 075 · £2.75"
+                - option "Catalog pagination QA dish 076 · £2.75"
+                - option "Catalog pagination QA dish 077 · £2.75"
+                - option "Catalog pagination QA dish 078 · £2.75"
+                - option "Catalog pagination QA dish 079 · £2.75"
+                - option "Catalog pagination QA dish 080 · £2.75"
+                - option "Catalog pagination QA dish 081 · £2.75"
+                - option "Catalog pagination QA dish 082 · £2.75"
+                - option "Catalog pagination QA dish 083 · £2.75"
+                - option "Catalog pagination QA dish 084 · £2.75"
+                - option "Catalog pagination QA dish 085 · £2.75"
+                - option "Catalog pagination QA dish 086 · £2.75"
+                - option "Catalog pagination QA dish 087 · £2.75"
+                - option "Catalog pagination QA dish 088 · £2.75"
+                - option "Catalog pagination QA dish 089 · £2.75"
+                - option "Catalog pagination QA dish 090 · £2.75"
+                - option "Catalog pagination QA dish 091 · £2.75"
+                - option "Catalog pagination QA dish 092 · £2.75"
+                - option "Catalog pagination QA dish 093 · £2.75"
+                - option "Catalog pagination QA dish 094 · £2.75"
+                - option "Catalog pagination QA dish 095 · £2.75"
+                - option "Catalog pagination QA dish 096 · £2.75"
+                - option "Catalog pagination QA dish 097 · £2.75"
+                - option "Catalog pagination QA dish 098 · £2.75"
+                - option "Catalog pagination QA dish 099 · £2.75"
+                - option "Catalog pagination QA dish 100 · £2.75"
+                - option "Catalog pagination QA dish 101 · £2.75"
+                - option "QA Decimal Pizza · £12.50"
+                - option "QA Plain Soup · £4.25"
+                - option "QA Variable Pizza · £10.00"
+                - option "ZZ Catalog pagination last dish · £2.75"
+                - option "ZZ Pagination required extra dish · £12.50"
+                - option "Check availability before creating the order." [selected]
+              - generic [ref=f7e125]:
+                - article [ref=f7e126]:
+                  - generic [ref=f7e128]:
+                    - strong [ref=f7e129]: "#204"
+                    - generic [ref=f7e130]:
+                      - generic [aria-hidden] [ref=f7e131]: 
+                      - text: Delivery
+                    - generic [ref=f7e132]:
+                      - generic [aria-hidden] [ref=f7e133]: 
+                      - generic [ref=f7e134]: 14 min left
+                  - heading [level=2] [ref=f7e135]:
+                    - button "QA Tax" [ref=f7e136] [cursor=pointer]
+                  - generic [ref=f7e137]:
+                    - generic [ref=f7e138]:
+                      - generic [ref=f7e139]: Order time
+                      - strong [ref=f7e140]: Nov 13, 10:12 am
+                    - generic [ref=f7e141]:
+                      - generic [ref=f7e142]: Service time
+                      - strong [ref=f7e143]: Nov 13, 10:30 am
+                  - generic [ref=f7e144]: New
+                  - list [ref=f7e147]:
+                    - listitem [ref=f7e148]:
+                      - generic [ref=f7e149]: "2"
+                      - generic [ref=f7e150]:
+                        - text: QA Decimal Pizza
+                        - generic [ref=f7e151]: "QA Decimal Extras: Extra cheese"
+                  - generic [ref=f7e152]:
+                    - generic [ref=f7e153]: "+442079460123"
+                    - strong [ref=f7e154]: £33.90
+                  - button "Accept order" [ref=f7e156] [cursor=pointer]:
+                    - generic [aria-hidden] [ref=f7e157]: 
+                    - text: Accept order
+                - article [ref=f7e158]:
+                  - generic [ref=f7e160]:
+                    - strong [ref=f7e161]: "#201"
+                    - generic [ref=f7e162]:
+                      - generic [aria-hidden] [ref=f7e163]: 
+                      - text: Dine-in · Table QA-12
+                    - generic [ref=f7e164]:
+                      - generic [aria-hidden] [ref=f7e165]: 
+                      - generic [ref=f7e166]: 14 min left
+                  - heading [level=2] [ref=f7e167]:
+                    - button "QA Table" [ref=f7e168] [cursor=pointer]
+                  - generic [ref=f7e169]:
+                    - generic [ref=f7e170]:
+                      - generic [ref=f7e171]: Order time
+                      - strong [ref=f7e172]: Nov 13, 10:10 am
+                    - generic [ref=f7e173]:
+                      - generic [ref=f7e174]: Service time
+                      - strong [ref=f7e175]: Nov 13, 10:30 am
+                  - generic [ref=f7e176]: New
+                  - list [ref=f7e179]:
+                    - listitem [ref=f7e180]:
+                      - generic [ref=f7e181]: "1"
+                      - generic [ref=f7e182]: QA Plain Soup
+                  - generic [ref=f7e183]:
+                    - generic [ref=f7e184]: "+442079460123"
+                    - strong [ref=f7e185]: £4.25
+                  - button "Accept order" [ref=f7e187] [cursor=pointer]:
+                    - generic [aria-hidden] [ref=f7e188]: 
+                    - text: Accept order
+                - article [ref=f7e189]:
+                  - generic [ref=f7e191]:
+                    - strong [ref=f7e192]: "#200"
+                    - generic [ref=f7e193]:
+                      - generic [aria-hidden] [ref=f7e194]: 
+                      - text: Delivery
+                    - generic [ref=f7e195]:
+                      - generic [aria-hidden] [ref=f7e196]: 
+                      - generic [ref=f7e197]: 2h 59m left
+                  - heading [level=2] [ref=f7e198]:
+                    - button "Native Delivery QA" [ref=f7e199] [cursor=pointer]
+                  - generic [ref=f7e200]:
+                    - generic [ref=f7e201]:
+                      - generic [ref=f7e202]: Order time
+                      - strong [ref=f7e203]: Nov 13, 10:09 am
+                    - generic [ref=f7e204]:
+                      - generic [ref=f7e205]: Service time
+                      - strong [ref=f7e206]: Nov 13, 1:15 pm
+                  - generic [ref=f7e207]: New
+                  - list [ref=f7e210]:
+                    - listitem [ref=f7e211]:
+                      - generic [ref=f7e212]: "1"
+                      - generic [ref=f7e213]: QA Plain Soup
+                  - generic [ref=f7e214]:
+                    - generic [ref=f7e215]: "07700900123"
+                    - strong [ref=f7e216]: £7.75
+                  - button "Accept order" [ref=f7e218] [cursor=pointer]:
+                    - generic [aria-hidden] [ref=f7e219]: 
+                    - text: Accept order
+                - article [ref=f7e220]:
+                  - generic [ref=f7e222]:
+                    - strong [ref=f7e223]: "#199"
+                    - generic [ref=f7e224]:
+                      - generic [aria-hidden] [ref=f7e225]: 
+                      - text: Delivery
+                    - generic [ref=f7e226]:
+                      - generic [aria-hidden] [ref=f7e227]: 
+                      - generic [ref=f7e228]: 26h 14m left
+                  - heading [level=2] [ref=f7e229]:
+                    - button "QA Delivery" [ref=f7e230] [cursor=pointer]
+                  - generic [ref=f7e231]:
+                    - generic [ref=f7e232]:
+                      - generic [ref=f7e233]: Order time
+                      - strong [ref=f7e234]: Nov 13, 10:07 am
+                    - generic [ref=f7e235]:
+                      - generic [ref=f7e236]: Service time
+                      - strong [ref=f7e237]: Nov 14, 12:30 pm
+                  - generic [ref=f7e238]: New
+                  - list [ref=f7e241]:
+                    - listitem [ref=f7e242]:
+                      - generic [ref=f7e243]: "1"
+                      - generic [ref=f7e244]:
+                        - text: QA Variable Pizza - Large
+                        - generic [ref=f7e245]: "QA Decimal Extras: Extra cheese"
+                  - paragraph [ref=f7e246]:
+                    - generic [aria-hidden] [ref=f7e247]: 
+                    - generic [ref=f7e248]: "Delivery QA: ring once, extra cheese"
+                  - generic [ref=f7e249]:
+                    - generic [ref=f7e250]: "+442079460123"
+                    - strong [ref=f7e251]: £19.00
+                  - button "Accept order" [ref=f7e253] [cursor=pointer]:
+                    - generic [aria-hidden] [ref=f7e254]: 
+                    - text: Accept order
+                - article [ref=f7e255]:
+                  - generic [ref=f7e257]:
+                    - strong [ref=f7e258]: "#198"
+                    - generic [ref=f7e259]:
+                      - generic [aria-hidden] [ref=f7e260]: 
+                      - text: Pickup
+                    - generic [ref=f7e261]:
+                      - generic [aria-hidden] [ref=f7e262]: 
+                      - generic [ref=f7e263]: 2h 29m left
+                  - heading [level=2] [ref=f7e264]:
+                    - button "Native Pickup QA" [ref=f7e265] [cursor=pointer]
+                  - generic [ref=f7e266]:
+                    - generic [ref=f7e267]:
+                      - generic [ref=f7e268]: Order time
+                      - strong [ref=f7e269]: Nov 13, 10:07 am
+                    - generic [ref=f7e270]:
+                      - generic [ref=f7e271]: Service time
+                      - strong [ref=f7e272]: Nov 13, 12:45 pm
+                  - generic [ref=f7e273]: New
+                  - list [ref=f7e276]:
+                    - listitem [ref=f7e277]:
+                      - generic [ref=f7e278]: "1"
+                      - generic [ref=f7e279]: QA Plain Soup
+                  - generic [ref=f7e280]:
+                    - generic [ref=f7e281]: "07700900123"
+                    - strong [ref=f7e282]: £4.25
+                  - button "Accept order" [ref=f7e284] [cursor=pointer]:
+                    - generic [aria-hidden] [ref=f7e285]: 
+                    - text: Accept order
+                - article [ref=f7e286]:
+                  - generic [ref=f7e288]:
+                    - strong [ref=f7e289]: "#93"
+                    - generic [ref=f7e290]:
+                      - generic [aria-hidden] [ref=f7e291]: 
+                      - text: Pickup
+                    - generic [ref=f7e292]:
+                      - generic [aria-hidden] [ref=f7e293]: 
+                      - generic [ref=f7e294]: 1 min late
+                  - heading [level=2] [ref=f7e295]:
+                    - button "QA Pickup" [ref=f7e296] [cursor=pointer]
+                  - generic [ref=f7e297]:
+                    - generic [ref=f7e298]:
+                      - generic [ref=f7e299]: Order time
+                      - strong [ref=f7e300]: Nov 13, 10:01 am
+                    - generic [ref=f7e301]:
+                      - generic [ref=f7e302]: Service time
+                      - strong [ref=f7e303]: Nov 13, 10:15 am
+                  - generic [ref=f7e304]: New
+                  - list [ref=f7e307]:
+                    - listitem [ref=f7e308]:
+                      - generic [ref=f7e309]: "1"
+                      - generic [ref=f7e310]:
+                        - text: QA Decimal Pizza
+                        - generic [ref=f7e311]: "QA Decimal Extras: Extra cheese"
+                  - paragraph [ref=f7e312]:
+                    - generic [aria-hidden] [ref=f7e313]: 
+                    - generic [ref=f7e314]: Local end-to-end pickup test
+                  - generic [ref=f7e315]:
+                    - generic [ref=f7e316]: "+442079460123"
+                    - strong [ref=f7e317]: £13.75
+                  - button "Accept order" [ref=f7e319] [cursor=pointer]:
+                    - generic [aria-hidden] [ref=f7e320]: 
+                    - text: Accept order
+  - 'dialog "Order #93" [active] [ref=f7e325]':
+    - generic [ref=f7e326]:
+      - generic [ref=f7e327]: "Order #93"
+      - button "Close" [ref=f7e328] [cursor=pointer]:
+        - generic [aria-hidden] [ref=f7e329]: 
+    - generic [ref=f7e330]:
+      - generic [ref=f7e331]:
+        - heading "QA Pickup" [level=2] [ref=f7e332]
+        - paragraph [ref=f7e333]: Pickup · Order time Nov 13, 10:01 am · Service time Nov 13, 10:15 am · +442079460123
+      - generic [ref=f7e334]: New
+      - generic [ref=f7e337]:
+        - paragraph [ref=f7e338]: Workflow
+        - generic [ref=f7e339]:
+          - generic [ref=f7e340]:
+            - generic [aria-hidden] [ref=f7e341]: 
+            - text: New
+          - generic [ref=f7e342]:
+            - generic [aria-hidden] [ref=f7e343]: 
+            - text: Accepted
+          - generic [ref=f7e344]:
+            - generic [aria-hidden] [ref=f7e345]: 
+            - text: Preparing
+          - generic [ref=f7e346]:
+            - generic [aria-hidden] [ref=f7e347]: 
+            - text: Ready
+      - generic [ref=f7e348]:
+        - paragraph [ref=f7e349]: Items
+        - generic [ref=f7e351]:
+          - generic [ref=f7e352]: "1"
+          - generic [ref=f7e353]:
+            - text: QA Decimal Pizza
+            - generic [ref=f7e354]: "QA Decimal Extras: Extra cheese"
+          - generic [ref=f7e355]: £13.75
+      - generic [ref=f7e356]:
+        - paragraph [ref=f7e357]: Kitchen note
+        - paragraph [ref=f7e358]: Local end-to-end pickup test
+      - generic [ref=f7e359]:
+        - paragraph [ref=f7e360]: Totals
+        - generic [ref=f7e361]:
+          - generic [ref=f7e362]:
+            - generic [ref=f7e363]: Subtotal
+            - generic [ref=f7e364]: £13.75
+          - generic [ref=f7e365]:
+            - generic [ref=f7e366]: Tax
+            - generic [ref=f7e367]: £0.00
+          - generic [ref=f7e368]:
+            - strong [ref=f7e369]: Total
+            - strong [ref=f7e370]: £13.75
+      - generic [ref=f7e371]:
+        - paragraph [ref=f7e372]: Billing address
+        - paragraph [ref=f7e373]: QA Pickup10 Test StreetLondonSW1A 1AA
+      - generic [ref=f7e374]:
+        - paragraph [ref=f7e375]: History
+        - list [ref=f7e376]:
+          - listitem [ref=f7e377]:
+            - generic [ref=f7e378]: New
+            - time [ref=f7e379]: 10:01 AM
+      - generic [ref=f7e380]:
+        - button "Accept order" [ref=f7e381] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f7e382]: 
+          - text: Accept order
+        - button "Print ticket" [ref=f7e383] [cursor=pointer]:
+          - generic [aria-hidden] [ref=f7e384]: 

@@ -49,6 +49,7 @@
     payment: '',
     coupon: '', couponMsg: '', couponOk: false,
     fields: { email: '', name: '', phone: '', address: '', city: '', pin: '', state: '' },
+    edited: {},            // customer edits, including cleared fields, take precedence over late prefill
     note: '',
     touched: false,        // a place-order attempt shows every field's problem
     seen: {},              // fields left with something typed show theirs
@@ -165,10 +166,12 @@
     if (!CHECKOUT) { data.menu_url = window.location.href; data.template = root.dataset.template || ''; }
     return { namespace: 'wowrestro', data: data };
   }
-  function syncMode() {
-    return api('cart/extensions', 'POST', syncData())
+  function syncMode(required, handoff) {
+    var payload = syncData();
+    if (handoff) payload.data.checkout_handoff = { note: S.note.trim(), status_updates: !!S.statusOptIn };
+    return api('cart/extensions', 'POST', payload)
       .then(function (d) { cart = d; render(); })
-      .catch(function () {});
+      .catch(function (error) { if (required === true) throw error; });
   }
 
   function refreshQuote() {
@@ -1112,7 +1115,7 @@
 
   // Otherwise start from what WooCommerce already knows: a signed-in customer's account,
   // or the last order in this session. A pickup order's address is the store's, so skip that.
-  // Only empty fields: the cart can arrive after the customer has started typing.
+  // Only untouched empty fields: a customer may clear a field before the cart arrives.
   function prefill() {
     var b = cart.billing_address || {}, a = cart.shipping_address || {}, store = CFG.store || {};
     var known = {
@@ -1123,7 +1126,7 @@
     if (a.address_1 && a.address_1 !== store.address_1 && (!a.country || a.country === CFG.country)) {
       known.address = a.address_1; known.city = a.city; known.state = a.state; known.pin = a.postcode;
     }
-    Object.keys(known).forEach(function (k) { if (!String(S.fields[k] || '').trim() && known[k]) S.fields[k] = known[k]; });
+    Object.keys(known).forEach(function (k) { if (!S.edited[k] && !String(S.fields[k] || '').trim() && known[k]) S.fields[k] = known[k]; });
   }
 
   /* ---------------- item modal ---------------- */
@@ -1361,8 +1364,9 @@
       // The checkout is WooCommerce's checkout page. The session gets this page's choices first.
       if (!cartCount() || t.getAttribute('aria-busy')) return;
       t.setAttribute('aria-busy', 'true');
-      return api('cart/extensions', 'POST', syncData()).catch(function () {})
-        .then(function () { window.location.href = CFG.checkoutUrl; });
+      return api('cart/extensions', 'POST', syncData())
+        .then(function () { window.location.href = CFG.checkoutUrl; })
+        .catch(function (error) { t.removeAttribute('aria-busy'); fail(error); });
     }
     if (d.svc) {
       if (S.service === d.svc) return;
@@ -1442,6 +1446,7 @@
     if (!t.dataset || !root.contains(t)) return;
     if (t.dataset.field === 'state') {
       S.fields.state = t.value;
+      S.edited.state = true;
       S.seen.state = true;
       delete S.serverErrors.state;
       saveDraft();
@@ -1489,6 +1494,7 @@
     if (t.dataset.field) {
       var key = t.dataset.field;
       S.fields[key] = t.value;
+      S.edited[key] = true;
       delete S.serverErrors[key];
       // Typing must not rebuild the form; a message already showing follows along.
       patchField(key);
@@ -1540,11 +1546,17 @@
 
     // Card gateways need WooCommerce's own payment fields: its standard checkout form, same page.
     if (needsWooCheckout(S.payment)) {
-      S.busy = true;
+      S.busy = true; S.error = '';
       render();
-      syncMode().then(function () {
+      var details = checkoutData();
+      api('cart/update-customer', 'POST', { billing_address: details.billing_address, shipping_address: details.shipping_address })
+        .then(function () { return syncMode(true, true); })
+        .then(function () {
+          // PUT updates the checkout draft/session; only the native payment form may submit it.
+          return api('checkout', 'PUT', Object.assign({}, details, { order_notes: details.customer_note }));
+        }).then(function () {
         window.location.href = CFG.checkoutUrl + (CFG.checkoutUrl.indexOf('?') === -1 ? '?' : '&') + 'wowrestro_gateway=' + encodeURIComponent(S.payment);
-      });
+      }).catch(fail);
       return;
     }
 
@@ -1552,10 +1564,10 @@
     render();
     // WooCommerce checks the cart against the session's mode and time before it reads
     // the order, so a pickup switch still in flight would be billed as a delivery.
-    syncMode().then(submitOrder);
+    syncMode(true).then(submitOrder).catch(fail);
   }
 
-  function submitOrder() {
+  function checkoutData() {
     var f = S.fields;
     var parts = f.name.trim().split(/\s+/);
     var store = CFG.store || {};
@@ -1580,7 +1592,7 @@
     };
     var note = S.note.trim();
 
-    api('checkout', 'POST', {
+    return {
       billing_address: address,
       shipping_address: address,
       payment_method: S.payment,
@@ -1592,8 +1604,12 @@
         'wowrestro/requested-time': S.slot || '',
         'wowrestro/status-updates': !!S.statusOptIn
       },
-      extensions: {}
-    }).then(function (res) {
+      extensions: { wowrestro: { fulfillment_mode: S.service } }
+    };
+  }
+
+  function submitOrder() {
+    api('checkout', 'POST', checkoutData()).then(function (res) {
       // WooCommerce's order-received page is the confirmation; the button stays busy until it loads.
       try { sessionStorage.removeItem(DRAFT); } catch (e) {}
       window.location.href = (res.payment_result && res.payment_result.redirect_url) || CFG.menuUrl || '/';
@@ -1622,19 +1638,32 @@
   if (!CHECKOUT) {
     // A menu kept to one category shows that category's dishes, and its sub-categories as the tabs.
     var inCat = CFG.category ? '&category=' + encodeURIComponent(CFG.category) : '';
-    api('products?per_page=100' + inCat).then(function (list) {
-      products = (list || []).filter(function (p) { return p.is_purchasable; }).map(named);
-      render();
-    }).catch(function () {});
-
-    api('products/categories?per_page=100').then(function (list) {
-      list = list || [];
+    function catalogPages(path, page) {
+      page = page || 1;
+      return fetch(apiUrl(path + '&page=' + page), { credentials: 'same-origin' }).then(function (res) {
+        return res.json().then(function (list) {
+          if (!res.ok) throw new Error(errorText(list, res.status));
+          var totalPages = Number(res.headers.get('X-WP-TotalPages') || 1);
+          return page < totalPages ? catalogPages(path, page + 1).then(function (next) { return list.concat(next); }) : list;
+        });
+      });
+    }
+    Promise.all([
+      catalogPages('products?per_page=100&catalog_visibility=catalog' + inCat),
+      catalogPages('products/categories?per_page=100').catch(function () { return []; })
+    ]).then(function (data) {
+      products = (data[0] || []).filter(function (p) { return p.is_purchasable; }).map(named);
+      var list = data[1] || [];
       var top = CFG.category ? list.filter(function (c) { return c.slug === CFG.category; })[0] : null;
-      cats = list.filter(function (c) { return c.count > 0 && (!CFG.category || (top && c.parent === top.id)); }).map(named);
+      cats = list.filter(function (c) { return !CFG.category || (top && c.parent === top.id); }).map(function (c) {
+        // Store category counts include hidden and unpurchasable products.
+        c.count = products.filter(function (p) { return p.categories.some(function (category) { return category.id === c.id; }); }).length;
+        return named(c);
+      }).filter(function (c) { return c.count > 0; });
       render();
     }).catch(function () {});
 
-    api('products?per_page=1&orderby=popularity' + inCat).then(function (list) {
+    api('products?per_page=1&orderby=popularity&catalog_visibility=catalog' + inCat).then(function (list) {
       popular = (list || [])[0] ? named(list[0]) : null;
       render();
     }).catch(function () {});

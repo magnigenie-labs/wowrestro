@@ -1,0 +1,38 @@
+// Run after card-handoff-browser.js. Inject one server failure, not a payment result.
+async (page) => {
+  const origin = new URL(page.url()).origin;
+  if (!['127.0.0.1', 'localhost'].includes(new URL(origin).hostname)) throw new Error('Local QA only.');
+  const results = [];
+  for (const card of [true, false]) {
+    await page.goto(origin + '/checkout/', { waitUntil: 'domcontentloaded' });
+    await page.getByRole('button', { name: card ? 'QA card handoff probe (no payments)' : 'Cash on delivery Pay on collection or delivery.', exact: true }).click();
+    const requests = [];
+    const record = request => { if (/\/wc\/store\/v1\/checkout(?:\?|$)/.test(request.url())) requests.push(request.method()); };
+    page.on('request', record);
+    const pattern = /\/wc\/store\/v1\/cart\/extensions(?:\?|$)/;
+    await page.route(pattern, route => route.request().method() === 'POST'
+      ? route.fulfill({ status: 503, contentType: 'application/json', body: JSON.stringify({ code: 'qa_sync_failure', message: 'QA mode sync rejected' }) })
+      : route.continue());
+    await page.getByRole('button', { name: /Place order ·/ }).click();
+    await page.getByRole('alert').filter({ hasText: 'QA mode sync rejected' }).waitFor();
+    if (page.url() !== origin + '/checkout/') throw new Error('Failed sync redirected the customer.');
+    if (requests.length) throw new Error('Failed sync reached checkout submission/draft update.');
+    if (await page.getByRole('button', { name: /Place order ·/ }).isDisabled()) throw new Error('Failed sync left checkout stuck busy.');
+    await page.unroute(pattern);
+    page.off('request', record);
+    results.push({ checkout: card ? 'card handoff' : 'COD', error_visible: true, no_redirect: true, no_checkout_request: true, retry_enabled: true });
+  }
+  await page.goto(origin + '/qa-menu/', { waitUntil: 'domcontentloaded' });
+  const pattern = /\/wc\/store\/v1\/cart\/extensions(?:\?|$)/;
+  await page.getByRole('button', { name: /Checkout ·/ }).waitFor();
+  await page.route(pattern, route => route.request().method() === 'POST'
+    ? route.fulfill({ status: 503, contentType: 'application/json', body: JSON.stringify({ code: 'qa_sync_failure', message: 'QA mode sync rejected' }) })
+    : route.continue());
+  await page.getByRole('button', { name: /Checkout ·/ }).click();
+  await page.locator('aside .oe-error').filter({ hasText: 'QA mode sync rejected' }).waitFor();
+  if (page.url() !== origin + '/qa-menu/') throw new Error('Menu checkout redirected after failed state sync.');
+  if (await page.getByRole('button', { name: /Checkout ·/ }).getAttribute('aria-busy')) throw new Error('Menu checkout retry remains busy.');
+  await page.unroute(pattern);
+  results.push({ checkout: 'menu handoff', error_visible: true, no_redirect: true, retry_enabled: true });
+  return results;
+}

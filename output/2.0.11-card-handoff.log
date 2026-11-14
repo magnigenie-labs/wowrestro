@@ -1,0 +1,13 @@
+Success: 10 card handoff session checks passed.
+[
+    "Classic notes retain apostrophes and newlines while removing HTML",
+    "Classic opt-in retains true",
+    "Adapter does not override native contact handling",
+    "Existing checkout field filters keep precedence",
+    "Cleared notes remain empty",
+    "Explicit false opt-in is not restored to true",
+    "Malformed note data is safely ignored",
+    "String false does not accidentally opt in",
+    "Clearing the cart removes the handoff note default",
+    "Clearing the cart removes the handoff preference"
+]

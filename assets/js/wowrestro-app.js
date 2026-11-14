@@ -136,9 +136,7 @@
 			return request.then( function ( response ) {
 				return response.json().catch( function () { return {}; } ).then( function ( payload ) {
 					if ( ! response.ok ) {
-						var error = new Error( payload.message || ( 'HTTP ' + response.status ) );
-						error.data = payload.data || {};
-						throw error;
+						throw new Error( payload.message || ( 'HTTP ' + response.status ) );
 					}
 					return payload;
 				} );
@@ -330,6 +328,27 @@
 			}
 		},
 
+		/** Wrap measured card text, including long words, without dropping the brand name. */
+		qrTextLines: function ( context, value, width ) {
+			var lines = [];
+			var line = '';
+			String( value ).trim().split( /\s+/ ).forEach( function ( word ) {
+				if ( line && context.measureText( line + ' ' + word ).width <= width ) {
+					line += ' ' + word;
+					return;
+				}
+				if ( line ) { lines.push( line ); line = ''; }
+				Array.from( word ).forEach( function ( character ) {
+					if ( line && context.measureText( line + character ).width > width ) {
+						lines.push( line ); line = '';
+					}
+					line += character;
+				} );
+			} );
+			if ( line ) { lines.push( line ); }
+			return lines;
+		},
+
 		downloadQr: function ( record ) {
 			var scale = 256 === Number( record.size ) ? 1 : ( 512 === Number( record.size ) ? 1.5 : 0.75 );
 			var qr = WR.qrCanvas( record.url, 420 * scale );
@@ -338,7 +357,7 @@
 			}
 			var backgroundUrl = record.backgroundUrl || appAssets.qrBackground || '';
 			var brandLogoUrl = restaurantProfile.logo_url || appAssets.brandLogo || appAssets.mark || '';
-			var brandLabel = String( restaurantProfile.name || WR.boot.siteName || 'Restaurant' ).slice( 0, 18 );
+			var brandLabel = String( restaurantProfile.name || WR.boot.siteName || 'Restaurant' );
 			return Promise.all( [ WR.loadImage( backgroundUrl ), WR.loadImage( brandLogoUrl ) ] ).then( function ( images ) {
 				var card = document.createElement( 'canvas' );
 				var name = String( record.name || 'Table' ).slice( 0, 32 ).toUpperCase();
@@ -351,14 +370,17 @@
 				context.fillStyle = 'rgba(3,4,28,.48)';
 				context.fillRect( 0, 0, 1200, 1800 );
 				context.fillStyle = 'rgba(255,255,255,.96)';
+				context.font = '700 16px Inter, Arial, sans-serif';
+				var brandLines = WR.qrTextLines( context, brandLabel, 136 );
 				context.beginPath();
-				context.roundRect( 72, 72, 160, 160, 36 );
+				context.roundRect( 72, 72, 160, Math.max( 160, 120 + brandLines.length * 20 ), 36 );
 				context.fill();
 				WR.drawImageContain( context, images[ 1 ], 92, 85, 120, 90 );
 				context.fillStyle = '#17172a';
 				context.textAlign = 'center';
-				context.font = '700 18px Inter, Arial, sans-serif';
-				context.fillText( brandLabel, 152, 207 );
+				brandLines.forEach( function ( line, index ) {
+					context.fillText( line, 152, ( 1 === brandLines.length ? 207 : 194 ) + index * 20 );
+				} );
 				context.fillStyle = 'rgba(7,8,31,.78)';
 				context.strokeStyle = 'rgba(255,255,255,.32)';
 				context.lineWidth = 2;
@@ -720,7 +742,15 @@
 	      custom_tip: enabled('custom_tips'), tips_taxable: enabled('tips_taxable'), asap: enabled('asap_enabled'),
 	      email_updates: enabled('email_updates'), free_delivery: false
 	    },
-	    serviceHours: JSON.parse(JSON.stringify(storeSettings.service_hours || { pickup: {}, delivery: {} })),
+	    schedule: {
+	      Monday: !!(storeSettings.service_hours && storeSettings.service_hours.pickup && storeSettings.service_hours.pickup[1] && storeSettings.service_hours.pickup[1].enabled === 'yes'),
+	      Tuesday: !!(storeSettings.service_hours && storeSettings.service_hours.pickup && storeSettings.service_hours.pickup[2] && storeSettings.service_hours.pickup[2].enabled === 'yes'),
+	      Wednesday: !!(storeSettings.service_hours && storeSettings.service_hours.pickup && storeSettings.service_hours.pickup[3] && storeSettings.service_hours.pickup[3].enabled === 'yes'),
+	      Thursday: !!(storeSettings.service_hours && storeSettings.service_hours.pickup && storeSettings.service_hours.pickup[4] && storeSettings.service_hours.pickup[4].enabled === 'yes'),
+	      Friday: !!(storeSettings.service_hours && storeSettings.service_hours.pickup && storeSettings.service_hours.pickup[5] && storeSettings.service_hours.pickup[5].enabled === 'yes'),
+	      Saturday: !!(storeSettings.service_hours && storeSettings.service_hours.pickup && storeSettings.service_hours.pickup[6] && storeSettings.service_hours.pickup[6].enabled === 'yes'),
+	      Sunday: !!(storeSettings.service_hours && storeSettings.service_hours.pickup && storeSettings.service_hours.pickup[7] && storeSettings.service_hours.pickup[7].enabled === 'yes')
+	    },
 	    integrations: { mailchimp: true, fluentcrm: false, zapier: true, pabbly: false, zohoflow: false, mailpoet: false },
 	    values: {
 	      rest_name: restaurantProfile.name || '', rest_logo: { id: Number(restaurantProfile.logo_id || 0), url: restaurantProfile.logo_url || appAssets.brandLogo || appAssets.mark || '' }, rest_email: restaurantProfile.email || '', rest_phone: restaurantProfile.phone || '',
@@ -728,11 +758,11 @@
 	      rest_city: restaurantProfile.city || '', rest_state: restaurantProfile.state || '', rest_postcode: restaurantProfile.postcode || '', rest_country: restaurantProfile.country || '',
 	      prep_time: String(storeSettings.prep_minutes || 30), slot_interval: String(storeSettings.slot_interval || 15),
 	      slot_capacity: String(storeSettings.slot_capacity || 8), hold_minutes: String(storeSettings.hold_minutes || 10),
-	      preorder_days: String(storeSettings.preorder_days === undefined ? 7 : storeSettings.preorder_days), delivery_lead: String(storeSettings.delivery_lead_minutes === undefined ? 15 : storeSettings.delivery_lead_minutes),
+	      preorder_days: String(storeSettings.preorder_days || 7), delivery_lead: String(storeSettings.delivery_lead_minutes || 15),
 	      tip_presets: storeSettings.tip_presets || '10,15,20', menu_per_page: String(storeSettings.menu_page_size || 30),
 	      menu_template: String(storeSettings.menu_template || 1), menu_layout: storeSettings.menu_layout || 'tabs',
 	      dietary_attribute: storeSettings.dietary_attribute || 'pa_dietary', allergen_attribute: storeSettings.allergen_attribute || 'pa_allergens',
-	      late_grace: String(storeSettings.late_grace_minutes === undefined ? 5 : storeSettings.late_grace_minutes), date_overrides: storeSettings.date_overrides || '',
+	      late_grace: String(storeSettings.late_grace_minutes || 5), date_overrides: storeSettings.date_overrides || '',
 	      res_advance_minutes: String(reservationSettings.advance_minutes === undefined ? 30 : reservationSettings.advance_minutes),
 	      res_future_days: String(reservationSettings.future_days || 730), res_default_status: reservationSettings.default_status || 'pending', res_min_guests: String(reservationSettings.min_guests || 1),
 	      res_max_guests: String(reservationSettings.max_guests || 100), res_seat_capacity: String(reservationSettings.seat_capacity || 100),
@@ -827,26 +857,33 @@
 	    }, {});
 	  }
 	  saveSettings() {
-	    if (!this.validateFields()) return;
 	    const st = this.state;
-	    const profile = {
-	      name: this.val('rest_name'), logo_id: Number((this.val('rest_logo', { id: 0 }) || {}).id || 0), email: this.val('rest_email'), phone: this.val('rest_phone'),
-	      address_1: this.val('rest_address_1'), address_2: this.val('rest_address_2'), city: this.val('rest_city'),
-	      state: this.val('rest_state'), postcode: this.val('rest_postcode'), country: this.val('rest_country')
-	    };
-	    const profileChanged = Object.keys(profile).some(key => String(profile[key] || '') !== String(restaurantProfile[key] || ''));
 	    const email = String(this.val('rest_email', '')).trim();
 	    const phone = String(this.val('rest_phone', '')).trim();
 	    const digits = phone.replace(/\D/g, '');
 	    const errors = {};
-	    if (profileChanged && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.rest_email = 'Enter a valid contact email address.';
-	    if (profileChanged && (!/^\+?[0-9\s().-]+$/.test(phone) || digits.length < 7 || digits.length > 15)) errors.rest_phone = 'Enter a valid phone number containing 7 to 15 digits.';
+	    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.rest_email = 'Enter a valid contact email address.';
+	    if (!/^\+?[0-9\s().-]+$/.test(phone) || digits.length < 7 || digits.length > 15) errors.rest_phone = 'Enter a valid phone number containing 7 to 15 digits.';
 	    if (Object.keys(errors).length) {
 	      this.setState({ fieldErrors: errors });
 	      this.toast('Check the contact email and phone number');
 	      return;
 	    }
+	    const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+	    const hours = JSON.parse(JSON.stringify(storeSettings.service_hours || { pickup: {}, delivery: {} }));
+	    hours.pickup = hours.pickup || {};
+	    hours.delivery = hours.delivery || {};
+	    days.forEach((day, index) => {
+	      const key = index + 1;
+	      hours.pickup[key] = hours.pickup[key] || { enabled: 'no', periods: '11:00-22:00' };
+	      hours.pickup[key].enabled = st.schedule[day] ? 'yes' : 'no';
+	    });
 	    const body = {
+	      profile: {
+	        name: this.val('rest_name'), logo_id: Number((this.val('rest_logo', { id: 0 }) || {}).id || 0), email: this.val('rest_email'), phone: this.val('rest_phone'),
+	        address_1: this.val('rest_address_1'), address_2: this.val('rest_address_2'), city: this.val('rest_city'),
+	        state: this.val('rest_state'), postcode: this.val('rest_postcode'), country: this.val('rest_country')
+	      },
 	      settings: {
 	        pickup_enabled: this.isOn('pickup') ? 'yes' : 'no', delivery_enabled: this.isOn('delivery') ? 'yes' : 'no',
 	        asap_enabled: this.isOn('asap') ? 'yes' : 'no', prep_minutes: this.val('prep_time'),
@@ -858,7 +895,7 @@
 	        menu_template: this.val('menu_template'), menu_layout: this.val('menu_layout'),
 	        dietary_attribute: this.val('dietary_attribute'), allergen_attribute: this.val('allergen_attribute'),
 	        email_updates: this.isOn('email_updates') ? 'yes' : 'no', late_grace_minutes: this.val('late_grace'),
-	        service_hours: st.serviceHours
+	        service_hours: hours
 	      },
 	      reservations: {
 	        advance_minutes: this.val('res_advance_minutes'), future_days: this.val('res_future_days'),
@@ -872,37 +909,17 @@
 	        fields: this.reservationFieldSettings(), custom_fields: this.val('res_custom_fields', [])
 	      }
 	    };
-	    // An unchanged, incomplete profile must not block saving service hours.
-	    if (profileChanged) body.profile = profile;
-	    return WR.post('/workspace/settings', body).then(result => {
+	    WR.post('/workspace/settings', body).then(result => {
 	      appConfig = result || appConfig;
 	      storeSettings = appConfig.settings || storeSettings;
 	      restaurantProfile = appConfig.profile || restaurantProfile;
 	      reservationSettings = appConfig.reservations || reservationSettings;
 	      appAssets.brandLogo = restaurantProfile.logo_url || appAssets.mark || '';
-	      this.setState({ serviceHours: JSON.parse(JSON.stringify(storeSettings.service_hours || st.serviceHours)) });
 	      this.toast('Settings saved');
-	    }).catch(error => {
-	      const data = error.data || {};
-	      if (data.mode && data.day) {
-	        this.setState(s => ({ fieldErrors: Object.assign({}, s.fieldErrors, { ['hours_' + data.mode + '_' + data.day]: error.message }) }));
-	        requestAnimationFrame(() => {
-	          const input = document.getElementById('wr-hours-' + data.mode + '-' + data.day);
-	          if (input) input.focus();
-	        });
-	      }
-	      this.toast(error && error.message ? error.message : 'Settings could not be saved');
-	    });
+	    }).catch(error => this.toast(error && error.message ? error.message : 'Settings could not be saved'));
 	  }
 
 	  /* ---------- nav data ---------- */
-	  validateFields() {
-	    const invalid = Array.from(ROOT.querySelectorAll('input')).find(input => !input.checkValidity());
-	    if (!invalid) return true;
-	    invalid.reportValidity();
-	    invalid.focus();
-	    return false;
-	  }
 	  pro() { return WR.boot.pro === true; }
 
 	  foodOrderingItems() {
@@ -1096,11 +1113,8 @@
 	        ]}
 	      ],
 	      schedule: [
-	        { title: 'Pickup Hours', description: 'Set opening hours in the WordPress timezone. Use 24-hour times; separate split shifts with a comma, for example 11:00-14:00,17:00-22:00.', fields: [
-	          { kind: 'schedule', mode: 'pickup', span: '1 / -1' }
-	        ]},
-	        { title: 'Delivery Hours', description: 'Set delivery hours separately from pickup using the same format. Turning a day off keeps its hours for when you reopen it.', fields: [
-	          { kind: 'schedule', mode: 'delivery', span: '1 / -1' }
+	        { title: 'Restaurant Schedule', description: 'Open days for pickup. Existing split-shift times are preserved when saved.', fields: [
+	          { kind: 'schedule', span: '1 / -1' }
 	        ]},
 	        { title: 'Date Overrides', description: 'One rule per line, for example 2026-12-25 | all | closed or 2026-12-31 | pickup | 11:00-15:00.', fields: [
 	          A('date_overrides', 'Overrides and closures', '', '1 / -1')
@@ -1172,7 +1186,7 @@
 	          ] },
 	          C('res_min_guests', 'Minimum guests', '1', 'People', '', 'Smallest party size accepted.'),
 	          C('res_max_guests', 'Maximum guests', '100', 'People', '', 'Largest party size accepted in one reservation.'),
-	          Object.assign(C('res_booking_amount', 'Booking Amount', reservationSettings.booking_amount || '0', '', (settings.currency || {}).symbol || '', 'Amount charged through WooCommerce when a booking requires payment.'), { step: 'any', min: 0 }),
+	          C('res_booking_amount', 'Booking Amount', reservationSettings.booking_amount || '0', '', (settings.currency || {}).symbol || '', 'Amount charged through WooCommerce when a booking requires payment.'),
 	          C('res_seat_capacity', 'Total seat capacity', '100', 'People', '', 'Maximum guests accepted for the same time slot.'),
 	          C('res_interval', 'Reservation slot interval', '30', 'Minutes', '', 'Distance between reservation start times.'),
 	          { kind: 'toggle', key: 'res_booking_per_guest', label: 'Multiply booking amount by the total number of guests', help: 'Charge the booking amount once for each guest', span: '1 / -1' },
@@ -1239,25 +1253,22 @@
 	        hasHelp: !!f.help && f.kind !== 'toggle', help: f.help || '', value: '', placeholder: f.placeholder || '',
 	        hasError: false, error: '', border: '#a5a9be', ariaInvalid: 'false', ariaRequired: f.required ? 'true' : 'false', isRequired: !!f.required,
 	        inputType: 'text', options: [], items: [], days: [],
-	        step: f.step === undefined ? '' : f.step, min: f.min === undefined ? '' : f.min, inputMode: f.step === 'any' ? 'decimal' : (f.type === 'number' ? 'numeric' : ''),
-	        pattern: f.step === 'any' ? '(?:[0-9]+(?:[.][0-9]*)?|[.][0-9]+)' : '.*',
 	        trackBg: '#e6e6f0', knobLeft: '2px', toggleLabel: '', ariaChecked: 'false', onInput: () => {}, onToggle: () => {}, onAdd: () => {}, onClick: () => {}
 	      };
 	      if (f.kind === 'input') {
 	        const error = this.state.fieldErrors[key] || '';
 	        return Object.assign(base, {
-	          // Text preserves a trailing decimal point across the runtime's rerenders.
-	          isInput: true, inputType: f.step === 'any' ? 'text' : (f.type || 'text'), value: this.val(key, f.def),
+	          isInput: true, inputType: f.type || 'text', value: this.val(key, f.def),
 	          hasError: !!error, error, border: error ? '#dc2626' : '#a5a9be', ariaInvalid: error ? 'true' : 'false',
 	          describedBy: [f.help ? fieldId + '-help' : '', error ? fieldId + '-error' : ''].filter(Boolean).join(' '),
-	          onInput: (e) => this.setVal(key, f.step === 'any' ? e.target.value.replace(',', '.') : e.target.value)
+	          onInput: (e) => this.setVal(key, e.target.value)
 	        });
 	      }
 	      if (f.kind === 'compound') {
 	        return Object.assign(base, {
-	          isCompound: true, isInput: false, inputType: f.step === 'any' ? 'text' : (f.type || 'text'), value: this.val(key, f.def),
+	          isCompound: true, isInput: false, inputType: f.type || 'text', value: this.val(key, f.def),
 	          hasPrefix: !!f.prefix, hasSuffix: !!f.suffix, prefix: f.prefix || '', suffix: f.suffix || '',
-	          onInput: (e) => this.setVal(key, f.step === 'any' ? e.target.value.replace(',', '.') : e.target.value)
+	          onInput: (e) => this.setVal(key, e.target.value)
 	        });
 	      }
 	      if (f.kind === 'select') {
@@ -1281,12 +1292,10 @@
 	          repeaterRows: rows.map((row, rowIndex) => ({
 	            canRemove: !!f.allowEmpty || rows.length > 1,
 	            cells: columns.map(column => ({
-	              label: column.label, value: Array.isArray(row[column.key]) ? row[column.key].join(', ') : (row[column.key] === undefined ? '' : row[column.key]), placeholder: column.placeholder || '', inputType: column.step === 'any' ? 'text' : (column.type || 'text'),
-	              step: column.step === undefined ? '' : column.step, min: column.min === undefined ? '' : column.min, inputMode: column.step === 'any' ? 'decimal' : (column.type === 'number' ? 'numeric' : ''),
-	              pattern: column.step === 'any' ? '(?:[0-9]+(?:[.][0-9]*)?|[.][0-9]+)' : '.*',
+	              label: column.label, value: Array.isArray(row[column.key]) ? row[column.key].join(', ') : (row[column.key] || ''), placeholder: column.placeholder || '', inputType: column.type || 'text',
 	              isSelect: Array.isArray(column.options), isInput: !Array.isArray(column.options), options: (column.options || []).map(option => ({ value: option, label: option })),
 	              onInput: event => {
-	                const value = column.step === 'any' ? event.target.value.replace(',', '.') : event.target.value;
+	                const value = event.target.value;
 	                this._formDirty = true;
 	                this.setState(state => {
 	                  const current = state.values[key] === undefined ? (f.def || [{}]) : state.values[key];
@@ -1381,24 +1390,14 @@
 	        });
 	      }
 	      if (f.kind === 'schedule') {
-	        const mode = f.mode || 'pickup';
-	        const service = mode === 'delivery' ? 'Delivery' : 'Pickup';
 	        const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map((d, index) => {
-	          const day = index + 1;
-	          const row = (this.state.serviceHours[mode] || {})[day] || { enabled: 'no', periods: '11:00-22:00' };
-	          const on = row.enabled === 'yes';
-	          const errorKey = 'hours_' + mode + '_' + day;
-	          const error = this.state.fieldErrors[errorKey] || '';
-	          const update = patch => this.setState(s => ({ fieldErrors: Object.assign({}, s.fieldErrors, { [errorKey]: '' }), serviceHours: Object.assign({}, s.serviceHours, {
-	            [mode]: Object.assign({}, s.serviceHours[mode], { [day]: Object.assign({}, row, patch) })
-	          }) }));
+	          const on = !!this.state.schedule[d];
+	          const row = storeSettings.service_hours && storeSettings.service_hours.pickup && storeSettings.service_hours.pickup[index + 1];
 	          return {
-	            label: d, id: 'wr-hours-' + mode + '-' + day, hours: row.periods, isOpen: on, isClosed: !on,
-	            inputLabel: service + ' hours on ' + d, toggleLabel: 'Open ' + service.toLowerCase() + ' on ' + d,
-	            hasError: !!error, error, errorId: 'wr-hours-' + mode + '-' + day + '-error', ariaInvalid: error ? 'true' : 'false', describedBy: error ? 'wr-hours-' + mode + '-' + day + '-error' : '',
+	            label: d, hours: on ? ((row && row.periods) || '11:00-22:00') : 'Closed',
+	            timeColor: on ? '#414454' : '#a5a9be',
 	            trackBg: on ? '#2B4BFF' : '#e6e6f0', knobLeft: on ? '20px' : '2px', ariaChecked: on ? 'true' : 'false',
-	            onToggle: () => update({ enabled: on ? 'no' : 'yes' }),
-	            onInput: e => update({ periods: e.target.value })
+	            onToggle: () => this.setState(s => ({ schedule: Object.assign({}, s.schedule, { [d]: !s.schedule[d] }) }))
 	          };
 	        });
 	        return Object.assign(base, { isSchedule: true, isInput: false, days });
@@ -1579,7 +1578,6 @@
 	    const chip = (text, color, icon) => Object.assign({}, blank, { isChip: true, text, dot: color, bg: color + '1f', icon: icon || '', hasIcon: !!icon });
 	    const chips = (list) => Object.assign({}, blank, { isChips: true, chipsEmpty: list.length === 0, chips: list.map(c => ({ label: c.label, color: c.color, bg: c.color + '1f', icon: c.icon })) });
 	    const price = (text, sub) => Object.assign({}, blank, { isPrice: true, text, sub: sub || '', hasSale: !!sub });
-	    const hasSale = item => item.type !== 'variable' && item.salePrice !== undefined ? item.salePrice !== '' : !!item.sale;
 
 	    const widgets = [
 	      { title: 'Food Orders', tooltip: 'Displays your most recent food orders placed through your restaurant.',
@@ -1594,7 +1592,7 @@
 	        columns: [{ title: 'Food Item' }, { title: 'Category' }, { title: 'Units sold' }, { title: 'Current price' }],
 	        rows: st.items.slice().sort((a, b) => b.sold - a.sold).slice(0, 6).map(it => ({ cells: [
 	          plain(it.name, 'inherit', '500'), plain(it.category), plain(String(it.sold)),
-	          plain(this.money(hasSale(it) ? it.sale : it.price), '#101828', '500')
+	          plain(this.money(it.sale || it.price), '#101828', '500')
 	        ] })) }
 	    ];
 	    widgets.forEach(widget => {
@@ -1698,7 +1696,7 @@
 	        rows: rows.map(it => ({ cells: [
 	          avatar(it.name, it.sku + ' · ' + it.sold + ' sold', it.icon, it.color, it.imageUrl),
 	          plain(it.category),
-	          hasSale(it) ? price(this.money(it.sale), this.money(it.price)) : price(this.money(it.price)),
+	          Number(it.sale) > 0 && Number(it.sale) < Number(it.price) ? price(this.money(it.sale), this.money(it.price)) : price(this.money(it.price)),
 	          chips(it.labels.map(n => { const l = this.labelBy(n); return { label: l.name, color: l.color, icon: l.icon }; })),
 	          badge(it.stock, this.stockDot(it.stock)),
 	          badge(it.status, it.status === 'Published' ? '#00c950' : '#f0b100'),
@@ -1764,7 +1762,7 @@
 	          actions(() => this.go('/food-menu/labels/update/' + l.id, st.group), null)
 	        ] })),
 	        count: rows.length + (rows.length === 1 ? ' label' : ' labels'),
-	        emptyTitle: 'No labels yet', emptyDescription: 'Create badges like Vegan or Spicy and attach them to any item.'
+	        emptyTitle: 'No labels yet', emptyDescription: 'Create Veg or Non-Veg badges and attach them to menu items.'
 	      };
 	    } else if (route === '/food-menu/nutrition') {
 	      const rows = st.items.filter(it => !ls || it.name.toLowerCase().indexOf(ls) > -1);
@@ -1950,7 +1948,7 @@
 	            { kind: 'repeater', key: 'a_options', label: 'Options', span: '1 / -1', addLabel: 'Add option', allowEmpty: true,
 	              def: d.options, columns: [
 	                { key: 'label', label: 'Add-on name', placeholder: 'e.g. Extra cheese' },
-	                { key: 'price', label: 'Additional price', placeholder: '0.00', type: 'number', step: 'any', min: 0 }
+	                { key: 'price', label: 'Additional price', placeholder: '0.00', type: 'number' }
 	              ], help: 'Prices are added to the selected variation price.' }
 	          ]}
 	        ],
@@ -1974,10 +1972,9 @@
 	      const it = itemId ? st.items.find(x => x.id === itemId) : null;
 	      const d = {
 	        name: it ? it.name : '', sku: it ? it.sku : '', category: it ? it.category : catNames[0],
-	        price: it ? (it.regularPrice === undefined ? String(it.price) : it.regularPrice) : '',
-	        sale: it ? (it.salePrice === undefined ? (it.sale ? String(it.sale) : '') : it.salePrice) : '',
-	        stock: it ? (it.stockStatus || (it.stock === 'Out of stock' ? 'outofstock' : 'instock')) : 'instock',
-	        status: it ? (it.postStatus || (it.status === 'Draft' ? 'draft' : 'publish')) : 'publish', labels: it ? it.labels.slice() : [],
+	        price: it ? String(it.price) : '',
+	        sale: it && it.sale ? String(it.sale) : '', stock: it ? it.stock : 'In stock',
+	        status: it ? it.status : 'Published', labels: it ? it.labels.slice() : [],
 	        brand: it ? it.brand : '', crossSells: it ? (it.crossSells || []).slice() : [],
 	        image: it ? { id: it.imageId || 0, url: it.imageUrl || '' } : { id: 0, url: '' },
 	        type: it ? it.type : 'simple', variations: it ? (it.variations || []) : [],
@@ -1988,16 +1985,12 @@
 	      const productType = this.val('i_type', d.type);
 	      const showVariationSections = productType === 'variable';
 	      const showAddonSection = productType === 'variable';
-	      const stockOptions = [{ label: 'In stock', value: 'instock' }, { label: 'Out of stock', value: 'outofstock' }, { label: 'On backorder', value: 'onbackorder' }];
-	      const statusOptions = [{ label: 'Published', value: 'publish' }, { label: 'Draft', value: 'draft' }];
-	      if (!statusOptions.some(option => option.value === d.status)) statusOptions.push({ label: ({ pending: 'Pending review', private: 'Private', future: 'Scheduled' })[d.status] || it.status, value: d.status });
-	      const variationStock = v => v.stockStatus || (v.stock === 'Out of stock' ? 'outofstock' : 'instock');
 	      const variationSections = showVariationSections ? d.variations.map(v => ({
 	        title: v.name || ('Variation #' + v.id), description: 'Price, SKU and availability save directly to this WooCommerce variation.', fields: [
 	          { kind: 'input', key: 'v_sku_' + v.id, label: 'SKU', def: v.sku || '', placeholder: 'Optional' },
-	          { kind: 'input', key: 'v_price_' + v.id, label: 'Regular price', def: v.price || '', placeholder: '0.00', type: 'number', step: 'any', min: 0 },
-	          { kind: 'input', key: 'v_sale_' + v.id, label: 'Sale price', def: v.sale || '', placeholder: 'Optional', type: 'number', step: 'any', min: 0 },
-	          { kind: 'select', key: 'v_stock_' + v.id, label: 'Stock status', options: stockOptions, def: variationStock(v) }
+	          { kind: 'input', key: 'v_price_' + v.id, label: 'Regular price', def: v.price || '', placeholder: '0.00', type: 'number' },
+	          { kind: 'input', key: 'v_sale_' + v.id, label: 'Sale price', def: v.sale || '', placeholder: 'Optional', type: 'number' },
+	          { kind: 'select', key: 'v_stock_' + v.id, label: 'Stock status', options: ['In stock', 'Out of stock'], def: v.stock || 'In stock' }
 	        ]
 	      })) : [];
 	      const formSections = [
@@ -2013,13 +2006,13 @@
 	          { kind: 'textarea', key: 'i_desc', label: 'Short description', def: d.desc, placeholder: 'One or two lines shown on the menu card.', span: '1 / -1' }
 	        ])},
 	        { title: productType === 'variable' ? 'Parent Availability' : 'Pricing & Stock', description: productType === 'variable' ? 'Variation prices are managed in the sections below.' : 'Leave the sale price empty to sell at the regular price.', fields: (productType === 'variable' ? [
-	          { kind: 'select', key: 'i_stock', label: 'Parent stock status', options: stockOptions, def: d.stock },
-	          { kind: 'select', key: 'i_status', label: 'Status', options: statusOptions, def: d.status }
+	          { kind: 'select', key: 'i_stock', label: 'Parent stock status', options: ['In stock', 'Out of stock'], def: d.stock },
+	          { kind: 'select', key: 'i_status', label: 'Status', options: ['Published', 'Draft'], def: d.status }
 	        ] : [
-	          { kind: 'input', key: 'i_price', label: 'Regular price', def: d.price, placeholder: '0.00', type: 'number', step: 'any', min: 0 },
-	          { kind: 'input', key: 'i_sale', label: 'Sale price', def: d.sale, placeholder: 'Optional', type: 'number', step: 'any', min: 0 },
-	          { kind: 'select', key: 'i_stock', label: 'Stock status', options: stockOptions, def: d.stock },
-	          { kind: 'select', key: 'i_status', label: 'Status', options: statusOptions, def: d.status }
+	          { kind: 'input', key: 'i_price', label: 'Regular price', def: d.price, placeholder: '0.00', type: 'number' },
+	          { kind: 'input', key: 'i_sale', label: 'Sale price', def: d.sale, placeholder: 'Optional', type: 'number' },
+	          { kind: 'select', key: 'i_stock', label: 'Stock status', options: ['In stock', 'Out of stock'], def: d.stock },
+	          { kind: 'select', key: 'i_status', label: 'Status', options: ['Published', 'Draft'], def: d.status }
 	        ])}
 	      ];
 	      if (showVariationSections) {
@@ -2028,8 +2021,8 @@
 	          { kind: 'repeater', key: 'i_variations', label: 'Variation options', span: '1 / -1', addLabel: 'Add variation',
 	            def: [{ name: '', price: '', sale: '', sku: '' }], columns: [
 	              { key: 'name', label: 'Variation name', placeholder: 'e.g. Large' },
-	              { key: 'price', label: 'Regular price', placeholder: '0.00', type: 'number', step: 'any', min: 0 },
-	              { key: 'sale', label: 'Sale price', placeholder: 'Optional', type: 'number', step: 'any', min: 0 },
+	              { key: 'price', label: 'Regular price', placeholder: '0.00', type: 'number' },
+	              { key: 'sale', label: 'Sale price', placeholder: 'Optional', type: 'number' },
 	              { key: 'sku', label: 'SKU', placeholder: 'Optional' }
 	            ], help: 'Add one clearly named row for each size or option.' }
 	        ]});
@@ -2041,9 +2034,10 @@
 	          { kind: 'note', label: '', span: '1 / -1', value: st.modifiers.length ? 'Selected groups appear on the menu item in the order shown above.' : 'No reusable add-on groups exist yet. Save this item, then create one from Food Menu → Add-ons.' }
 	        ]});
 	      }
+	      const savingDraft = this.val('i_status', d.status) === 'Draft';
 	      formCfg = {
-	        submitLabel: itemId ? 'Update Item' : 'Publish Item',
-	        message: itemId ? 'Menu item updated' : 'Menu item published',
+	        submitLabel: savingDraft ? 'Save Draft' : (itemId ? 'Update Item' : 'Publish Item'),
+	        message: savingDraft ? 'Menu item saved as draft' : (itemId ? 'Menu item updated' : 'Menu item published'),
 	        back: '/food-menu/items', group: st.group,
 	        sections: formSections.concat([
 	          { title: 'Product Labels', description: 'Badges render on the menu card and inside the details popup.', fields: [
@@ -2056,17 +2050,19 @@
 	          ]}
 	        ]),
 	        onSubmit: () => {
+	          const name = String(this.val('i_name', d.name) || '').trim();
+	          if (!name) return Promise.reject(new Error('Enter an item name.'));
 	          const image = this.val('i_image', d.image) || { id: 0, url: '' };
 	          const newVariations = showVariationSections ? (this.val('i_variations', []) || []).filter(row => String(row.name || '').trim()) : [];
           const rec = {
 	            id: itemId,
-	            name: this.val('i_name', d.name) || 'Untitled item',
+	            name,
 	            sku: this.val('i_sku', d.sku),
 	            category: this.val('i_category', d.category),
 	            price: this.val('i_price', d.price),
 	            sale: this.val('i_sale', d.sale),
-	            stockStatus: this.val('i_stock', d.stock),
-	            postStatus: this.val('i_status', d.status),
+	            stock: this.val('i_stock', d.stock),
+	            status: this.val('i_status', d.status),
 	            brand: this.val('i_brand', d.brand),
 	            labels: this.val('i_labels', d.labels),
 	            crossSells: this.val('i_cross_sells', d.crossSells),
@@ -2076,8 +2072,8 @@
 	            variations: (itemId ? d.variations.map(v => ({
 	              id: v.id, sku: this.val('v_sku_' + v.id, v.sku || ''),
 	              price: this.val('v_price_' + v.id, v.price || ''), sale: this.val('v_sale_' + v.id, v.sale || ''),
-	              stockStatus: this.val('v_stock_' + v.id, variationStock(v))
-	            })) : []).concat(newVariations.map(row => ({ id: 0, name: String(row.name).trim(), price: row.price || '', sale: row.sale || '', sku: row.sku || '', stockStatus: 'instock' }))),
+	              stock: this.val('v_stock_' + v.id, v.stock || 'In stock')
+	            })) : []).concat(newVariations.map(row => ({ id: 0, name: String(row.name).trim(), price: row.price || '', sale: row.sale || '', sku: row.sku || '', stock: 'In stock' }))),
 	            description: this.val('i_desc', d.desc)
 	          };
 	          return WR.post('/workspace/product', rec).then(saved => this.setState(s => ({
@@ -2104,7 +2100,8 @@
 	          ]}
 	        ],
 	        onSubmit: () => {
-	          const name = this.val('c_name', d.name) || 'Untitled category';
+	          const name = String(this.val('c_name', d.name) || '').trim();
+	          if (!name) return Promise.reject(new Error('Enter a category name.'));
 	          const rec = {
 	            id: catId,
 	            name, slug: this.val('c_slug', d.slug) || this.slugify(name),
@@ -2130,7 +2127,8 @@
 	          ]}
 	        ],
 	        onSubmit: () => {
-	          const name = this.val('b_name', d.name) || 'Untitled brand';
+	          const name = String(this.val('b_name', d.name) || '').trim();
+	          if (!name) return Promise.reject(new Error('Enter a brand name.'));
 	          const rec = { id: brandId, name, slug: this.val('b_slug', d.slug) || this.slugify(name), description: this.val('b_desc', d.description) };
 	          return WR.post('/workspace/brand', rec).then(saved => this.setState(s => ({
 	            brands: brandId ? s.brands.map(x => x.id === brandId ? saved : x) : s.brands.concat([saved]),
@@ -2146,8 +2144,8 @@
 	        message: labelId ? 'Label updated' : 'Label added',
 	        back: '/food-menu/labels', group: st.group,
 	        sections: [
-	          { title: 'Product Label', description: 'Pick a colour and an icon - the badge renders on every menu card and details popup.', fields: [
-	            { kind: 'input', key: 'lb_name', label: 'Label name', def: d.name, placeholder: 'e.g. Vegan' },
+	          { title: 'Product Label', description: 'Choose Veg or Non-Veg, then customise its badge colour and icon.', fields: [
+	            { kind: 'select', key: 'lb_name', label: 'Label name', def: d.name, options: [{ label: 'Select Veg or Non-Veg', value: '' }, 'Veg', 'Non-Veg'] },
 	            { kind: 'swatch', key: 'lb_color', label: 'Badge colour', def: d.color,
 	              options: ['#2B4BFF', '#00a63e', '#e7000b', '#00B5D8', '#9333e9', '#f0b100', '#00bba7', '#1d222b'] },
 	            { kind: 'iconpick', key: 'lb_icon', label: 'Icon', def: d.icon, span: '1 / -1',
@@ -2155,9 +2153,12 @@
 	          ]}
 	        ],
 	        onSubmit: () => {
+	          const name = String(this.val('lb_name', d.name) || '').trim();
+	          if (!name) return Promise.reject(new Error('Enter a label name.'));
+	          if (!['Veg', 'Non-Veg'].includes(name)) return Promise.reject(new Error('Choose Veg or Non-Veg.'));
 	          const rec = {
 	            id: labelId,
-	            name: this.val('lb_name', d.name) || 'New label',
+	            name,
 	            color: this.val('lb_color', d.color), icon: this.val('lb_icon', d.icon)
 	          };
 	          return WR.post('/workspace/label', rec).then(saved => this.setState(s => ({
@@ -2395,8 +2396,8 @@
 	    }));
 
 	    const submitCurrentForm = () => {
-	      if (!formCfg || !this.validateFields()) return;
-	      Promise.resolve(formCfg.onSubmit ? formCfg.onSubmit() : null).then(() => {
+	      if (!formCfg) return;
+	      Promise.resolve().then(() => formCfg.onSubmit ? formCfg.onSubmit() : null).then(() => {
 	        this._formDirty = false;
 	        this.toast(formCfg.message);
 	        this.go(formCfg.back, formCfg.group);
@@ -2423,12 +2424,11 @@
 	      status: check.status === 'good' ? 'Ready' : (check.status === 'critical' ? 'Critical' : 'Needs attention')
 	    }));
 	    const diagnosticEnvironment = (diagnosticData.environment || []).map(row => ({ label: row.label || '', value: String(row.value || '') }));
-	    const hasServiceHours = Object.values(st.serviceHours).some(days => Object.values(days).some(day => day.enabled === 'yes'));
 	    const setupSteps = [
 	      { title: 'Restaurant profile', description: 'Name, contact details and address used for ordering.', ready: !!this.val('rest_name', restaurantProfile.name || ''), icon: 'ph ph-storefront', onClick: () => this.go('/settings?tab=general', 'settings') },
 	      { title: 'Menu items', description: st.items.length ? st.items.length + ' restaurant products are ready.' : 'Add at least one restaurant product.', ready: st.items.length > 0, icon: 'ph ph-hamburger', onClick: () => this.go('/food-menu/items', 'food-ordering') },
 	      { title: 'Fulfillment services', description: (st.toggles.pickup || st.toggles.delivery) ? 'Pickup or delivery is enabled.' : 'Enable pickup or delivery.', ready: st.toggles.pickup || st.toggles.delivery, icon: 'ph ph-moped', onClick: () => this.go('/settings?tab=pickup', 'food-ordering') },
-	      { title: 'Restaurant schedule', description: hasServiceHours ? 'At least one service day is open.' : 'Configure kitchen service hours.', ready: hasServiceHours, icon: 'ph ph-calendar-blank', onClick: () => this.go('/settings?tab=schedule', 'settings') },
+	      { title: 'Restaurant schedule', description: Object.values(st.schedule).some(Boolean) ? 'At least one service day is open.' : 'Configure kitchen service hours.', ready: Object.values(st.schedule).some(Boolean), icon: 'ph ph-calendar-blank', onClick: () => this.go('/settings?tab=schedule', 'settings') },
 	      { title: 'System diagnostics', description: diagnosticChecks.every(check => check.status !== 'Critical') ? 'Required platform checks are passing.' : 'A required check needs attention.', ready: diagnosticChecks.every(check => check.status !== 'Critical'), icon: 'ph ph-stethoscope', onClick: () => this.go('/diagnostics', 'settings') }
 	    ].map(step => Object.assign({}, step, {
 	      status: step.ready ? 'Complete' : 'Action needed',

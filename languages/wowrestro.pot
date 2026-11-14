@@ -2,8 +2,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WowRestro\n"
-"POT-Creation-Date: 2026-10-07 16:09+0530\n"
-"PO-Revision-Date: 2026-10-07 16:09+0530\n"
+"POT-Creation-Date: 2026-10-17 12:00+0530\n"
+"PO-Revision-Date: 2026-10-17 12:00+0530\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -80,7 +80,7 @@ msgstr ""
 #: includes/class-wowrestro-diagnostics.php:84
 #: includes/class-wowrestro-diagnostics.php:95
 #: includes/class-wowrestro-onboarding.php:60
-#: includes/class-wowrestro-plugin.php:93
+#: includes/class-wowrestro-plugin.php:95
 #: includes/class-wowrestro-products.php:141
 msgid "WowRestro"
 msgstr ""
@@ -130,7 +130,7 @@ msgstr ""
 msgid "Ordering open"
 msgstr ""
 
-#: includes/class-wowrestro-admin.php:171 includes/class-wowrestro-app.php:1683
+#: includes/class-wowrestro-admin.php:171 includes/class-wowrestro-app.php:1685
 msgid "You do not have permission to view WowRestro."
 msgstr ""
 
@@ -161,11 +161,11 @@ msgid ""
 "controlling fulfillment and kitchen workflow."
 msgstr ""
 
-#: includes/class-wowrestro-admin.php:216 includes/class-wowrestro-app.php:1287
+#: includes/class-wowrestro-admin.php:216 includes/class-wowrestro-app.php:1289
 msgid "Revenue today"
 msgstr ""
 
-#: includes/class-wowrestro-admin.php:218 includes/class-wowrestro-app.php:1292
+#: includes/class-wowrestro-admin.php:218 includes/class-wowrestro-app.php:1294
 msgid "Paid restaurant orders created today, minus refunds."
 msgstr ""
 
@@ -174,19 +174,19 @@ msgstr ""
 msgid "since yesterday"
 msgstr ""
 
-#: includes/class-wowrestro-admin.php:227 includes/class-wowrestro-app.php:1295
+#: includes/class-wowrestro-admin.php:227 includes/class-wowrestro-app.php:1297
 msgid "Orders today"
 msgstr ""
 
-#: includes/class-wowrestro-admin.php:229 includes/class-wowrestro-app.php:1300
+#: includes/class-wowrestro-admin.php:229 includes/class-wowrestro-app.php:1302
 msgid "Restaurant orders created today, paid or not."
 msgstr ""
 
-#: includes/class-wowrestro-admin.php:238 includes/class-wowrestro-app.php:1303
+#: includes/class-wowrestro-admin.php:238 includes/class-wowrestro-app.php:1305
 msgid "Active orders"
 msgstr ""
 
-#: includes/class-wowrestro-admin.php:240 includes/class-wowrestro-app.php:1308
+#: includes/class-wowrestro-admin.php:240 includes/class-wowrestro-app.php:1310
 msgid "Orders waiting or in progress in the kitchen queue."
 msgstr ""
 
@@ -211,11 +211,11 @@ msgid "payment remains in WooCommerce"
 msgstr ""
 
 #: includes/class-wowrestro-admin.php:262
-#: includes/class-wowrestro-admin.php:791 includes/class-wowrestro-app.php:1311
+#: includes/class-wowrestro-admin.php:791 includes/class-wowrestro-app.php:1313
 msgid "Menu items"
 msgstr ""
 
-#: includes/class-wowrestro-admin.php:264 includes/class-wowrestro-app.php:1316
+#: includes/class-wowrestro-admin.php:264 includes/class-wowrestro-app.php:1318
 msgid "WooCommerce products marked as restaurant menu items."
 msgstr ""
 
@@ -487,8 +487,7 @@ msgstr ""
 
 #: includes/class-wowrestro-admin.php:870
 #: includes/class-wowrestro-order-board.php:163
-#: includes/class-wowrestro-privacy.php:47
-#: includes/class-wowrestro-storefront.php:499
+#: includes/class-wowrestro-privacy.php:47 includes/views/order-received.php:83
 msgid "Order"
 msgstr ""
 
@@ -504,18 +503,19 @@ msgstr ""
 
 #: includes/class-wowrestro-admin.php:873
 #: includes/class-wowrestro-order-board.php:262
-#: includes/class-wowrestro-reservations.php:444
-#: includes/views/app-template.php:674
+#: includes/class-wowrestro-reservations.php:445
+#: includes/views/app-template.php:674 includes/views/order-received.php:86
 msgid "Payment"
 msgstr ""
 
 #: includes/class-wowrestro-admin.php:874
 #: includes/class-wowrestro-order-board.php:173
+#: includes/views/order-received.php:85 includes/views/order-received.php:127
 msgid "Total"
 msgstr ""
 
-#: includes/class-wowrestro-admin.php:889 includes/class-wowrestro-app.php:1379
-#: includes/class-wowrestro-checkout.php:543
+#: includes/class-wowrestro-admin.php:889 includes/class-wowrestro-app.php:1381
+#: includes/class-wowrestro-checkout.php:548
 #: includes/class-wowrestro-onboarding.php:318
 #: includes/class-wowrestro-order-board.php:150
 #: includes/class-wowrestro-order-board.php:250
@@ -526,9 +526,9 @@ msgstr ""
 msgid "Delivery"
 msgstr ""
 
-#: includes/class-wowrestro-admin.php:889 includes/class-wowrestro-app.php:1379
-#: includes/class-wowrestro-checkout.php:540
-#: includes/class-wowrestro-checkout.php:546
+#: includes/class-wowrestro-admin.php:889 includes/class-wowrestro-app.php:1381
+#: includes/class-wowrestro-checkout.php:545
+#: includes/class-wowrestro-checkout.php:551
 #: includes/class-wowrestro-onboarding.php:317
 #: includes/class-wowrestro-order-board.php:151
 #: includes/class-wowrestro-order-board.php:249
@@ -595,7 +595,7 @@ msgstr ""
 
 #: includes/class-wowrestro-analytics.php:271
 #: includes/class-wowrestro-order-board.php:158
-#: includes/class-wowrestro-storefront.php:250
+#: includes/class-wowrestro-storefront.php:611
 msgid "All"
 msgstr ""
 
@@ -762,105 +762,105 @@ msgstr ""
 msgid "Simple variation entry supports products with one variation attribute."
 msgstr ""
 
-#: includes/class-wowrestro-app.php:849
+#: includes/class-wowrestro-app.php:825
 msgid "Choose a valid image from the Media Library."
 msgstr ""
 
-#: includes/class-wowrestro-app.php:858 includes/class-wowrestro-app.php:1046
+#: includes/class-wowrestro-app.php:860 includes/class-wowrestro-app.php:1048
 #: includes/class-wowrestro-products.php:100
 msgid "Dietary"
 msgstr ""
 
 #. translators: %s: menu item name.
-#: includes/class-wowrestro-app.php:899 includes/class-wowrestro-app.php:1488
+#: includes/class-wowrestro-app.php:901 includes/class-wowrestro-app.php:1490
 #, php-format
 msgid "%s Add-ons"
 msgstr ""
 
-#: includes/class-wowrestro-app.php:934 includes/class-wowrestro-app.php:956
+#: includes/class-wowrestro-app.php:936 includes/class-wowrestro-app.php:958
 msgid "Option"
 msgstr ""
 
-#: includes/class-wowrestro-app.php:1033
+#: includes/class-wowrestro-app.php:1035
 msgid "The brand attribute could not be created."
 msgstr ""
 
-#: includes/class-wowrestro-app.php:1043
+#: includes/class-wowrestro-app.php:1045
 msgid "Dietary flags are limited to Veg and Non-Veg."
 msgstr ""
 
-#: includes/class-wowrestro-app.php:1063
+#: includes/class-wowrestro-app.php:1065
 msgid "Choose a restaurant menu item you can edit."
 msgstr ""
 
-#: includes/class-wowrestro-app.php:1071
+#: includes/class-wowrestro-app.php:1073
 #: includes/class-wowrestro-products.php:101
 msgid "Allergens"
 msgstr ""
 
-#: includes/class-wowrestro-app.php:1073
+#: includes/class-wowrestro-app.php:1075
 msgid "The configured allergen attribute is unavailable."
 msgstr ""
 
-#: includes/class-wowrestro-app.php:1096
+#: includes/class-wowrestro-app.php:1098
 msgid "Enter a category name."
 msgstr ""
 
-#: includes/class-wowrestro-app.php:1099
+#: includes/class-wowrestro-app.php:1101
 msgid "You cannot edit this category."
 msgstr ""
 
-#: includes/class-wowrestro-app.php:1121
+#: includes/class-wowrestro-app.php:1123
 msgid "Enter a name."
 msgstr ""
 
-#: includes/class-wowrestro-app.php:1124
+#: includes/class-wowrestro-app.php:1126
 msgid "You cannot edit this record."
 msgstr ""
 
-#: includes/class-wowrestro-app.php:1144
+#: includes/class-wowrestro-app.php:1146
 msgid "Brand"
 msgstr ""
 
-#: includes/class-wowrestro-app.php:1227
+#: includes/class-wowrestro-app.php:1229
 msgid "You cannot manage add-on groups."
 msgstr ""
 
-#: includes/class-wowrestro-app.php:1232
+#: includes/class-wowrestro-app.php:1234
 msgid "You cannot edit this add-on group."
 msgstr ""
 
-#: includes/class-wowrestro-app.php:1235
+#: includes/class-wowrestro-app.php:1237
 msgid "Enter an add-on group name."
 msgstr ""
 
-#: includes/class-wowrestro-app.php:1436
+#: includes/class-wowrestro-app.php:1438
 #, php-format
 msgid "Variation #%d"
 msgstr ""
 
-#: includes/class-wowrestro-app.php:1440 includes/class-wowrestro-app.php:1453
+#: includes/class-wowrestro-app.php:1442 includes/class-wowrestro-app.php:1455
 msgid "In stock"
 msgstr ""
 
-#: includes/class-wowrestro-app.php:1440 includes/class-wowrestro-app.php:1453
+#: includes/class-wowrestro-app.php:1442 includes/class-wowrestro-app.php:1455
 msgid "Out of stock"
 msgstr ""
 
-#: includes/class-wowrestro-app.php:1456 includes/class-wowrestro-app.php:1675
+#: includes/class-wowrestro-app.php:1458 includes/class-wowrestro-app.php:1677
 #: includes/class-wowrestro-settings.php:261
 msgid "Published"
 msgstr ""
 
-#: includes/class-wowrestro-app.php:1456 includes/class-wowrestro-app.php:1675
+#: includes/class-wowrestro-app.php:1458 includes/class-wowrestro-app.php:1677
 msgid "Draft"
 msgstr ""
 
-#: includes/class-wowrestro-app.php:1668
+#: includes/class-wowrestro-app.php:1670
 msgid "Multiple items"
 msgstr ""
 
-#: includes/class-wowrestro-app.php:1668
+#: includes/class-wowrestro-app.php:1670
 msgid "Single item"
 msgstr ""
 
@@ -936,12 +936,12 @@ msgid "Choose one of the available tip amounts."
 msgstr ""
 
 #: includes/class-wowrestro-checkout.php:41
-#: includes/class-wowrestro-checkout.php:120
+#: includes/class-wowrestro-checkout.php:125
 msgid "How would you like your order?"
 msgstr ""
 
 #: includes/class-wowrestro-checkout.php:51
-#: includes/class-wowrestro-checkout.php:134
+#: includes/class-wowrestro-checkout.php:139
 msgid "Send me restaurant status updates by email"
 msgstr ""
 
@@ -958,106 +958,106 @@ msgstr ""
 msgid "Choose a valid fulfillment time."
 msgstr ""
 
-#: includes/class-wowrestro-checkout.php:127
+#: includes/class-wowrestro-checkout.php:132
 #: includes/class-wowrestro-order-board.php:261
 #: includes/views/app-template.php:673
 msgid "Requested time"
 msgstr ""
 
-#: includes/class-wowrestro-checkout.php:128
+#: includes/class-wowrestro-checkout.php:133
 #: includes/class-wowrestro-order-board.php:154
 msgid "ASAP"
 msgstr ""
 
-#: includes/class-wowrestro-checkout.php:225
-#: includes/class-wowrestro-checkout.php:286
+#: includes/class-wowrestro-checkout.php:230
+#: includes/class-wowrestro-checkout.php:291
 msgid ""
 "Complete the WOWRestro 1.x migration, and deactivate that plugin if it is "
 "still active, before accepting orders."
 msgstr ""
 
-#: includes/class-wowrestro-checkout.php:472
+#: includes/class-wowrestro-checkout.php:477
 #, php-format
 msgid "The minimum %1$s order is %2$s."
 msgstr ""
 
-#: includes/class-wowrestro-checkout.php:477
-#: includes/class-wowrestro-checkout.php:510
+#: includes/class-wowrestro-checkout.php:482
+#: includes/class-wowrestro-checkout.php:515
 #: includes/class-wowrestro-rest-api.php:513
-#: includes/class-wowrestro-slot-reservations.php:813
+#: includes/class-wowrestro-slot-reservations.php:818
 msgid "Online ordering is temporarily paused."
 msgstr ""
 
-#: includes/class-wowrestro-checkout.php:478
+#: includes/class-wowrestro-checkout.php:483
 #: includes/class-wowrestro-rest-api.php:514
 msgid "Choose a scheduled fulfillment time."
 msgstr ""
 
-#: includes/class-wowrestro-checkout.php:479
-#: includes/class-wowrestro-slot-reservations.php:814
+#: includes/class-wowrestro-checkout.php:484
+#: includes/class-wowrestro-slot-reservations.php:819
 msgid "Choose a valid fulfillment slot."
 msgstr ""
 
-#: includes/class-wowrestro-checkout.php:480
+#: includes/class-wowrestro-checkout.php:485
 #: includes/class-wowrestro-rest-api.php:516
 msgid "The restaurant is closed at that requested time."
 msgstr ""
 
-#: includes/class-wowrestro-checkout.php:481
+#: includes/class-wowrestro-checkout.php:486
 msgid "That requested time is outside the preorder window."
 msgstr ""
 
-#: includes/class-wowrestro-checkout.php:482
+#: includes/class-wowrestro-checkout.php:487
 msgid "The kitchen is full for the requested period. Choose another time."
 msgstr ""
 
-#: includes/class-wowrestro-checkout.php:483
+#: includes/class-wowrestro-checkout.php:488
 #: includes/class-wowrestro-rest-api.php:519
-#: includes/class-wowrestro-slot-reservations.php:818
+#: includes/class-wowrestro-slot-reservations.php:823
 msgid "Ordering is temporarily unavailable while the slot ledger is repaired."
 msgstr ""
 
-#: includes/class-wowrestro-checkout.php:484
+#: includes/class-wowrestro-checkout.php:489
 #: includes/class-wowrestro-rest-api.php:520
 msgid "Pickup is not currently available."
 msgstr ""
 
-#: includes/class-wowrestro-checkout.php:485
+#: includes/class-wowrestro-checkout.php:490
 #: includes/class-wowrestro-rest-api.php:521
 msgid "Delivery is not currently available."
 msgstr ""
 
-#: includes/class-wowrestro-checkout.php:487
+#: includes/class-wowrestro-checkout.php:492
 #: includes/class-wowrestro-rest-api.php:523
 msgid "That fulfillment option is not currently available."
 msgstr ""
 
-#: includes/class-wowrestro-checkout.php:507
+#: includes/class-wowrestro-checkout.php:512
 msgid "Checking the next available time…"
 msgstr ""
 
-#: includes/class-wowrestro-checkout.php:508
+#: includes/class-wowrestro-checkout.php:513
 msgid "Promised for"
 msgstr ""
 
-#: includes/class-wowrestro-checkout.php:509
+#: includes/class-wowrestro-checkout.php:514
 msgid "Delivery fee"
 msgstr ""
 
-#: includes/class-wowrestro-checkout.php:511
+#: includes/class-wowrestro-checkout.php:516
 msgid "That service or requested time is unavailable."
 msgstr ""
 
-#: includes/class-wowrestro-checkout.php:529
+#: includes/class-wowrestro-checkout.php:534
 msgid "Your promised time"
 msgstr ""
 
-#: includes/class-wowrestro-checkout.php:565
+#: includes/class-wowrestro-checkout.php:570
 #: includes/class-wowrestro-privacy.php:44
 msgid "WowRestro fulfillment"
 msgstr ""
 
-#: includes/class-wowrestro-checkout.php:568
+#: includes/class-wowrestro-checkout.php:573
 msgid "Kitchen status:"
 msgstr ""
 
@@ -1205,16 +1205,17 @@ msgid "WowRestro Menu"
 msgstr ""
 
 #: includes/class-wowrestro-elementor-widget.php:16
+#: includes/class-wowrestro-stores.php:457
 msgid "Menu"
 msgstr ""
 
-#: includes/class-wowrestro-former-name.php:98
+#: includes/class-wowrestro-former-name.php:105
 msgid ""
 "WowRestro replaces WooRestro and picks up its settings, menu and orders. "
 "Deactivate WooRestro to finish the switch; WowRestro stays off until then."
 msgstr ""
 
-#: includes/class-wowrestro-former-name.php:100
+#: includes/class-wowrestro-former-name.php:107
 msgid "Deactivate WooRestro"
 msgstr ""
 
@@ -1231,24 +1232,24 @@ msgstr ""
 msgid "The legacy delivery settings report could not be saved."
 msgstr ""
 
-#: includes/class-wowrestro-legacy-migration.php:249
+#: includes/class-wowrestro-legacy-migration.php:252
 msgid "WowRestro settings could not be saved during migration."
 msgstr ""
 
-#: includes/class-wowrestro-legacy-migration.php:281
+#: includes/class-wowrestro-legacy-migration.php:284
 msgid ""
 "WOWRestro 1.x add-on groups could not be migrated because the add-on group "
 "type is missing."
 msgstr ""
 
 #. translators: 1: legacy modifier group name, 2: database error.
-#: includes/class-wowrestro-legacy-migration.php:319
+#: includes/class-wowrestro-legacy-migration.php:322
 #, php-format
 msgid "WOWRestro modifier group \"%1$s\" could not be read: %2$s"
 msgstr ""
 
 #. translators: %s: legacy modifier group name.
-#: includes/class-wowrestro-legacy-migration.php:344
+#: includes/class-wowrestro-legacy-migration.php:347
 #, php-format
 msgid ""
 "WOWRestro modifier group \"%s\" contains options that could not be "
@@ -1256,118 +1257,118 @@ msgid ""
 msgstr ""
 
 #. translators: %s: legacy modifier group name.
-#: includes/class-wowrestro-legacy-migration.php:375
+#: includes/class-wowrestro-legacy-migration.php:378
 #, php-format
 msgid ""
 "WOWRestro modifier group \"%s\" conflicts with an existing migration record."
 msgstr ""
 
-#: includes/class-wowrestro-legacy-migration.php:392
+#: includes/class-wowrestro-legacy-migration.php:395
 msgid "WordPress did not create the record."
 msgstr ""
 
 #. translators: 1: legacy modifier group name, 2: database error.
-#: includes/class-wowrestro-legacy-migration.php:397
+#: includes/class-wowrestro-legacy-migration.php:400
 #, php-format
 msgid "WOWRestro modifier group \"%1$s\" could not be created: %2$s"
 msgstr ""
 
 #. translators: 1: legacy modifier group name, 2: metadata key.
-#: includes/class-wowrestro-legacy-migration.php:413
+#: includes/class-wowrestro-legacy-migration.php:416
 #, php-format
 msgid "WOWRestro modifier group \"%1$s\" could not save configuration %2$s."
 msgstr ""
 
-#: includes/class-wowrestro-legacy-migration.php:451
+#: includes/class-wowrestro-legacy-migration.php:454
 #, php-format
 msgid "Product #%d could not be marked as a WowRestro menu item."
 msgstr ""
 
-#: includes/class-wowrestro-legacy-migration.php:463
+#: includes/class-wowrestro-legacy-migration.php:466
 #, php-format
 msgid "Product #%1$d modifier assignments could not be migrated: %2$s"
 msgstr ""
 
-#: includes/class-wowrestro-legacy-migration.php:561
+#: includes/class-wowrestro-legacy-migration.php:564
 #, php-format
 msgid "groups: %s"
 msgstr ""
 
-#: includes/class-wowrestro-legacy-migration.php:564
+#: includes/class-wowrestro-legacy-migration.php:567
 #, php-format
 msgid "options: %s"
 msgstr ""
 
-#: includes/class-wowrestro-legacy-migration.php:568
+#: includes/class-wowrestro-legacy-migration.php:571
 #, php-format
 msgid "Legacy modifier sources could not be resolved (%s)."
 msgstr ""
 
-#: includes/class-wowrestro-legacy-migration.php:577
+#: includes/class-wowrestro-legacy-migration.php:580
 msgid "The modifier option allow-list could not be saved."
 msgstr ""
 
-#: includes/class-wowrestro-legacy-migration.php:583
+#: includes/class-wowrestro-legacy-migration.php:586
 msgid "The modifier groups could not be saved."
 msgstr ""
 
-#: includes/class-wowrestro-legacy-migration.php:617
+#: includes/class-wowrestro-legacy-migration.php:620
 #, php-format
 msgid "Order #%1$d could not be migrated safely: %2$s"
 msgstr ""
 
-#: includes/class-wowrestro-legacy-migration.php:678
-#: includes/class-wowrestro-legacy-migration.php:954
+#: includes/class-wowrestro-legacy-migration.php:681
+#: includes/class-wowrestro-legacy-migration.php:957
 msgid "The legacy promised time is invalid and needs manual correction."
 msgstr ""
 
-#: includes/class-wowrestro-legacy-migration.php:699
+#: includes/class-wowrestro-legacy-migration.php:702
 msgid ""
 "The legacy restaurant workflow status is invalid and needs manual correction."
 msgstr ""
 
-#: includes/class-wowrestro-legacy-migration.php:713
+#: includes/class-wowrestro-legacy-migration.php:716
 msgid "Migrated from the legacy restaurant workflow."
 msgstr ""
 
-#: includes/class-wowrestro-legacy-migration.php:848
+#: includes/class-wowrestro-legacy-migration.php:851
 msgid ""
 "WOWRestro 1.x and this plugin must not process checkout together. Complete "
 "migration, then deactivate WOWRestro 1.x."
 msgstr ""
 
-#: includes/class-wowrestro-legacy-migration.php:856
+#: includes/class-wowrestro-legacy-migration.php:859
 msgid ""
 "WowRestro migration stopped because one or more records could not be "
 "migrated safely."
 msgstr ""
 
-#: includes/class-wowrestro-legacy-migration.php:858
+#: includes/class-wowrestro-legacy-migration.php:861
 msgid "Last error:"
 msgstr ""
 
-#: includes/class-wowrestro-legacy-migration.php:860
+#: includes/class-wowrestro-legacy-migration.php:863
 msgid "Open diagnostics"
 msgstr ""
 
-#: includes/class-wowrestro-legacy-migration.php:860
+#: includes/class-wowrestro-legacy-migration.php:863
 msgid "Retry migration"
 msgstr ""
 
-#: includes/class-wowrestro-legacy-migration.php:862
+#: includes/class-wowrestro-legacy-migration.php:865
 #, php-format
 msgid "WowRestro migration is running: %1$s (%2$d migrated, %3$d skipped)."
 msgstr ""
 
-#: includes/class-wowrestro-legacy-migration.php:865
+#: includes/class-wowrestro-legacy-migration.php:868
 msgid "WowRestro found legacy restaurant data."
 msgstr ""
 
-#: includes/class-wowrestro-legacy-migration.php:865
+#: includes/class-wowrestro-legacy-migration.php:868
 msgid "Start safe migration"
 msgstr ""
 
-#: includes/class-wowrestro-legacy-migration.php:1053
+#: includes/class-wowrestro-legacy-migration.php:1056
 msgid "Legacy modifiers"
 msgstr ""
 
@@ -1912,7 +1913,7 @@ msgstr ""
 #: includes/class-wowrestro-order-board.php:128
 #: includes/class-wowrestro-order-statuses.php:50
 #: includes/class-wowrestro-order-statuses.php:59
-#: includes/class-wowrestro-storefront.php:468
+#: includes/class-wowrestro-storefront.php:486
 msgid "Out for delivery"
 msgstr ""
 
@@ -2009,6 +2010,7 @@ msgid ""
 msgstr ""
 
 #: includes/class-wowrestro-order-board.php:162
+#: includes/views/order-received.php:100
 msgid "Order details"
 msgstr ""
 
@@ -2250,30 +2252,29 @@ msgstr ""
 
 #: includes/class-wowrestro-order-statuses.php:47
 #: includes/class-wowrestro-order-statuses.php:56
-#: includes/class-wowrestro-storefront.php:465
+#: includes/class-wowrestro-storefront.php:479
 msgid "Accepted"
 msgstr ""
 
 #: includes/class-wowrestro-order-statuses.php:48
 #: includes/class-wowrestro-order-statuses.php:57
-#: includes/class-wowrestro-storefront.php:466
+#: includes/class-wowrestro-storefront.php:480
 msgid "Preparing"
 msgstr ""
 
 #: includes/class-wowrestro-order-statuses.php:49
 #: includes/class-wowrestro-order-statuses.php:58
-#: includes/class-wowrestro-storefront.php:467
+#: includes/class-wowrestro-storefront.php:482
 msgid "Ready"
 msgstr ""
 
 #: includes/class-wowrestro-order-statuses.php:51
-#: includes/class-wowrestro-reservations.php:744
-#: includes/class-wowrestro-storefront.php:469
+#: includes/class-wowrestro-reservations.php:765
 msgid "Completed"
 msgstr ""
 
 #: includes/class-wowrestro-order-statuses.php:52
-#: includes/class-wowrestro-reservations.php:745
+#: includes/class-wowrestro-reservations.php:766
 msgid "Cancelled"
 msgstr ""
 
@@ -2334,7 +2335,7 @@ msgid "The restaurant order could not be reloaded."
 msgstr ""
 
 #: includes/class-wowrestro-order-statuses.php:386
-#: includes/class-wowrestro-rest-api.php:2120
+#: includes/class-wowrestro-rest-api.php:2121
 msgid "This order changed since it was loaded. Refresh and try again."
 msgstr ""
 
@@ -2346,7 +2347,7 @@ msgstr ""
 msgid "This order is being updated. Refresh and try again."
 msgstr ""
 
-#: includes/class-wowrestro-plugin.php:95
+#: includes/class-wowrestro-plugin.php:97
 msgid ""
 "WowRestro stores fulfillment mode, promised time, delivery instructions and "
 "operational status on WooCommerce orders. This information is used to "
@@ -2539,7 +2540,7 @@ msgstr ""
 
 #: includes/class-wowrestro-reservations.php:71
 #: includes/class-wowrestro-reservations.php:219
-#: includes/class-wowrestro-reservations.php:753
+#: includes/class-wowrestro-reservations.php:774
 msgid "Guests"
 msgstr ""
 
@@ -2568,141 +2569,141 @@ msgid "Notes"
 msgstr ""
 
 #: includes/class-wowrestro-reservations.php:232
-#: includes/class-wowrestro-reservations.php:754
+#: includes/class-wowrestro-reservations.php:775
 msgid "Status"
 msgstr ""
 
-#: includes/class-wowrestro-reservations.php:303
+#: includes/class-wowrestro-reservations.php:304
 msgid ""
 "Complete the guest details and enter a valid reservation date, start time "
 "and end time."
 msgstr ""
 
-#: includes/class-wowrestro-reservations.php:308
+#: includes/class-wowrestro-reservations.php:309
 msgid "This time slot does not have enough remaining seat capacity."
 msgstr ""
 
-#: includes/class-wowrestro-reservations.php:382
+#: includes/class-wowrestro-reservations.php:383
 msgid ""
 "We couldn't book that. Check your details and choose one of the available "
 "times."
 msgstr ""
 
-#: includes/class-wowrestro-reservations.php:383
+#: includes/class-wowrestro-reservations.php:384
 msgid "That time just filled up. Please choose another time."
 msgstr ""
 
-#: includes/class-wowrestro-reservations.php:384
+#: includes/class-wowrestro-reservations.php:385
 msgid "Your booking couldn't be saved. Please try again."
 msgstr ""
 
-#: includes/class-wowrestro-reservations.php:385
+#: includes/class-wowrestro-reservations.php:386
 msgid ""
 "Online payment couldn't be started. Try again, or choose to pay at the "
 "restaurant."
 msgstr ""
 
-#: includes/class-wowrestro-reservations.php:423
+#: includes/class-wowrestro-reservations.php:424
 msgid "No times left on this day"
 msgstr ""
 
-#: includes/class-wowrestro-reservations.php:443
+#: includes/class-wowrestro-reservations.php:444
 #, php-format
 msgid "Booking amount: %s per guest"
 msgstr ""
 
-#: includes/class-wowrestro-reservations.php:443
+#: includes/class-wowrestro-reservations.php:444
 #, php-format
 msgid "Booking amount: %s"
 msgstr ""
 
-#: includes/class-wowrestro-reservations.php:444
+#: includes/class-wowrestro-reservations.php:445
 msgid "Pay at the restaurant"
 msgstr ""
 
-#: includes/class-wowrestro-reservations.php:444
+#: includes/class-wowrestro-reservations.php:445
 msgid "Pay online with WooCommerce"
 msgstr ""
 
-#: includes/class-wowrestro-reservations.php:458
-#: includes/class-wowrestro-reservations.php:751
+#: includes/class-wowrestro-reservations.php:459
+#: includes/class-wowrestro-reservations.php:772
 #: includes/class-wowrestro-rest-api.php:699
 msgid "Guest"
 msgstr ""
 
-#: includes/class-wowrestro-reservations.php:528
+#: includes/class-wowrestro-reservations.php:529
 msgid "Pay at restaurant"
 msgstr ""
 
-#: includes/class-wowrestro-reservations.php:528
+#: includes/class-wowrestro-reservations.php:529
 msgid "No payment required"
 msgstr ""
 
-#: includes/class-wowrestro-reservations.php:574
+#: includes/class-wowrestro-reservations.php:575
 msgid "Complete all required reservation fields."
 msgstr ""
 
-#: includes/class-wowrestro-reservations.php:579
+#: includes/class-wowrestro-reservations.php:580
 msgid "Choose a valid reservation option."
 msgstr ""
 
-#: includes/class-wowrestro-reservations.php:592
+#: includes/class-wowrestro-reservations.php:593
 msgid "WooCommerce payment is unavailable."
 msgstr ""
 
-#: includes/class-wowrestro-reservations.php:599
+#: includes/class-wowrestro-reservations.php:600
 msgid "Restaurant reservation"
 msgstr ""
 
-#: includes/class-wowrestro-reservations.php:610
+#: includes/class-wowrestro-reservations.php:611
 msgid "WooCommerce payment pending"
 msgstr ""
 
-#: includes/class-wowrestro-reservations.php:622
+#: includes/class-wowrestro-reservations.php:623
 msgid "Paid through WooCommerce"
 msgstr ""
 
-#: includes/class-wowrestro-reservations.php:670
+#: includes/class-wowrestro-reservations.php:671
 msgid "seats left"
 msgstr ""
 
 #. translators: %s: reservation status.
-#: includes/class-wowrestro-reservations.php:726
+#: includes/class-wowrestro-reservations.php:747
 #, php-format
 msgid "Reservation update: %s"
 msgstr ""
 
-#: includes/class-wowrestro-reservations.php:726
+#: includes/class-wowrestro-reservations.php:747
 msgid "Reservation request received"
 msgstr ""
 
 #. translators: 1: guest name, 2: reservation date and time, 3: status.
-#: includes/class-wowrestro-reservations.php:728
+#: includes/class-wowrestro-reservations.php:749
 #, php-format
 msgid "Hello %1$s, your reservation for %2$s is %3$s."
 msgstr ""
 
-#: includes/class-wowrestro-reservations.php:736
+#: includes/class-wowrestro-reservations.php:757
 msgid "New restaurant reservation"
 msgstr ""
 
-#: includes/class-wowrestro-reservations.php:741
+#: includes/class-wowrestro-reservations.php:762
 msgid "Pending"
 msgstr ""
 
-#: includes/class-wowrestro-reservations.php:742
+#: includes/class-wowrestro-reservations.php:763
 msgid "Confirmed"
 msgstr ""
 
-#: includes/class-wowrestro-reservations.php:743
+#: includes/class-wowrestro-reservations.php:764
 msgid "Seated"
 msgstr ""
 
-#: includes/class-wowrestro-reservations.php:746
+#: includes/class-wowrestro-reservations.php:767
 msgid "Rejected"
 msgstr ""
 
-#: includes/class-wowrestro-reservations.php:752
+#: includes/class-wowrestro-reservations.php:773
 msgid "Date / time"
 msgstr ""
 
@@ -2945,7 +2946,7 @@ msgid ""
 msgstr ""
 
 #: includes/class-wowrestro-rest-api.php:1369
-#: includes/class-wowrestro-rest-api.php:2310
+#: includes/class-wowrestro-rest-api.php:2311
 msgid "The phone order could not be created."
 msgstr ""
 
@@ -2996,56 +2997,56 @@ msgstr ""
 
 #: includes/class-wowrestro-rest-api.php:1559
 #: includes/class-wowrestro-rest-api.php:1568
-#: includes/class-wowrestro-rest-api.php:1983
+#: includes/class-wowrestro-rest-api.php:1984
 msgid "Order not found."
 msgstr ""
 
-#: includes/class-wowrestro-rest-api.php:1596
+#: includes/class-wowrestro-rest-api.php:1597
 msgid "Add at least one item."
 msgstr ""
 
-#: includes/class-wowrestro-rest-api.php:1607
+#: includes/class-wowrestro-rest-api.php:1608
 msgid "One of the selected products cannot be purchased."
 msgstr ""
 
-#: includes/class-wowrestro-rest-api.php:1611
+#: includes/class-wowrestro-rest-api.php:1612
 msgid "A selected variation does not belong to that product."
 msgstr ""
 
-#: includes/class-wowrestro-rest-api.php:1614
+#: includes/class-wowrestro-rest-api.php:1615
 msgid "Phone orders can contain only supported WooCommerce products."
 msgstr ""
 
-#: includes/class-wowrestro-rest-api.php:1618
+#: includes/class-wowrestro-rest-api.php:1619
 #, php-format
 msgid "%s does not have enough stock."
 msgstr ""
 
-#: includes/class-wowrestro-rest-api.php:1627
+#: includes/class-wowrestro-rest-api.php:1628
 msgid "Product modifiers are temporarily unavailable."
 msgstr ""
 
-#: includes/class-wowrestro-rest-api.php:1631
+#: includes/class-wowrestro-rest-api.php:1632
 msgid "Item instructions cannot exceed 500 characters."
 msgstr ""
 
-#: includes/class-wowrestro-rest-api.php:1641
+#: includes/class-wowrestro-rest-api.php:1642
 msgid "No valid products were supplied."
 msgstr ""
 
-#: includes/class-wowrestro-rest-api.php:1826
+#: includes/class-wowrestro-rest-api.php:1827
 msgid "WowRestro can reschedule only one-package orders."
 msgstr ""
 
-#: includes/class-wowrestro-rest-api.php:1856
+#: includes/class-wowrestro-rest-api.php:1857
 msgid "The order shipping method could not be updated."
 msgstr ""
 
-#: includes/class-wowrestro-rest-api.php:1924
+#: includes/class-wowrestro-rest-api.php:1925
 msgid "Stock reservation is temporarily unavailable."
 msgstr ""
 
-#: includes/class-wowrestro-rest-api.php:1935
+#: includes/class-wowrestro-rest-api.php:1936
 msgid "One or more items no longer have enough stock."
 msgstr ""
 
@@ -3413,265 +3414,542 @@ msgstr ""
 msgid "The order could not be rescheduled."
 msgstr ""
 
-#: includes/class-wowrestro-slot-reservations.php:676
+#: includes/class-wowrestro-slot-reservations.php:681
 msgid "The kitchen slot could not be reserved."
 msgstr ""
 
-#: includes/class-wowrestro-slot-reservations.php:790
+#: includes/class-wowrestro-slot-reservations.php:795
 #, php-format
 msgid "WowRestro could not bind kitchen capacity: %s"
 msgstr ""
 
-#: includes/class-wowrestro-slot-reservations.php:807
+#: includes/class-wowrestro-slot-reservations.php:812
 msgid "Checkout was closed because kitchen capacity could not be committed."
 msgstr ""
 
-#: includes/class-wowrestro-slot-reservations.php:815
+#: includes/class-wowrestro-slot-reservations.php:820
 msgid "That time is outside the preorder window."
 msgstr ""
 
-#: includes/class-wowrestro-slot-reservations.php:816
+#: includes/class-wowrestro-slot-reservations.php:821
 msgid "The selected service is closed at that time."
 msgstr ""
 
-#: includes/class-wowrestro-slot-reservations.php:817
+#: includes/class-wowrestro-slot-reservations.php:822
 msgid "The kitchen is full for that slot."
 msgstr ""
 
-#: includes/class-wowrestro-slot-reservations.php:820
+#: includes/class-wowrestro-slot-reservations.php:825
 msgid "No fulfillment slot is currently available."
 msgstr ""
 
-#: includes/class-wowrestro-storefront.php:245
-msgid "Order direct"
+#: includes/class-wowrestro-storefront.php:236
+msgid "This checkout needs JavaScript."
 msgstr ""
 
-#: includes/class-wowrestro-storefront.php:245
-msgid "Our menu"
+#: includes/class-wowrestro-storefront.php:236
+msgid "Use the standard checkout"
 msgstr ""
 
-#: includes/class-wowrestro-storefront.php:246
-msgid "Search this page"
+#: includes/class-wowrestro-storefront.php:473
+msgid "Order cancelled"
 msgstr ""
 
-#: includes/class-wowrestro-storefront.php:246
-msgid "Search dishes on this page"
+#: includes/class-wowrestro-storefront.php:474
+msgid "This order was cancelled. Contact the restaurant if that is unexpected."
 msgstr ""
 
-#: includes/class-wowrestro-storefront.php:249
-msgid "Menu categories"
+#: includes/class-wowrestro-storefront.php:478
+msgid "Order received"
 msgstr ""
 
-#: includes/class-wowrestro-storefront.php:269
-msgid "No dishes are available in this category yet."
+#: includes/class-wowrestro-storefront.php:478
+msgid "The kitchen has your order."
 msgstr ""
 
-#: includes/class-wowrestro-storefront.php:290
-#, php-format
-msgid "Allergens: %s"
+#: includes/class-wowrestro-storefront.php:478
+msgid "Received."
 msgstr ""
 
-#: includes/class-wowrestro-storefront.php:294
-#, php-format
-msgid "%s kcal"
+#: includes/class-wowrestro-storefront.php:479
+msgid "The kitchen accepted your order."
 msgstr ""
 
-#: includes/class-wowrestro-storefront.php:308
-msgid "Sold out"
+#: includes/class-wowrestro-storefront.php:479
+msgid "Accepted."
 msgstr ""
 
-#: includes/class-wowrestro-storefront.php:313
-msgid "Menu pages"
+#: includes/class-wowrestro-storefront.php:479
+msgid "Waiting on the kitchen."
 msgstr ""
 
-#: includes/class-wowrestro-storefront.php:329
-msgid "View your WooCommerce cart"
+#: includes/class-wowrestro-storefront.php:480
+msgid "Your food is being cooked now."
 msgstr ""
 
-#: includes/class-wowrestro-storefront.php:329
-msgid "View order"
+#: includes/class-wowrestro-storefront.php:480
+msgid "Cooked."
 msgstr ""
 
-#. translators: 1: template number, 2: template name
-#: includes/class-wowrestro-storefront.php:339
-#, php-format
-msgid "Template %1$d - %2$s"
+#: includes/class-wowrestro-storefront.php:480
+msgid "Not started yet."
 msgstr ""
 
-#: includes/class-wowrestro-storefront.php:355
-msgid "Classic Cards"
+#: includes/class-wowrestro-storefront.php:482
+msgid "Packed and waiting for the rider."
 msgstr ""
 
-#: includes/class-wowrestro-storefront.php:356
-msgid "Editorial List"
+#: includes/class-wowrestro-storefront.php:482
+#: includes/class-wowrestro-storefront.php:483
+msgid "Ready."
 msgstr ""
 
-#: includes/class-wowrestro-storefront.php:357
-msgid "Modern Tiles"
+#: includes/class-wowrestro-storefront.php:482
+#: includes/class-wowrestro-storefront.php:483
+msgid "Not ready yet."
 msgstr ""
 
-#: includes/class-wowrestro-storefront.php:358
-msgid "Menu Card"
+#: includes/class-wowrestro-storefront.php:483
+msgid "Ready for collection"
 msgstr ""
 
-#: includes/class-wowrestro-storefront.php:359
-msgid "Delivery Rows"
+#: includes/class-wowrestro-storefront.php:483
+msgid "Ready now - come and collect it."
 msgstr ""
 
-#: includes/class-wowrestro-storefront.php:360
-msgid "Midnight Grill"
+#: includes/class-wowrestro-storefront.php:486
+msgid "On its way to you."
 msgstr ""
 
-#: includes/class-wowrestro-storefront.php:361
-msgid "Story Feed"
+#: includes/class-wowrestro-storefront.php:486
+msgid "Handed to the rider."
 msgstr ""
 
-#: includes/class-wowrestro-storefront.php:362
-msgid "Snack Bar"
+#: includes/class-wowrestro-storefront.php:486
+msgid "Not dispatched yet."
 msgstr ""
 
-#: includes/class-wowrestro-storefront.php:363
-msgid "Noir"
+#: includes/class-wowrestro-storefront.php:487
+msgid "Delivered"
 msgstr ""
 
-#: includes/class-wowrestro-storefront.php:364
-msgid "Pastel Bakery"
+#: includes/class-wowrestro-storefront.php:487
+msgid "Delivered - enjoy."
 msgstr ""
 
-#: includes/class-wowrestro-storefront.php:365
-msgid "Showcase Rows"
+#: includes/class-wowrestro-storefront.php:487
+msgid "Delivered."
 msgstr ""
 
-#: includes/class-wowrestro-storefront.php:366
-msgid "Bento Box"
+#: includes/class-wowrestro-storefront.php:487
+msgid "Not delivered yet."
 msgstr ""
 
-#: includes/class-wowrestro-storefront.php:367
-msgid "Quick Order"
+#: includes/class-wowrestro-storefront.php:489
+msgid "Collected"
 msgstr ""
 
-#: includes/class-wowrestro-storefront.php:368
-msgid "Farm Table"
+#: includes/class-wowrestro-storefront.php:489
+msgid "Collected - enjoy."
 msgstr ""
 
-#: includes/class-wowrestro-storefront.php:369
-msgid "After Dark"
+#: includes/class-wowrestro-storefront.php:489
+msgid "Collected."
 msgstr ""
 
-#: includes/class-wowrestro-storefront.php:370
-msgid "Spice Route"
+#: includes/class-wowrestro-storefront.php:489
+msgid "Not collected yet."
 msgstr ""
 
-#: includes/class-wowrestro-storefront.php:371
-msgid "Nordic Light"
+#: includes/class-wowrestro-storefront.php:495
+msgid "Tracking your delivery"
 msgstr ""
 
-#: includes/class-wowrestro-storefront.php:372
-msgid "Kiosk"
+#: includes/class-wowrestro-storefront.php:495
+msgid "Your collection"
 msgstr ""
 
-#: includes/class-wowrestro-storefront.php:373
-msgid "Mediterranean"
-msgstr ""
-
-#: includes/class-wowrestro-storefront.php:374
-msgid "Neon Night"
-msgstr ""
-
-#: includes/class-wowrestro-storefront.php:375
-msgid "Juice Bar"
-msgstr ""
-
-#: includes/class-wowrestro-storefront.php:376
-msgid "Taqueria"
-msgstr ""
-
-#: includes/class-wowrestro-storefront.php:377
-msgid "Coffee Bar"
-msgstr ""
-
-#: includes/class-wowrestro-storefront.php:378
-msgid "Ramen Bar"
-msgstr ""
-
-#: includes/class-wowrestro-storefront.php:379
-msgid "Express Grid"
-msgstr ""
-
-#: includes/class-wowrestro-storefront.php:380
-msgid "Garden Green"
-msgstr ""
-
-#: includes/class-wowrestro-storefront.php:381
-msgid "Sushi Bar"
-msgstr ""
-
-#: includes/class-wowrestro-storefront.php:382
-msgid "Poke Bowl"
-msgstr ""
-
-#: includes/class-wowrestro-storefront.php:383
-msgid "Canteen"
-msgstr ""
-
-#: includes/class-wowrestro-storefront.php:384
-msgid "Brunch Club"
-msgstr ""
-
-#: includes/class-wowrestro-storefront.php:385
-msgid "Food Hall"
-msgstr ""
-
-#: includes/class-wowrestro-storefront.php:386
-msgid "Glass Lounge"
-msgstr ""
-
-#: includes/class-wowrestro-storefront.php:387
-msgid "Boba Bar"
-msgstr ""
-
-#: includes/class-wowrestro-storefront.php:388
-msgid "Catering Sheet"
-msgstr ""
-
-#: includes/class-wowrestro-storefront.php:389
-msgid "Swiss Grid"
-msgstr ""
-
-#: includes/class-wowrestro-storefront.php:390
-msgid "Pizzeria"
-msgstr ""
-
-#: includes/class-wowrestro-storefront.php:432
-msgid "Order number"
-msgstr ""
-
-#: includes/class-wowrestro-storefront.php:432
-msgid "Order key from your receipt"
-msgstr ""
-
-#: includes/class-wowrestro-storefront.php:432
-msgid "Track order"
-msgstr ""
-
-#: includes/class-wowrestro-storefront.php:450
-msgid "Track your restaurant order"
-msgstr ""
-
-#: includes/class-wowrestro-storefront.php:464
-msgid "Received"
-msgstr ""
-
-#: includes/class-wowrestro-storefront.php:499
+#: includes/class-wowrestro-storefront.php:496
 #, php-format
 msgid "Promised for %s"
 msgstr ""
 
-#: includes/class-wowrestro-storefront.php:499
-msgid "The restaurant has your order."
+#: includes/class-wowrestro-storefront.php:606
+msgid "Order direct"
 msgstr ""
 
-#: wowrestro.php:97
+#: includes/class-wowrestro-storefront.php:606
+msgid "Our menu"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:607
+msgid "Search this page"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:607
+msgid "Search dishes on this page"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:610
+msgid "Menu categories"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:630
+msgid "No dishes are available in this category yet."
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:651
+#, php-format
+msgid "Allergens: %s"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:655
+#, php-format
+msgid "%s kcal"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:669
+msgid "Sold out"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:674
+msgid "Menu pages"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:690
+msgid "View your WooCommerce cart"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:690
+msgid "View order"
+msgstr ""
+
+#. translators: 1: template number, 2: template name
+#: includes/class-wowrestro-storefront.php:700
+#, php-format
+msgid "Template %1$d - %2$s"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:716
+msgid "Classic Cards"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:717
+msgid "Editorial List"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:718
+msgid "Modern Tiles"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:719
+msgid "Menu Card"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:720
+msgid "Delivery Rows"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:721
+msgid "Midnight Grill"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:722
+msgid "Story Feed"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:723
+msgid "Snack Bar"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:724
+msgid "Noir"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:725
+msgid "Pastel Bakery"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:726
+msgid "Showcase Rows"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:727
+msgid "Bento Box"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:728
+msgid "Quick Order"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:729
+msgid "Farm Table"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:730
+msgid "After Dark"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:731
+msgid "Spice Route"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:732
+msgid "Nordic Light"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:733
+msgid "Kiosk"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:734
+msgid "Mediterranean"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:735
+msgid "Neon Night"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:736
+msgid "Juice Bar"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:737
+msgid "Taqueria"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:738
+msgid "Coffee Bar"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:739
+msgid "Ramen Bar"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:740
+msgid "Express Grid"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:741
+msgid "Garden Green"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:742
+msgid "Sushi Bar"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:743
+msgid "Poke Bowl"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:744
+msgid "Canteen"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:745
+msgid "Brunch Club"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:746
+msgid "Food Hall"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:747
+msgid "Glass Lounge"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:748
+msgid "Boba Bar"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:749
+msgid "Catering Sheet"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:750
+msgid "Swiss Grid"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:751
+msgid "Pizzeria"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:793
+msgid "Order number"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:793
+msgid "Order key from your receipt"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:793
+msgid "Track order"
+msgstr ""
+
+#: includes/class-wowrestro-storefront.php:803
+msgid "Track your restaurant order"
+msgstr ""
+
+#: includes/class-wowrestro-stores.php:388
+msgid "We are on it."
+msgstr ""
+
+#: includes/class-wowrestro-stores.php:389
+msgid "The store has your order."
+msgstr ""
+
+#: includes/class-wowrestro-stores.php:390
+msgid "The store accepted your order."
+msgstr ""
+
+#: includes/class-wowrestro-stores.php:391
+msgid "Waiting on the store."
+msgstr ""
+
+#: includes/class-wowrestro-stores.php:392
+msgid "We are preparing your order now."
+msgstr ""
+
+#: includes/class-wowrestro-stores.php:393
+msgid "Prepared."
+msgstr ""
+
+#: includes/class-wowrestro-stores.php:394
+#, php-format
+msgid ""
+"Contact the store and quote order <b>#%s</b>. Changes are possible until we "
+"start on it."
+msgstr ""
+
+#: includes/class-wowrestro-stores.php:395
+msgid "This order was cancelled. Contact the store if that is unexpected."
+msgstr ""
+
+#: includes/class-wowrestro-stores.php:457
+msgid "Store"
+msgstr ""
+
+#: includes/class-wowrestro-stores.php:457
+msgid "My account"
+msgstr ""
+
+#. translators: %d: items in the order
+#: includes/class-wowrestro-stores.php:458
+#, php-format
+msgid "Checkout, %d items"
+msgstr ""
+
+#: includes/class-wowrestro-stores.php:458
+#: includes/class-wowrestro-stores.php:480
+msgid "Your order is empty"
+msgstr ""
+
+#: includes/class-wowrestro-stores.php:458
+#: includes/class-wowrestro-stores.php:478
+msgid "Your order"
+msgstr ""
+
+#: includes/class-wowrestro-stores.php:471
+msgid "Ordering by WowRestro"
+msgstr ""
+
+#: includes/class-wowrestro-stores.php:480
+msgid "Checkout"
+msgstr ""
+
+#: includes/class-wowrestro-stores.php:537
+msgid "Stores"
+msgstr ""
+
+#: includes/views/order-received.php:38
+msgid "Delivery time"
+msgstr ""
+
+#: includes/views/order-received.php:38
+msgid "Pickup time"
+msgstr ""
+
+#. translators: %s: order number
+#: includes/views/order-received.php:61
+#, php-format
+msgid "Order #%s placed - awaiting payment"
+msgstr ""
+
+#: includes/views/order-received.php:61
+#, php-format
+msgid "Order #%s confirmed"
+msgstr ""
+
+#: includes/views/order-received.php:65
+#, php-format
+msgid "Thank you, %s."
+msgstr ""
+
+#: includes/views/order-received.php:65
+msgid "Thank you."
+msgstr ""
+
+#: includes/views/order-received.php:66
+msgid "The kitchen has it."
+msgstr ""
+
+#: includes/views/order-received.php:71
+#, php-format
+msgid "We have sent your confirmation to %s."
+msgstr ""
+
+#: includes/views/order-received.php:75
+#, php-format
+msgid "We will bring it to %s."
+msgstr ""
+
+#: includes/views/order-received.php:75
+msgid "your address"
+msgstr ""
+
+#: includes/views/order-received.php:76
+#, php-format
+msgid "Collect it from %s."
+msgstr ""
+
+#: includes/views/order-received.php:84
+msgid "Placed"
+msgstr ""
+
+#: includes/views/order-received.php:127
+msgid "Total paid"
+msgstr ""
+
+#: includes/views/order-received.php:132
+msgid "Delivering to"
+msgstr ""
+
+#: includes/views/order-received.php:132
+msgid "Collect from"
+msgstr ""
+
+#: includes/views/order-received.php:138
+msgid "Something wrong?"
+msgstr ""
+
+#. translators: %s: order number
+#: includes/views/order-received.php:142
+#, php-format
+msgid ""
+"Contact the kitchen and quote order <b>#%s</b>. Changes are possible until "
+"the ticket is on the pass."
+msgstr ""
+
+#: includes/views/order-received.php:144
+#, php-format
+msgid "Call %s"
+msgstr ""
+
+#: includes/views/order-received.php:148
+msgid "Order again"
+msgstr ""
+
+#: wowrestro.php:111
 msgid "WowRestro requires WooCommerce to be installed and active."
 msgstr ""
 

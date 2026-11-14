@@ -1,150 +1,182 @@
 === WowRestro - Restaurant Ordering & Operations for WooCommerce ===
 Contributors: magnigenie, sagarseth9, devashu0011
-Tags: restaurant, food ordering, woocommerce, pickup, delivery
+Tags: restaurant, food ordering, online ordering, pickup, delivery
 Donate link: https://paypal.me/magnigeeks
 Requires PHP: 7.4
 Requires at least: 6.2
 Tested up to: 7.1
-Stable tag: 2.0.11
+Stable tag: 2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-WowRestro is a complete restaurant ordering and fulfillment operations system for WooCommerce.
+Transform WooCommerce into a commission-free restaurant ordering powerhouse with app-like menus, QR dine-in, live kitchen order board, and table reservations.
 
 == Description ==
 
-WooRestro is an online ordering system powered by WooCommerce. WooRestro allows you to offer both Takeaway/Pickup and Delivery services to your customers. Using WooRestro, you can easily create a responsive food ordering system for free.
+**WowRestro** is a complete, commission-free restaurant online ordering and kitchen operations system built specifically for WooCommerce. 
 
-Now you can easily convert your website visitors to customers using the WooRestro ordering interface. WooRestro helps you convert your WooCommerce store into an online takeaway/delivery system by providing a modern and responsive menu design.
+Say goodbye to hefty 15–30% aggregator commissions. With WowRestro, you own your customer relationships, keep 100% of your profits, and deliver a slick, lightning-fast ordering experience that keeps hungry diners coming back for more.
 
-Some of the possible use cases of WooRestro include online food delivery/takeaway businesses, online grocery delivery/takeaway businesses, online flower delivery/takeaway systems, laundry services, etc.
+Whether you run a bustling pizzeria, trendy cafe, bakery, cloud kitchen, food truck, bar, or multi-location restaurant chain, WowRestro equips you with an enterprise-grade digital ordering suite right inside WordPress.
 
-WooRestro enables you to easily add modifiers/options/add-ons for your food items directly from the product add/edit screen of WooCommerce.
+👉 [Live Demo](https://www.woorestro.com/#demo)
+---
 
-The WooRestro layout is implemented on your site using the [wowrestro] shortcode. The plugin automatically creates a page called ORDER ONLINE, which contains the [wowrestro] shortcode and is used for the ordering interface presented to your customers.
+### 🚀 Why WowRestro Boosts Customer Engagement & Sales
 
-= Shortcode Attributes =
+* **App-Like Speed & Flow**: Powered by the WooCommerce Store API, customers browse categories, configure toppings, and checkout in seconds without annoying full-page reloads.
+* **Frictionless Mobile-First Experience**: Over 80% of food orders happen on smartphones. WowRestro is engineered from the ground up for thumb-friendly mobile ordering.
+* **Irresistible Food Customization**: Visual modifier popups make upselling toppings, crusts, dips, sizes, and combos effortless.
+* **Contactless Dine-In QR Ordering**: Seat guests, let them scan their table QR code, browse your interactive digital menu, and order directly to their table.
+* **Real-Time Customer Order Tracking**: Keep diners excited and informed with live visual progress updates from "Order Placed" to "Out for Delivery".
 
-* category: Comma-separated list of category slugs.
-* show_search (yes, no): Allows you to show/hide the search bar.
+---
 
-= Shortcode Examples =
+### 🌟 Key Features Built for Modern Restaurants
 
-* [wowrestro]
-* [wowrestro category="main-course,lunch,starters"]
-* [wowrestro category="main-course,lunch,starters" show_search="no"]
+#### 📱 High-Converting Menu Storefront (36 Modern Templates)
+* **Single-Page Ordering App**: Fast, responsive menu layout with sticky categories, search bar, and live floating cart.
+* **36 Designer Templates**: Tailored layouts for pizza places, burger joints, sushi bars, bakeries, cafes, and fine dining.
+* **Gutenberg Block & Elementor Widget**: Embed your interactive food menu anywhere with drag-and-drop ease.
+* **Dietary Badges & Info**: Highlight Veg, Non-Veg, Vegan, Gluten-Free, or Spicy items at a glance.
 
-= Why Use WooRestro =
+#### 🍕 Advanced Modifiers, Add-ons & Option Groups
+* **Custom Modifier Groups**: Add checkboxes, radio buttons, or quantity selectors for extras and add-ons.
+* **Selection Limits**: Enforce required minimums and maximums (e.g., "Choose 1 sauce", "Pick up to 3 toppings").
+* **Pre-Selected Defaults**: Guide customer choices with default selections to speed up checkout.
+* **Immutable Snapshots**: Order modifiers are permanently locked into the receipt, preventing discrepancies.
 
-* WooRestro is built with a mobile-first design approach, as most of your customers will use their mobile phones to order online.
-* Powered by WooCommerce, which makes it more powerful.
-* Ability to easily add modifiers for your items.
-* Allows you to set items as Veg or Non-Veg.
-* Support for variable products.
-* Completely developer-friendly with sufficient hooks to alter any functionality of the plugin.
+#### 🧑‍🍳 Real-Time Kitchen Order Board (KDS)
+* **Live Operational Board**: Separate order operations into New, Accepted, Preparing, Ready, Out for Delivery, and Completed.
+* **Push Notifications & Sound Alerts**: Real-time Firebase Cloud Messaging (FCM HTTP v1) alerts your kitchen staff instantly the moment an order arrives.
+* **Manual / Phone Order Entry**: Take walk-in or phone orders straight from the order board.
+* **Staff Access Roles**: Assign dedicated `Kitchen Manager`, `Kitchen Staff`, or `Waiter` roles without exposing sensitive WordPress admin settings.
 
-= WooRestro Demo =
+#### 🪑 Dine-In QR Table Ordering
+* **Contactless Digital Table Menus**: Print automatic QR codes for each table.
+* **Automatic Table Tracking**: Orders placed via table QR code are tagged with the table number and session automatically.
+* **Fast Re-Ordering**: Guests can order extra drinks or desserts throughout their meal.
 
-Check out [WooRestro Demo](https://demo.wowrestro.com/)
-Check out [Documentation](https://docs.wowrestro.com/)
+#### 📅 Table Reservations Management
+* **Interactive Booking Widget**: Embed table reservations with `[wowrestro_reservations]`.
+* **Guest Counts & Slot Capacities**: Control available seats and time slots to prevent overbooking.
+* **Booking Confirmation & Statuses**: Manage pending, confirmed, seated, and cancelled reservations.
 
-= Need Help? =
+#### ⏱️ Smart Kitchen Capacity & Slot Reservations
+* **Avoid Kitchen Overwhelm**: Cap the maximum number of orders per time slot (e.g., max 10 orders every 15 minutes).
+* **Atomic InnoDB Ledger**: Concurrency-safe slot reservations ensure duplicate slot claims never occur during peak lunch and dinner rushes.
+* **Delivery & Pickup Windows**: Flexible lead times, advance ordering dates, and service-specific schedules.
 
-You can use the support forum for this plugin to share any issues you are experiencing, and our support team will make sure to provide you with a quick resolution for your problems.
+#### 🏪 Multi-Store & Category-Specific Pages
+* **Dedicated Store Pages**: Run independent ordering pages for sub-brands (e.g., `/bakery/` or `/cocktail-bar/`) with their own branding, colours, header, and clean confirmation page (`/confirmation/`).
+* **Store Switcher Bar**: Seamlessly navigate between locations or concepts using `[wowrestro_store_switcher]`.
+* **Shared WooCommerce Cart**: Smart cart handling ensures orders remain isolated to the correct storefront.
 
-You can also reach out to us at [support@wowrestro.com](mailto:support@wowrestro.com)
+#### 📍 Multi-Location Branch Support
+* Assign menu items, operational hours, and orders to specific restaurant branches.
+* Allow customers to choose their closest branch using `[wowrestro_location_selector]`.
 
+#### 💳 Seamless Checkout, Tipping & Tracking
+* **Clean Confirmation URLs**: Polished `/confirmation/` experience that securely restores the customer's order session without ugly query keys.
+* **Tip Suggestions**: Preset percentage buttons (10%, 15%, 20%) and custom tip fields at checkout.
+* **HPOS Compatible**: 100% compatible with WooCommerce High-Performance Order Storage and Checkout Blocks.
+* **Zero jQuery Bloat**: Built with vanilla JavaScript and lightweight SVG icons for peak speed and Google Core Web Vitals scores.
+
+---
+
+### 📋 Shortcode Quick Reference
+
+Embed WowRestro anywhere on your WordPress site using these flexible shortcodes:
+
+* `[wowrestro]` – Displays the default online ordering menu.
+* `[wowrestro template="2" layout="tabs"]` – Displays template 2 with tabbed category navigation.
+* `[wowrestro category="pizza,pasta" show_search="no"]` – Restricts the menu to specific categories.
+* `[wowrestro_menu category="bakery" name="Artisan Bakery" header="store"]` – Builds a branded store page.
+* `[wowrestro_store_switcher label="Our Brands" brand="Main Kitchen"]` – Adds a navigation switcher between store pages.
+* `[wowrestro_reservations]` – Embeds the table reservation booking form.
+* `[wowrestro_tracking]` – Displays customer order tracking and status lookup.
+* `[wowrestro_staff_panel]` – Staff ordering terminal for dine-in and POS table orders.
+* `[wowrestro_location_selector]` – Branch switcher for multi-location venues.
+
+---
+
+### 💡 Ideal For Every Food Business
+
+* Restaurants & Bistros
+* Pizzerias & Italian Trattorias
+* Burger Joints & Fast Food
+* Cafes, Coffee Shops & Bakeries
+* Ghost Kitchens & Cloud Kitchens
+* Bars, Pubs & Breweries
+* Food Trucks & Pop-up Eateries
+* Catering & Meal Prep Services
+
+---
 == Installation ==
 
-1. Login to your WordPress dashboard and navigate to Plugins > Add New.
-2. Search for WooRestro.
-3. Click Install and activate the plugin.
-4. Once the plugin is activated, it will create a page called Order Online with the shortcode [wowrestro]. This page will list all your items.
-5. After activating the plugin, you can navigate to the WooRestro menu on your dashboard and start setting up different settings for the plugin.
+= Minimum Requirements =
+* WordPress 6.2 or higher
+* WooCommerce 8.9 or higher
+* PHP 7.4 or higher (PHP 8.1+ recommended)
+
+= Automatic Installation =
+1. Log in to your WordPress Dashboard.
+2. Go to **Plugins > Add New**.
+3. Search for **WowRestro**.
+4. Click **Install Now** and then **Activate**.
+5. The 4-step setup wizard will guide you through your business hours, service types (Delivery / Pickup / Dine-in), and ordering page setup.
+
+= Manual Installation =
+1. Download the plugin zip file from WordPress.org.
+2. Go to **Plugins > Add New > Upload Plugin** in your WordPress admin.
+3. Choose the zip file and click **Install Now**.
+4. Activate the plugin and follow the onboarding wizard.
 
 == Frequently Asked Questions ==
 
-= How can I add my products to the order online page? =
-You can easily add your products from the WooCommerce Products menu. You just need to make sure the product you are adding is marked as a WooRestro item.
+= Does WowRestro charge any commission on orders? =
+No! WowRestro is 100% commission-free. Unlike Deliveroo, UberEats, or DoorDash that take 20–30% of every sale, you keep all of your revenue and customer data.
 
-= Does it require WooCommerce? =
-Yes, the plugin is built as an extension to WooCommerce, so it's necessary to have WooCommerce installed and active before adding this plugin.
+= Can customers order on mobile without installing an app? =
+Yes! WowRestro provides a Progressive Web App (PWA) style single-page experience directly in mobile browsers. Customers browse menus, pick toppings, and pay instantly without downloading anything from the app store.
 
-= Do I need any specific theme to make this plugin work correctly? =
-No, you don't need any special theme to run this plugin. It works with all themes that support WooCommerce.
+= How do the food modifiers and add-ons work? =
+Under **WowRestro > Modifier Groups**, you can create reusable modifier sets (e.g., "Choose Crust", "Extra Toppings", "Choice of Dressing"). You can configure single-choice radio buttons, multi-choice checkboxes, minimum/maximum selection rules, and prices for each choice. Then assign them to any food product with a single click.
+
+= Can I prevent kitchen overload during peak rush hours? =
+Yes! WowRestro features built-in Kitchen Capacity and Slot Reservations. You can define how many orders your kitchen can handle in each 15, 30, or 60-minute window. Once a slot reaches capacity, customers are prompted to select the next available time slot.
+
+= How does Dine-In QR Table Ordering work? =
+Each dining table can have its own QR code generated from the WowRestro dining settings. When a guest scans the QR code with their phone camera, the menu opens with their table number pre-selected. Their order is sent straight to the Kitchen Order Board tagged with their table number.
+
+= How do kitchen staff get notified of new orders? =
+Staff can keep the **Kitchen Order Board** open on any tablet, iPad, or computer screen. WowRestro uses real-time push notifications (Firebase FCM) and audible chimes so the kitchen is alerted immediately when a new order lands.
+
+= Can I use WowRestro with page builders like Elementor or the Block Editor? =
+Yes! WowRestro includes both a native Gutenberg Block and an Elementor Widget for the menu, plus flexible shortcodes for full customization in any theme or builder.
+
+= Is it compatible with WooCommerce HPOS and Checkout Blocks? =
+Yes! WowRestro is fully declared compatible with WooCommerce High-Performance Order Storage (HPOS) and both classic checkout and the new Cart & Checkout Blocks.
+
+= Can I migrate my settings from WooRestro 1.x? =
+Yes! WowRestro 2.0 includes an automatic, non-destructive legacy migration tool that safely upgrades your settings, legacy modifiers, and order history.
 
 == Screenshots ==
 
-1. WooRestro items list
-2. WooRestro Order Setting
-3. Simple WooRestro item with modifiers
-4. Variable WooRestro item with modifiers
-5. WooRestro Mobile Layout
-6. WooRestro Item edit screen
-7. WooRestro General Settings
-8. WooRestro Service Settings
-9. WooRestro Pickup Service Settings
-10. WooRestro Delivery Service Settings
-11. WooRestro Style Settings
-12. WooRestro Notifications Settings
+1. Interactive mobile-first online food ordering menu with category tabs
+2. Food item modifier popup with toppings, choices, and quantity selectors
+3. Live Kitchen Order Board (KDS) with audio chimes and real-time order columns
+4. Dine-in QR code table ordering flow for contactless table service
+5. Table reservation booking widget with guest count and time slot selection
+6. Order confirmation and live visual order tracking timeline
+7. Multi-store page builder with custom branding, hero headers, and themes
+8. Kitchen capacity and time slot reservation settings
+9. Delivery and pickup service scheduling rules
+10. Modifier Group creator with min/max rules and pricing
+11. Guided 4-step onboarding wizard for quick restaurant launch
+12. HPOS-compatible restaurant sales analytics and performance reports
 
 == Changelog ==
-
-= 2.0.11 =
-* Fixed: Handoff to native WooCommerce payment forms preserves customer details, kitchen notes, preferences and scheduled fulfillment. Failed synchronization stops checkout and allows retry.
-* Fixed: Payments completed after fulfillment capacity expires retain their financial transaction and flag the order for staff review without overbooking the kitchen.
-* Fixed: Repeated payment callbacks release locks correctly; orders requiring capacity review cannot reclaim a fulfillment slot.
-* Fixed: Failed, cancelled and refunded receipts display their actual payment state. Failed payable orders offer a payment retry, and confirmed receipts clear stale checkout drafts only when the cart is empty.
-
-= 2.0.10 =
-* Fixed: Menus load all product pages, retain required add-ons beyond the first 60 products, support plain REST permalinks, and exclude hidden products and empty categories.
-* Fixed: Scheduled pickup and delivery choices carry into native WooCommerce Blocks and classic checkout. Delayed contact prefill preserves customer edits.
-* Fixed: Checkout rejects an unavailable requested delivery method instead of silently creating a pickup order.
-* Fixed: Saved add-on choices and item instructions appear on receipts, customer order details and emails; pickup receipts use the restaurant contact details.
-* Fixed: Guest email verification preserves its form submission when opening an order confirmation link; plain-text emails retain apostrophes in item instructions.
-* Fixed: Kitchen tickets show selected extras and readable addresses. Repeated checkout saves preserve one workflow status, history and tracking token, and existing duplicate metadata is repaired.
-* Fixed: Legacy order discovery avoids expensive metadata joins, and order metadata queries work without warnings on both HPOS and legacy WordPress order storage.
-* Fixed: Startup and upgrades defer translated setup work until WordPress initialization.
-* Tested with WordPress 7.1.4 and WooCommerce 11.3.0, including real guest pickup, scheduled delivery, native checkout, QR table orders, coupons and taxes.
-
-= 2.0.9 =
-* Fixed: Restaurant Schedule now edits opening hours for every pickup and delivery day, including split shifts. Closed days retain their hours, and invalid or overlapping hours are rejected before saving.
-* Fixed: Decimal prices can be typed and saved for add-ons, products, variations and reservation booking amounts. Decimal points survive workspace redraws, comma decimals are accepted, and invalid prices are rejected.
-* Fixed: Saving settings preserves zero preorder days, delivery lead time and late grace time. An unchanged, incomplete restaurant profile no longer blocks schedule changes.
-* Fixed: Product edits preserve blank and zero prices, out-of-stock and backorder states, and publication status in translated workspaces.
-
-= 2.0.8 =
-* Fixed: QR table cards from Workspace > QR code now carry their table in the link (`?wr_table=<card name>`), so orders placed after a scan show as "Dine-in · Table <name>" on the orders board. Cards made before this update pick up the table too; download them again to print the fixed QR code.
-* Changed: the Table sessions screen is no longer in the WowRestro menu. It only held internal records linking dine-in orders to a table, and its Add New button made posts that did nothing. The table still shows on each order on the orders board.
-
-= 2.0.7 =
-* Added: store pages. An ordering page whose menu shortcode sets a product category, `[wowrestro_menu category="bakery"]`, runs as its own store: it gets its own checkout and confirmation under its page (/bakery/checkout/, /bakery/confirmation/), and orders, receipts and email links remember the store. The shortcode can also set the store's `name`, switcher `label`, `tagline`, `hero` (two lines split by |), menu `heading`, `note`, colours (`accent`, `ink`, `paper`), corner `radius` in pixels, `type="shop"` (the receipt talks about the store, not the kitchen) and `header="store"` (a store header with a live cart pill and a store footer in place of the theme's). All store pages share one WooCommerce cart: a store's menu drops dishes added in another store, and /checkout/ or another store's checkout sends the cart to its own store.
-* Added: `[wowrestro_store_switcher label="" brand="" brand_url="" cta="" cta_url=""]`, a bar linking the store pages. On a store page with `header="store"` it sits above the store header.
-* Changed: the WooRestro 0.3 demo's old design files are no longer loaded if a site still enqueues them.
-
-= 2.0.6 =
-* Changed: after checkout the confirmation opens at /confirmation/ (or a site's own /…/confirmation/), with no order number or key in the address. A keyed link, after checkout or from an email, is remembered in that browser's session and redirects to the clean address, which shows that order and survives a refresh. Keyed links still work everywhere, so emails open on any device; links a payment gateway added its own parameters to are left alone so it can finish the payment. With no order in the session, /confirmation/ goes back to the menu.
-
-= 2.0.5 =
-* Fixed: every order into a part-booked kitchen slot wrote one "WordPress database error Duplicate entry" line to the PHP error log for each position already taken. Those collisions are how a slot is claimed safely, so they are no longer logged; a real database fault while reserving still is.
-
-= 2.0.4 =
-* Fixed: after activating the plugin (a new install, or switching over from WooRestro), /confirmation/ pages returned "not found" until Settings > Permalinks was opened. Activation now adds the route before WordPress rebuilds its rules.
-* Fixed: switching over from WooRestro by activation left a migration stopped by the 2.0.3 bug stopped; activation now restarts it, as updating already did.
-
-= 2.0.3 =
-* Fixed: the data migration stopped with "settings could not be saved during migration" whenever it ran in an admin request (Retry migration, or the background runner on admin-ajax). It compared the saved settings with the unsanitized value, and the settings sanitizer always reshapes it. A migration stopped by this runs again after the update.
-
-= 2.0.2 =
-* Changed: restaurant orders confirm at /confirmation/{order}/?key=… instead of /checkout/order-received/{order}/?key=…, after checkout, when a gateway returns, and in emails. It is still WooCommerce's order-received page underneath, so gateway thank-you hooks, conversion tracking and the guest email check behave as before, and old links keep working. Sites on plain permalinks keep WooCommerce's address.
-* Changed: the QR table card photo is recompressed (same size and look), which brings the plugin zip under the common 2 MB upload limit.
-* Changed: the order flow's text (menu, item dialog, cart, checkout and confirmation) uses Poppins on every template, in place of each template's own fonts.
-
-= 2.0.1 =
-* New: the `wowrestro_design_config` filter. Through it a menu page can keep to one product category (`category`, its sub-categories become the tabs), and change the hero line (`hero`, "First line|second line"), the menu heading (`heading`) and the line under the menu (`note`).
-* New: the order flow fires a `wowrestro:cart` event on the document with the item count and the formatted total whenever the cart changes, for a header cart badge outside the menu.
-* Fixed: template 1 tinted every button in the order panel alike, so Checkout, Place order and the options dialog's Add looked disabled. They are solid in the template's colour again.
-* Fixed: selected times, the chosen payment method, step numbers, quantity steppers and card hovers used a fixed orange instead of the template's colour.
 
 = 2.0 =
 * Major Release: Complete architectural modernization for high-performance restaurant operations.
@@ -153,6 +185,8 @@ No, you don't need any special theme to run this plugin. It works with all theme
 * Added: Operational order statuses (New, Accepted, Preparing, Ready, Out for Delivery, Completed, Cancelled) decoupled from payment statuses.
 * Added: Atomic shared-kitchen capacity and slot reservations ledger with InnoDB transactional safety.
 * Added: Single-page ordering storefront app powered by WooCommerce Store API, including 36 modern menu templates.
+* Added: Store pages. An ordering page whose menu shortcode sets a product category, `[wowrestro_menu category="bakery"]`, runs as its own store: it gets its own checkout and confirmation under its page (/bakery/checkout/, /bakery/confirmation/), and orders, receipts and email links remember the store. The shortcode can also set the store's `name`, switcher `label`, `tagline`, `hero` (two lines split by |), menu `heading`, `note`, colours (`accent`, `ink`, `paper`), corner `radius` in pixels, `type="shop"` (the receipt talks about the store, not the kitchen) and `header="store"` (a store header with a live cart pill and a store footer in place of the theme's). All store pages share one WooCommerce cart: a store's menu drops dishes added in another store, and /checkout/ or another store's checkout sends the cart to its own store.
+* Added: `[wowrestro_store_switcher label="" brand="" brand_url="" cta="" cta_url=""]`, a bar linking the store pages. On a store page with `header="store"` it sits above the store header.
 * Added: Modern Gutenberg menu block and Elementor widget for flexible menu embedding.
 * Added: Reusable Modifier Groups custom post type (`wowrestro_mod_group`) with min/max selection bounds, single/multi choices, default options, and immutable order snapshots.
 * Added: Table reservations management system (`[wowrestro_reservations]`) with slot capacity, guest limits, and deposit support.
@@ -162,11 +196,24 @@ No, you don't need any special theme to run this plugin. It works with all theme
 * Added: In-board manual / phone order entry with item selection, custom delivery/pickup timing, and payment collection.
 * Added: Tip calculation support (percentage presets and custom flat amounts) on cart and checkout.
 * Added: Live customer order tracking page and shortcode (`[wowrestro_tracking]`) with progress updates on Thank You page and emails.
+* Added: The `wowrestro_design_config` filter. Through it a menu page can keep to one product category (`category`, its sub-categories become the tabs), and change the hero line (`hero`, "First line|second line"), the menu heading (`heading`) and the line under the menu (`note`).
+* Added: The order flow fires a `wowrestro:cart` event on the document with the item count and the formatted total whenever the cart changes, for a header cart badge outside the menu.
 * Added: Comprehensive REST API under `wowrestro/v1` namespace for menu, availability, operations, devices, and tracking.
 * Added: Resumable, non-destructive legacy data migration tool for seamless upgrades from WOWRestro 1.x and WooRestro.
 * Added: Guided 4-step onboarding wizard for first-time restaurant setup.
 * Added: Built-in HPOS-safe restaurant sales analytics and operational reporting.
 * Added: Site Health diagnostic checks for checkout compatibility, configuration, and capacity ledger health.
+* Changed: After checkout the confirmation opens at /confirmation/ (or a site's own /…/confirmation/), with no order number or key in the address. A keyed link, after checkout or from an email, is remembered in that browser's session and redirects to the clean address, which shows that order and survives a refresh. Keyed links still work everywhere, so emails open on any device; links a payment gateway added its own parameters to are left alone so it can finish the payment. With no order in the session, /confirmation/ goes back to the menu.
+* Changed: Restaurant orders confirm at clean confirmation routes instead of /checkout/order-received/{order}/?key=…, while maintaining gateway thank-you hooks, conversion tracking, and guest email check behavior. Old links keep working. Sites on plain permalinks keep WooCommerce's address.
+* Changed: The QR table card photo is recompressed (same size and look), which brings the plugin zip under the common 2 MB upload limit.
+* Changed: The order flow's text (menu, item dialog, cart, checkout and confirmation) uses Poppins on every template, in place of each template's own fonts.
+* Changed: The WooRestro 0.3 demo's old design files are no longer loaded if a site still enqueues them.
+* Fixed: Every order into a part-booked kitchen slot wrote one "WordPress database error Duplicate entry" line to the PHP error log for each position already taken. Those collisions are how a slot is claimed safely, so they are no longer logged; a real database fault while reserving still is.
+* Fixed: After activating the plugin (a new install, or switching over from WooRestro), /confirmation/ pages returned "not found" until Settings > Permalinks was opened. Activation now adds the route before WordPress rebuilds its rules.
+* Fixed: Switching over from WooRestro by activation left a migration stopped by the settings check stopped; activation now restarts it, as updating already did.
+* Fixed: The data migration stopped with "settings could not be saved during migration" whenever it ran in an admin request (Retry migration, or the background runner on admin-ajax). It compared the saved settings with the unsanitized value, and the settings sanitizer always reshapes it. A migration stopped by this runs again after the update.
+* Fixed: Template 1 tinted every button in the order panel alike, so Checkout, Place order and the options dialog's Add looked disabled. They are solid in the template's colour again.
+* Fixed: Selected times, the chosen payment method, step numbers, quantity steppers and card hovers used a fixed orange instead of the template's colour.
 * Removed: Legacy jQuery dependencies (jquery.timepicker, jquery.toast, jquery.tipTip) and outdated template files in favor of lightweight vanilla scripts and Phosphor icon fonts.
 
 = 1.3.1 - 13th April 2022 =
@@ -201,42 +248,8 @@ No, you don't need any special theme to run this plugin. It works with all theme
 
 == Upgrade Notice ==
 
-= 2.0.11 =
-* Fixes native payment handoff, late-payment fulfillment handling and payment-state receipts. Includes the earlier schedule, decimal-price and checkout fixes.
-
-= 2.0.10 =
-* Fixes additional menu, checkout and receipt issues found through local WordPress/WooCommerce end-to-end testing. Includes the schedule and decimal-price fixes from 2.0.9.
-
-= 2.0.9 =
-* Fixes editable pickup/delivery hours and decimal prices in the workspace, with additional safeguards against unintended settings and product changes.
-
-= 2.0.8 =
-* QR table cards now tag dine-in orders with their table. Download existing cards again to print the fixed QR code.
-
-= 2.0.7 =
-* Store pages: an ordering page limited to one category can run as its own store, with its own checkout, confirmation, name and colours.
-
-= 2.0.6 =
-* Order confirmations open at a clean address, /confirmation/, with no order number or key in it.
-
-= 2.0.5 =
-* Stops kitchen-slot reservations filling the PHP error log with "Duplicate entry" lines.
-
-= 2.0.4 =
-* Fixes /confirmation/ pages returning "not found" after the plugin is activated, until permalinks were saved.
-
-= 2.0.3 =
-* Fixes the data migration stopping with "settings could not be saved during migration". A stopped migration runs again after this update.
-
-= 2.0.2 =
-* Order confirmations move to their own address, /confirmation/{order}/. Links already sent to /checkout/order-received/ keep working.
-* The order flow's text uses Poppins on every menu template.
-
-= 2.0.1 =
-* Template 1's Checkout and Place order buttons no longer look disabled, and its selected options use the template's own colour.
-
 = 2.0 =
-Major release 2.0 brings HPOS compatibility, Checkout Blocks support, a live Kitchen Order Board, slot reservations, and a redesigned modifier engine. An automatic, non-destructive data migration wizard will run on first activation to migrate your 1.x settings, modifiers, and orders.
+Major release 2.0 brings HPOS compatibility, Checkout Blocks support, a live Kitchen Order Board, slot reservations, store pages, clean confirmation URLs, and a redesigned modifier engine. An automatic, non-destructive data migration wizard will run on first activation to migrate your 1.x settings, modifiers, and orders.
 
 = 1.3.1 =
 Please take a backup of your site before updating the plugin.

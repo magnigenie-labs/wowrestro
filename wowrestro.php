@@ -3,12 +3,12 @@
  * Plugin Name:       WowRestro
  * Plugin URI:        https://woorestro.com/
  * Description:       Restaurant ordering and fulfillment operations for WooCommerce.
- * Version:           2.0.11
+ * Version:           2.0
  * Requires at least: 6.2
  * Requires PHP:      7.4
  * Requires Plugins:  woocommerce
  * WC requires at least: 8.9
- * WC tested up to: 11.3
+ * WC tested up to: 11.2.1
  * Author:            WowRestro
  * Author URI:        https://woorestro.com/
  * Text Domain:       wowrestro
@@ -21,7 +21,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'WOWRESTRO_VERSION', '2.0.11' );
+define( 'WOWRESTRO_VERSION', '2.0' );
 define( 'WOWRESTRO_FILE', __FILE__ );
 define( 'WOWRESTRO_PATH', plugin_dir_path( __FILE__ ) );
 define( 'WOWRESTRO_URL', plugin_dir_url( __FILE__ ) );
@@ -133,7 +133,7 @@ function wowrestro_boot() {
 			WowRestro_Order_Statuses::install_roles();
 		}
 		if ( method_exists( 'WowRestro_Products', 'install_attributes' ) ) {
-			add_action( 'init', array( 'WowRestro_Products', 'install_attributes' ), 5 );
+			WowRestro_Products::install_attributes();
 		}
 		wowrestro_restart_stopped_migration();
 		update_option( 'wowrestro_flush_rewrite', 'yes', false );

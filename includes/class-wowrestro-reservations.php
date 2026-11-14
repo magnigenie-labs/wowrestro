@@ -299,12 +299,13 @@ final class WowRestro_Reservations {
 		if ( ! $end_time && preg_match( '/^(?:[01]\d|2[0-3]):[0-5]\d$/', $time ) ) {
 			$end_time = gmdate( 'H:i', strtotime( '1970-01-01 ' . $time . ' UTC +' . absint( $settings['interval'] ) . ' minutes' ) );
 		}
-		if ( ! $name || ! is_email( $email ) || ! $phone || $guests < $settings['min_guests'] || $guests > $settings['max_guests'] || ! preg_match( '/^\d{4}-\d{2}-\d{2}$/', $date ) || ! preg_match( '/^(?:[01]\d|2[0-3]):[0-5]\d$/', $time ) || ! preg_match( '/^(?:[01]\d|2[0-3]):[0-5]\d$/', $end_time ) || $end_time <= $time ) {
+		$valid_date = preg_match( '/^\d{4}-\d{2}-\d{2}$/', $date ) && checkdate( (int) substr( $date, 5, 2 ), (int) substr( $date, 8, 2 ), (int) substr( $date, 0, 4 ) );
+		if ( ! $name || ! is_email( $email ) || ! $phone || $guests < $settings['min_guests'] || $guests > $settings['max_guests'] || ! $valid_date || ! preg_match( '/^(?:[01]\d|2[0-3]):[0-5]\d$/', $time ) || ! preg_match( '/^(?:[01]\d|2[0-3]):[0-5]\d$/', $end_time ) || $end_time <= $time ) {
 			return new WP_Error( 'wowrestro_reservation_invalid', __( 'Complete the guest details and enter a valid reservation date, start time and end time.', 'wowrestro' ), array( 'status' => 400 ) );
 		}
 		$status = sanitize_key( $input['status'] ?? $settings['default_status'] );
 		$location = sanitize_text_field( $input['location'] ?? '' );
-		if ( in_array( $status, $settings['blocking_statuses'], true ) && self::reserved_guests( $date, $time, $location, $post_id ) + $guests > $settings['seat_capacity'] ) {
+		if ( in_array( $status, $settings['blocking_statuses'], true ) && self::reserved_guests( $date, $time, $location, $post_id, $end_time ) + $guests > $settings['seat_capacity'] ) {
 			return new WP_Error( 'wowrestro_reservation_capacity', __( 'This time slot does not have enough remaining seat capacity.', 'wowrestro' ), array( 'status' => 409 ) );
 		}
 		$input['name']  = $name;
@@ -663,7 +664,7 @@ final class WowRestro_Reservations {
 			if ( ! preg_match( '/^(\d{2}:\d{2})-(\d{2}:\d{2})$/', $period, $match ) ) {
 				continue; }
 			for ( $at = new DateTimeImmutable( $date . ' ' . $match[1], wp_timezone() ), $end = new DateTimeImmutable( $date . ' ' . $match[2], wp_timezone() ); $at < $end; $at = $at->modify( '+' . $interval . ' minutes' ) ) {
-				$used = self::reserved_guests( $date, $at->format( 'H:i' ), $location );
+				$used = self::reserved_guests( $date, $at->format( 'H:i' ), $location, 0, $at->modify( '+' . $interval . ' minutes' )->format( 'H:i' ) );
 				if ( $at->getTimestamp() >= strtotime( '+' . absint( $settings['advance_minutes'] ) . ' minutes' ) && $at->getTimestamp() <= strtotime( '+' . absint( $settings['future_days'] ) . ' days' ) && $used < $capacity ) {
 					$slots[] = array(
 						'time'  => $at->format( 'H:i' ),
@@ -674,7 +675,7 @@ final class WowRestro_Reservations {
 		return $slots;
 	}
 
-	private static function reserved_guests( $date, $time, $location, $exclude_id = 0 ) {
+	private static function reserved_guests( $date, $time, $location, $exclude_id = 0, $end_time = '' ) {
 		if ( ! self::settings()['blocking_statuses'] ) {
 			return 0;
 		}
@@ -683,10 +684,6 @@ final class WowRestro_Reservations {
 			array(
 				'key'   => '_wowrestro_date',
 				'value' => $date,
-			),
-			array(
-				'key'   => '_wowrestro_time',
-				'value' => $time,
 			),
 			array( 'key' => '_wowrestro_status', 'value' => self::settings()['blocking_statuses'], 'compare' => 'IN' ),
 		);
@@ -707,14 +704,38 @@ final class WowRestro_Reservations {
 		if ( $exclude_id ) {
 			$ids = array_values( array_diff( $ids, array( absint( $exclude_id ) ) ) );
 		}
-		return array_sum(
-			array_map(
-				function ( $id ) {
-					return absint( get_post_meta( $id, '_wowrestro_guests', true ) );
-				},
-				$ids
-			)
-		);
+		$minutes = static function ( $value ) {
+			return (int) substr( $value, 0, 2 ) * 60 + (int) substr( $value, 3, 2 );
+		};
+		$start = $minutes( $time );
+		$end = $end_time ? $minutes( $end_time ) : $start + self::settings()['interval'];
+		if ( $end <= $start ) {
+			$end += 1440;
+		}
+		$events = array();
+		foreach ( $ids as $id ) {
+			$from = $minutes( get_post_meta( $id, '_wowrestro_time', true ) );
+			$stored_end = get_post_meta( $id, '_wowrestro_end_time', true );
+			// Legacy and public bookings without an end time occupy one configured interval.
+			$until = $stored_end ? $minutes( $stored_end ) : $from + self::settings()['interval'];
+			if ( $from >= $end || $until <= $start ) {
+				continue;
+			}
+			$from = max( $start, $from );
+			$until = min( $end, $until );
+			$guests = absint( get_post_meta( $id, '_wowrestro_guests', true ) );
+			$events[ $from ] = ( $events[ $from ] ?? 0 ) + $guests;
+			$events[ $until ] = ( $events[ $until ] ?? 0 ) - $guests;
+		}
+		// Peak concurrent occupancy avoids counting adjacent bookings twice.
+		ksort( $events, SORT_NUMERIC );
+		$used = 0;
+		$peak = 0;
+		foreach ( $events as $change ) {
+			$used += $change;
+			$peak = max( $peak, $used );
+		}
+		return $peak;
 	}
 
 	private static function email( $post_id, $updated ) {
